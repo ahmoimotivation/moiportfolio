@@ -1,0 +1,103 @@
+{
+  "_comment": "Moi Investment Portfolio — canonical data file. This is the SINGLE SOURCE OF TRUTH. Update this file first, then mirror the same numbers into the `const holdings={...}` block inside index.html. See UPDATE_INSTRUCTIONS.md for the full procedure and for which fields must NEVER be touched.",
+
+  "meta": {
+    "owner": "Moi",
+    "timezone": "Asia/Kuala_Lumpur (MYT)",
+    "displayCurrency": "MYR",
+    "lastRefresh": "2026-09-07T08:44:00+08:00",
+    "lastRefreshNote": "美股 Labor Day 休市，价格为 2026-09-04 收盘。马股 Bursa 未开盘，沿用 2026-09-04 收盘。",
+    "priceAsOf": {
+      "usStocks": "2026-09-04 close",
+      "myStocks": "2026-09-04 close",
+      "btc": "2026-09-06 20:44",
+      "goldSpot": "2026-09-06",
+      "fx": "2026-09-07"
+    }
+  },
+
+  "constants": {
+    "marginLoanMyr": 362763.77,
+    "marginLoanLender": "Public Bank",
+    "marginCallLsr": 70,
+    "forceSellLsr": 80,
+    "targetLsr": 69,
+    "uobBuybackMultiplier": 1.01,
+    "pdsVersion": "Public Bank PDS Ver032026"
+  },
+
+  "fx": {
+    "usdMyr": 4.038,
+    "usdHkd": 7.8407
+  },
+
+  "us": [
+    { "t": "GOOGL", "name": "Alphabet-A",                "qty": 100,   "cost": 387.50,  "px": 338.46, "cat": "Hyperscaler", "broker": "Moomoo",        "note": "Moomoo · 6/18 $387.5 put 接货" },
+    { "t": "META",  "name": "Meta",                      "qty": 55,    "cost": 611.42,  "px": 616.77, "cat": "Hyperscaler", "broker": "blended",       "note": "blended · M+ 38 @ $639.45 + Moomoo 17 @ $548.78（8/1 加仓）" },
+    { "t": "MSFT",  "name": "Microsoft",                 "qty": 63,    "cost": 432.45,  "px": 499.70, "cat": "Hyperscaler", "broker": "blended",       "note": "blended · Moomoo 17 + M+ 46（6/15 加仓 14 股 @ $398.28）" },
+    { "t": "NVDA",  "name": "Nvidia",                    "qty": 110.4, "cost": 214.01,  "px": 230.36, "cat": "AI Capex",    "broker": "Moomoo",        "note": "Moomoo only（平均成本 $214.01 · option premium 已计入 wheel 收入）· M+ 26 股 6/15 @ $209.15 已卖出" },
+    { "t": "SOXX",  "name": "iShares Semiconductor ETF", "qty": 18,    "cost": 513.09,  "px": 519.86, "cat": "AI Capex",    "broker": "Moomoo",        "note": "Moomoo · 8/1 买入（BOXX 换股）" },
+    { "t": "NOW",   "name": "ServiceNow",                "qty": 200,   "cost": 108.00,  "px": 141.26, "cat": "SaaS",        "broker": "Moomoo",        "note": "Moomoo · $108 put 行权接货 (2 张)" },
+    { "t": "PLTR",  "name": "Palantir",                  "qty": 139,   "cost": 134.499, "px": 174.33, "cat": "Defense",     "broker": "Moomoo",        "note": "Moomoo · 6/29 买 39 + 7/2 $141 put 行权接货 100 股 · 8/3 财报后续涨" },
+    { "t": "QQQ",   "name": "Invesco QQQ",               "qty": 46,    "cost": 435.53,  "px": 718.96, "cat": "ETF",         "broker": "M+",            "note": "M+ · 2026-07-03" },
+    { "t": "UNH",   "name": "UnitedHealth",              "qty": 31,    "cost": 319.89,  "px": 397.14, "cat": "Healthcare",  "broker": "M+",            "note": "M+ · 2026-07-03" }
+  ],
+
+  "my": [
+    { "t": "IGBREIT", "code": "5227", "name": "IGB REIT",        "qty": 11800, "cost": 2.67,    "px": 2.75,  "note": "cash" },
+    { "t": "MAYBANK", "code": "1155", "name": "Malayan Banking", "qty": 45300, "cost": 11.6964, "px": 10.56, "note": "partial margin" },
+    { "t": "SUNREIT", "code": "5176", "name": "Sunway REIT",     "qty": 10000, "cost": 2.11,    "px": 2.10,  "note": "cash" }
+  ],
+
+  "gold": {
+    "oz": 7,
+    "costPerOz": 21246,
+    "spotUsd": 4443.53,
+    "custodian": "UOB",
+    "note": "Kangaroo 1 oz · Perth Mint 99.99% · purchased 28 Jan 2026 @ USD spot ATH (~$5,400/oz)"
+  },
+
+  "crypto": {
+    "qty": 0.0351549,
+    "costMyr": 15994.97,
+    "pxUsd": 80141.71,
+    "broker": "HATA"
+  },
+
+  "cash": {
+    "usd": 32962.68,
+    "myr": 38003.47,
+    "usdBreakdown": "us_cash $254.58 + USD 货币基金 $32,708.10 (Moomoo fund_assets 256,454.44 HKD ÷ 7.8407)",
+    "myrBreakdown": "Maybank 货币基金 + 现金（Moomoo 拉不到，手动维护）"
+  },
+
+  "options": [],
+
+  "wheelRealized": 8698.98,
+
+  "ulPxFallback": {
+    "AMZN": 258.51,
+    "GOOGL": 338.46,
+    "NVDA": 230.36,
+    "PLTR": 174.33,
+    "NOW": 141.26
+  },
+
+  "sectorMap": {
+    "AI Capex": ["NVDA", "SOXX"],
+    "Hyperscaler": ["META", "GOOGL", "MSFT"],
+    "SaaS": ["NOW"],
+    "Healthcare": ["UNH"],
+    "Defense": ["PLTR"],
+    "ETF": ["QQQ"]
+  },
+
+  "derived": {
+    "_comment": "Recomputed on every refresh. Do not hand-edit — recalculate from the formulas in UPDATE_INSTRUCTIONS.md §5.",
+    "netWorthMyr": 1414831,
+    "grossAssetsMyr": 1777595,
+    "lsrPct": 68.21,
+    "lsrBufferToCallPp": 1.79,
+    "soldPutLiabilityUsd": 0
+  }
+}

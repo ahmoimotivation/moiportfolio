@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<!--
+  Moi Investment Portfolio — standalone dashboard
+  Repo: https://github.com/ahmoimotivation/moiportfolio
+  Update procedure: see UPDATE_INSTRUCTIONS.md
+  Data source of truth: portfolio-data.json (mirrored into `const holdings` below)
+-->
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moi Investment Portfolio</title>
+<style>
+:root{color-scheme:light;--bg:#f7f7f5;--surface:#ffffff;--ink:#1a1a1a;--muted:#6b6b6b;--hint:#9a9a9a;--border:rgba(0,0,0,.08);--green:#0f7a3a;--red:#c53030;--amber:#b8620a;--blue:#1b5ea8;--purple:#7c3aed;--chip:#f0efeb;}
+*{box-sizing:border-box}
+body{margin:0;padding:16px;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;font-size:14px;line-height:1.5}
+h1,h2{margin:0;font-weight:600;letter-spacing:-0.01em}
+h1{font-size:18px}
+h2{font-size:12px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin:20px 0 8px}
+.header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}
+.timestamp{font-size:11px;color:var(--hint)}
+.card{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px}
+.hero{padding:18px}
+.hero-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.hero-value{font-size:30px;font-weight:600;letter-spacing:-0.02em;line-height:1.1}
+.hero-sub{font-size:12px;color:var(--muted);margin-top:6px}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;padding-top:14px;border-top:0.5px solid var(--border)}
+.stat-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.stat-value{font-size:15px;font-weight:600;margin-top:2px}
+.pos{color:var(--green)}.neg{color:var(--red)}
+.toggle-row{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)}
+.toggle{position:relative;display:inline-block;width:38px;height:22px}
+.toggle input{opacity:0;width:0;height:0}
+.slider{position:absolute;inset:0;background:#ccc;border-radius:22px;cursor:pointer;transition:.2s}
+.slider:before{content:"";position:absolute;height:16px;width:16px;left:3px;top:3px;background:white;border-radius:50%;transition:.2s}
+input:checked+.slider{background:var(--amber)}
+input:checked+.slider:before{transform:translateX(16px)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;font-weight:500;color:var(--muted);padding:6px 3px;border-bottom:0.5px solid var(--border);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+td{padding:8px 3px;border-bottom:0.5px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.ticker{font-weight:600;font-size:13px}
+.ticker-note{font-size:10px;color:var(--hint);font-weight:400;margin-top:2px}
+.right{text-align:right;font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums}
+.chip{display:inline-block;font-size:9px;padding:1px 6px;border-radius:4px;background:var(--chip);color:var(--muted);margin-left:4px;vertical-align:middle}
+.chip-warn{background:#fdf3e1;color:var(--amber)}
+.chip-info{background:#e7f1fb;color:var(--blue)}
+.chip-ok{background:#e3f3e9;color:var(--green)}
+.chip-danger{background:#fcebeb;color:var(--red)}
+.chip-cat{background:#eef0f4;color:#4a5568;font-weight:500}
+.subtotal td{font-weight:600;background:#fafaf7;font-size:12px}
+.alloc{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center}
+.alloc-row{display:flex;justify-content:space-between;padding:5px 0;font-size:12px;border-bottom:0.5px dashed var(--border)}
+.alloc-row:last-child{border-bottom:none}
+.alloc-dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.lsr-bar{position:relative;height:12px;background:#eee;border-radius:4px;overflow:visible;margin-top:10px}
+.lsr-fill{height:100%;transition:width .4s;border-radius:4px}
+.lsr-danger-zone{position:absolute;top:0;right:0;left:70%;height:100%;background:repeating-linear-gradient(45deg,rgba(197,48,48,.12),rgba(197,48,48,.12) 4px,transparent 4px,transparent 8px);border-radius:0 4px 4px 0;pointer-events:none}
+.lsr-tick{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--amber)}
+.lsr-tick.force{background:var(--red)}
+.lsr-labels{position:relative;height:16px;font-size:10px;color:var(--hint);margin-top:6px}
+.lsr-labels span{position:absolute;white-space:nowrap}
+.lsr-labels .tick-label{color:var(--amber)}
+.lsr-labels .tick-label.force{color:var(--red)}
+.pump-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;padding-top:12px;border-top:0.5px solid var(--border)}
+.pump-card{padding:10px;border-radius:8px;background:#fafaf7}
+.pump-card.call{background:#fdf3e1}
+.pump-card.force{background:#fcebeb}
+.pump-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.pump-label.call{color:var(--amber)}
+.pump-label.force{color:var(--red)}
+.pump-value{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+.pump-hint{font-size:10px;color:var(--muted);margin-top:2px}
+.mb-card{margin-top:12px;padding-top:12px;border-top:0.5px solid var(--border)}
+.mb-title{font-size:13px;font-weight:600;margin-bottom:8px}
+.mb-stack-bar{display:flex;height:20px;border-radius:4px;overflow:hidden;margin:6px 0}
+.mb-equity-seg{background:#1b5ea8;display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:500}
+.mb-margin-seg{background:#c53030;display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:500}
+.mb-row{display:grid;grid-template-columns:1fr auto;gap:8px;font-size:12px;padding:4px 0;border-bottom:0.5px dashed var(--border)}
+.mb-row:last-of-type{border-bottom:none}
+.mb-row .label{color:var(--muted)}
+.mb-row .value{font-weight:500;font-variant-numeric:tabular-nums}
+.mb-pl-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.mb-pl-box{padding:8px 10px;border-radius:6px;background:#fafaf7}
+.mb-pl-label{font-size:10px;color:var(--muted);margin-bottom:3px}
+.mb-pl-value{font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.mb-pl-sub{font-size:10px;color:var(--muted);margin-top:2px}
+.opt-section{margin-top:14px;padding-top:12px;border-top:0.5px solid var(--border)}
+.opt-section:first-child{margin-top:0;padding-top:0;border-top:none}
+.opt-sec-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:8px}
+.opt-row{display:grid;grid-template-columns:1fr auto;gap:8px;font-size:12px;padding:5px 0;border-bottom:0.5px dashed var(--border)}
+.opt-row:last-child{border-bottom:none}
+.opt-row .label{color:var(--muted)}
+.opt-row .value{font-weight:500;font-variant-numeric:tabular-nums}
+.opt-box{border-radius:8px;padding:10px 12px;margin-top:8px;font-size:11px;line-height:1.5}
+.opt-box.warn{background:#fdf3e1;color:var(--amber)}
+.opt-box.info{background:#f0efeb;color:var(--muted)}
+.opt-box.ok{background:#e3f3e9;color:var(--green)}
+.gold-card{background:#fef6e7;border-color:#f1dfae}
+.crypto-card{background:#f3efff;border-color:#d7cdf7}
+.footnote{font-size:10px;color:var(--hint);margin-top:6px;line-height:1.4}
+.footnote a{color:var(--blue);text-decoration:none}
+.footnote a:hover{text-decoration:underline}
+.opt-sec-title::before{content:"";display:inline-block;width:3px;height:11px;background:#cfcfc9;border-radius:2px;margin-right:7px;vertical-align:-1px}
+tr.row-itm td{background:#fdf6ea}tr.row-itm td:first-child{box-shadow:inset 2px 0 0 var(--amber)}
+tr.row-otm td{background:#eef6f0}tr.row-otm td:first-child{box-shadow:inset 2px 0 0 var(--green)}
+tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 0 #c4c4be}
+.collat-put{display:flex;justify-content:space-between;align-items:center;font-size:11px;padding:6px 9px;border-radius:7px;margin-bottom:4px;font-variant-numeric:tabular-nums}
+.collat-put.itm{background:#fdf8ef}
+.collat-put.otm{background:#eef7f1}
+.collat-put.unk{background:#f5f5f2}
+.collat-box{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 4px}
+.collat-card{padding:9px 11px;border-radius:8px}
+.collat-card.need{background:#fdf3e1}
+.collat-card.have{background:#e3f3e9}
+.cc-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px}
+.collat-card.need .cc-label{color:var(--amber)}
+.collat-card.have .cc-label{color:var(--green)}
+.cc-value{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums}
+.cc-hint{font-size:10px;color:var(--muted);margin-top:2px;line-height:1.35}
+.repo-bar{background:#eef2f7;border:0.5px solid #d4dde8;border-radius:10px;padding:9px 12px;margin-bottom:12px;font-size:11px;color:#3d5670;line-height:1.5}
+.repo-bar a{color:var(--blue);text-decoration:none;font-weight:500}
+.repo-bar a:hover{text-decoration:underline}
+@media(max-width:420px){.hero-value{font-size:24px}.alloc{grid-template-columns:100px 1fr}th,td{padding:6px 2px;font-size:11px}.pump-grid,.mb-pl-grid,.collat-box{grid-template-columns:1fr}}
+</style></head><body>
+
+<div class="repo-bar">
+  📖 更新这个看板前请先读 <a href="./UPDATE_INSTRUCTIONS.md">UPDATE_INSTRUCTIONS.md</a> ·
+  数据真源 <a href="./portfolio-data.json">portfolio-data.json</a> ·
+  <a href="https://github.com/ahmoimotivation/moiportfolio">repo</a>
+  <span id="dataSrc" style="color:#7d8fa3"></span>
+</div>
+
+<div class="header">
+  <div>
+    <h1>Moi Investment Portfolio</h1>
+    <div class="timestamp">股票/现金: Moomoo (us_cash · USD 货币基金) · 马股: Public Bank</div>
+    <div class="timestamp" id="syncStatus" style="margin-top:2px">期权来自 Moomoo</div>
+    <div class="timestamp" style="margin-top:2px;color:var(--green)">✓ 2026-09-07（周一 08:44 MYT）刷新。美股 Labor Day 休市，价格为 09-04 收盘。马股 Bursa 未开盘，沿用 09-04 收盘。黄金 spot <b>$4,443.53/oz</b> · BTC <b>$80,141.71</b> · USD/MYR <b>4.038</b>。当前 0 持仓期权。</div>
+  </div>
+  <div class="toggle-row">
+    <span id="goldModeLabel">Gold: UOB buyback est.</span>
+    <label class="toggle"><input type="checkbox" id="goldToggle" checked><span class="slider"></span></label>
+  </div>
+</div>
+
+<div class="card hero">
+  <div class="hero-label">Net worth (MYR)</div>
+  <div class="hero-value num" id="netWorth">—</div>
+  <div class="hero-sub">after deducting margin loan &amp; sold-put liability</div>
+  <div class="hero-grid">
+    <div><div class="stat-label">Gross assets</div><div class="stat-value num" id="grossAssets">—</div></div>
+    <div><div class="stat-label">Margin loan</div><div class="stat-value neg num" id="marginDisp">—</div></div>
+    <div><div class="stat-label">Sold-put liability <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(预估平仓)</span></div><div class="stat-value neg num" id="putLiabDisp">—</div></div>
+    <div><div class="stat-label">Total deployed <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(扣 margin)</span></div><div class="stat-value num" id="totalCost">—</div></div>
+    <div><div class="stat-label">Unrealized P&L <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(股·金·币)</span></div><div class="stat-value num" id="totalPL">—</div></div>
+    <div><div class="stat-label">Wheel 收入 26' <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(已实现)</span></div><div class="stat-value num pos" id="wheelPremium">—</div></div>
+  </div>
+</div>
+
+<h2>Allocation <span style="font-weight:400;text-transform:none;color:var(--hint);font-size:10px">(MY stocks 已扣 margin loan · 其余按 gross)</span></h2>
+<div class="card">
+  <div class="alloc">
+    <div style="position:relative;height:140px"><canvas id="allocChart" role="img" aria-label="Asset allocation"></canvas></div>
+    <div id="allocList"></div>
+  </div>
+  <div class="footnote" id="cashSplitNote" style="margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border)"></div>
+</div>
+
+<h2>Margin health — Public Bank (per PDS)</h2>
+<div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:baseline">
+    <div><div class="stat-label">LSR (loan / shares value)</div><div class="stat-value num" id="lsrVal">—</div></div>
+    <div style="text-align:right;font-size:11px;color:var(--muted);line-height:1.3">Margin call ≥ 70%<br>Force-sell ≥ 80% · Target 69%</div>
+  </div>
+  <div class="lsr-bar">
+    <div class="lsr-danger-zone"></div>
+    <div class="lsr-fill" id="lsrBar"></div>
+    <div class="lsr-tick" style="left:70%" title="Margin call 70%"></div>
+    <div class="lsr-tick force" style="left:80%" title="Force-sell 80%"></div>
+  </div>
+  <div class="lsr-labels">
+    <span style="left:0">0%</span>
+    <span style="left:50%;transform:translateX(-50%)">50%</span>
+    <span class="tick-label" style="left:70%;transform:translateX(-50%)">70%</span>
+    <span class="tick-label force" style="left:80%;transform:translateX(-50%)">80%</span>
+    <span style="right:0">100%</span>
+  </div>
+  <div class="footnote" style="margin-top:8px">Loan MYR <span id="lsrLoan">—</span> ÷ shares MYR <span id="lsrShares">—</span> · <span id="lsrBuffer" style="color:var(--muted)">—</span></div>
+  <div class="footnote" id="lsrTrigger" style="margin-top:4px"></div>
+  <div class="pump-grid">
+    <div class="pump-card call">
+      <div class="pump-label call">若 Margin Call 触发 (70%)</div>
+      <div class="pump-value num">补 ~MYR <span id="pumpCall">—</span></div>
+      <div class="pump-hint">把 LSR 拉回目标 69% · ≈ loan 的 1.4%</div>
+    </div>
+    <div class="pump-card force">
+      <div class="pump-label force">若 Force-Sell 触发 (80%)</div>
+      <div class="pump-value num">补 ~MYR <span id="pumpForce">—</span></div>
+      <div class="pump-hint">把 LSR 拉回目标 69% · ≈ loan 的 13.75%</div>
+    </div>
+  </div>
+  <div class="mb-card">
+    <div class="mb-title" id="mbTitle">MAYBANK (margin-financed)</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Qty <span id="mbQty">—</span> · avg <span id="mbAvgCost">—</span> · last <span id="mbLast">—</span></div>
+    <div class="mb-stack-bar">
+      <div class="mb-equity-seg" id="mbEquitySeg">—</div>
+      <div class="mb-margin-seg" id="mbMarginSeg">—</div>
+    </div>
+    <div class="mb-row"><span class="label">Cost total</span><span class="value" id="mbCost">—</span></div>
+    <div class="mb-row"><span class="label">↳ Your equity (掏出来的)</span><span class="value pos" id="mbEquity">—</span></div>
+    <div class="mb-row"><span class="label">↳ Margin loan (借来的)</span><span class="value neg" id="mbMargin">—</span></div>
+    <div class="mb-row"><span class="label">Current MV</span><span class="value" id="mbMv">—</span></div>
+    <div class="mb-row"><span class="label">↳ Current equity (MV − margin)</span><span class="value" id="mbCurEquity">—</span></div>
+    <div class="mb-pl-grid">
+      <div class="mb-pl-box">
+        <div class="mb-pl-label">Position P&L</div>
+        <div class="mb-pl-value" id="mbPL">—</div>
+        <div class="mb-pl-sub">on cost basis (unleveraged)</div>
+      </div>
+      <div class="mb-pl-box">
+        <div class="mb-pl-label">Equity P&L (leveraged)</div>
+        <div class="mb-pl-value" id="mbPLEquity">—</div>
+        <div class="mb-pl-sub">on your own money</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>US stocks · FX <span id="fxDisp">3.98</span></h2>
+<div class="card" style="padding:10px 12px">
+  <table><thead><tr>
+    <th>Ticker</th><th class="right">Qty</th><th class="right">Avg cost</th><th class="right">Last</th><th class="right">MV (MYR)</th><th class="right">P&L (MYR)</th>
+  </tr></thead><tbody id="usBody"></tbody></table>
+</div>
+
+<div class="card">
+  <div class="opt-sec-title" style="margin-bottom:10px">US stocks — 板块分类 · by sector <span style="font-weight:400;text-transform:none;color:var(--hint);font-size:10px">(按当前 MV 计 % · 只含实际持股)</span></div>
+  <div class="alloc">
+    <div style="position:relative;height:150px"><canvas id="catChart" role="img" aria-label="US stock sector allocation"></canvas></div>
+    <div id="catList"></div>
+  </div>
+  <div class="footnote" style="margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border)">分类：<b>AI Capex</b> NVDA·SOXX(半导体 ETF) · <b>Hyperscaler</b> META·GOOGL·MSFT · <b>SaaS</b> NOW · <b>Healthcare</b> UNH · <b>Defense</b> PLTR · <b>ETF</b> QQQ。SOXX 是半导体篮子（成分含 NVDA/AVGO/ASML）故归入 AI Capex。ASML / Broadcom / AMZN 无单独持股。</div>
+</div>
+
+<h2>Malaysia stocks — Public Bank <span style="font-weight:400;text-transform:none;color:var(--hint);font-size:10px">(cash-bought · MAYBANK shown above)</span></h2>
+<div class="card" style="padding:10px 12px">
+  <table><thead><tr>
+    <th>Ticker</th><th class="right">Qty</th><th class="right">Avg cost</th><th class="right">Last</th><th class="right">MV (MYR)</th><th class="right">P&L</th>
+  </tr></thead><tbody id="myBody"></tbody></table>
+</div>
+
+<h2>Physical gold — UOB</h2>
+<div class="card gold-card">
+  <table><thead><tr>
+    <th>Item</th><th class="right">Oz</th><th class="right">Cost/oz</th><th class="right">Value/oz</th><th class="right">MV (MYR)</th><th class="right">P&L</th>
+  </tr></thead><tbody id="goldBody"></tbody></table>
+  <div class="footnote">
+    Purchased 28 Jan 2026 @ USD spot ATH (~$5,400/oz). Default estimate: <b>UOB buyback ≈ spot × 1.01</b>.
+    For exact UOB quote: <a href="https://www.uob.com.my/online-rates/gold-bullion-prices.page" target="_blank" rel="noopener">UOB gold bullion prices →</a>
+  </div>
+</div>
+
+<h2>Crypto — HATA</h2>
+<div class="card crypto-card">
+  <table><thead><tr>
+    <th>Asset</th><th class="right">Qty</th><th class="right">Avg cost/BTC</th><th class="right">Last/BTC</th><th class="right">MV (MYR)</th><th class="right">P&L</th>
+  </tr></thead><tbody id="cryptoBody"></tbody></table>
+</div>
+
+<h2>Option strategy &amp; cash — Moomoo</h2>
+<div class="card">
+  <div class="opt-section">
+    <div class="opt-sec-title">Cash pool · 现金池</div>
+    <table><tbody id="cashBody"></tbody></table>
+  </div>
+  <div class="opt-section">
+    <div class="opt-sec-title">Open positions · 持仓期权 <span class="chip chip-info" id="optCount"></span></div>
+    <table><thead><tr>
+      <th>Position</th><th class="right">Strike</th><th class="right">到期</th><th class="right">Premium</th><th class="right">预估 P/L</th><th class="right">状态</th>
+    </tr></thead><tbody id="optBody"></tbody></table>
+  </div>
+  <div class="opt-section" id="collateralBox"></div>
+  <div class="opt-section" id="optPLBox"></div>
+</div>
+
+<div style="height:10px"></div>
+<div class="footnote" style="text-align:center;padding-bottom:12px">✓ 2026-09-07（周一 08:44 MYT）刷新，数据源 Moomoo OpenD + WebSearch。美股 <b>Labor Day 休市</b>，价格为 09-04 收盘：GOOGL $338.46 · PLTR $174.33 · NVDA $230.36 · META $616.77 · MSFT $499.70 · NOW $141.26 · QQQ $718.96 · UNH $397.14 · SOXX $519.86 · AMZN $258.51。BTC <b>$80,141.71</b>（09-06 20:44）。黄金 spot <b>$4,443.53/oz</b> · USD/MYR <b>4.038</b>。现金 = us_cash $254.58 + USD 货币基金 $32,708.10（fund_assets 256,454.44 HKD ÷ 7.8407）。0 持仓期权 · sold-put liability $0。🇲🇾 马股 Bursa 未开盘（Moomoo 无 MY 报价权限），沿用 09-04 收盘 MAYBANK <b>10.560</b> · IGBREIT <b>2.750</b> · SUNREIT <b>2.100</b>。Margin thresholds per Public Bank PDS Ver032026.</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+<script>
+(function(){
+  /* ==========================================================================
+     CONSTANTS — 严禁随意修改，见 UPDATE_INSTRUCTIONS.md §0
+     ========================================================================== */
+  let margin=362763.77;
+  const MARGIN_CALL_LSR=70, FORCE_SELL_LSR=80, TARGET_LSR=69;
+  const UOB_BUYBACK_MULT=1.01;
+
+  /* ==========================================================================
+     HOLDINGS — 镜像自 portfolio-data.json。两边必须保持一致。
+     若 portfolio-data.json 可加载（GitHub Pages / 本地 server），会自动覆盖下面的值。
+     直接用 file:// 打开时浏览器会拦截 fetch，此时用下面的内联快照。
+     ========================================================================== */
+  const holdings={
+    us:[
+      {t:"GOOGL",name:"Alphabet-A",qty:100,cost:387.50,px:338.46,cat:"Hyperscaler",note:"Moomoo · 6/18 $387.5 put 接货"},
+      {t:"META",name:"Meta",qty:55,cost:611.42,px:616.77,cat:"Hyperscaler",note:"blended · M+ 38 @ $639.45 + Moomoo 17 @ $548.78（8/1 加仓）"},
+      {t:"MSFT",name:"Microsoft",qty:63,cost:432.45,px:499.70,cat:"Hyperscaler",note:"blended · Moomoo 17 + M+ 46（6/15 加仓 14 股 @ $398.28）"},
+      {t:"NVDA",name:"Nvidia",qty:110.4,cost:214.01,px:230.36,cat:"AI Capex",note:"Moomoo only（平均成本 $214.01 · option premium 已计入下方 wheel 收入）· M+ 26 股 6/15 @ $209.15 已卖出"},
+      {t:"SOXX",name:"iShares Semiconductor ETF",qty:18,cost:513.09,px:519.86,cat:"AI Capex",note:"Moomoo · 8/1 买入（BOXX 换股）"},
+      {t:"NOW",name:"ServiceNow",qty:200,cost:108.00,px:141.26,cat:"SaaS",note:"Moomoo · $108 put 行权接货 (2 张)"},
+      {t:"PLTR",name:"Palantir",qty:139,cost:134.499,px:174.33,cat:"Defense",note:"Moomoo · 6/29 买 39 + 7/2 $141 put 行权接货 100 股 · 8/3 财报后续涨"},
+      {t:"QQQ",name:"Invesco QQQ",qty:46,cost:435.53,px:718.96,cat:"ETF",note:"M+ · 2026-07-03"},
+      {t:"UNH",name:"UnitedHealth",qty:31,cost:319.89,px:397.14,cat:"Healthcare",note:"M+ · 2026-07-03"},
+    ],
+    my:[
+      {t:"IGBREIT",name:"IGB REIT",qty:11800,cost:2.67,px:2.75,note:"cash"},
+      {t:"MAYBANK",name:"Malayan Banking",qty:45300,cost:11.6964,px:10.56,note:"partial margin"},
+      {t:"SUNREIT",name:"Sunway REIT",qty:10000,cost:2.11,px:2.10,note:"cash"},
+    ],
+    gold:{oz:7,costPerOz:21246,spotUsd:4443.53},
+    crypto:{qty:0.0351549,costMyr:15994.97,pxUsd:80141.71,broker:"HATA"},
+    cash:{usd:32962.68,myr:38003.47},
+    options:[],
+    wheelRealized:8698.98,
+    fx:4.038
+  };
+
+  const catColors={'AI Capex':'#76b900','Hyperscaler':'#1b5ea8','SaaS':'#7c3aed','Healthcare':'#0f7a3a','Defense':'#c53030','ETF':'#b8620a'};
+  const catOrder=['AI Capex','Hyperscaler','SaaS','Healthcare','Defense','ETF'];
+
+  const fmt=(n,d=2)=>n.toLocaleString('en-MY',{minimumFractionDigits:d,maximumFractionDigits:d});
+  const fmtPct=n=>(n>=0?'+':'')+n.toFixed(2)+'%';
+  const fmtSigned=(n,d=2)=>(n>=0?'+':'')+fmt(n,d);
+  const colorOf=v=>v>=0?'pos':'neg';
+  let goldMode='buyback';
+
+  function render(){
+    const fx=holdings.fx;
+    document.getElementById('fxDisp').textContent=fx.toFixed(2);
+
+    let usMvUsd=0,usCostUsd=0;
+    const usRows=holdings.us.map(s=>{
+      const mvUsd=s.qty*s.px, costUsd=s.qty*s.cost, plUsd=mvUsd-costUsd, plPct=costUsd?plUsd/costUsd*100:0;
+      usMvUsd+=mvUsd; usCostUsd+=costUsd;
+      return {...s, costPerShare:s.cost, mvUsd, costUsd, plUsd, plPct, mvMyr:mvUsd*fx, plMyr:plUsd*fx};
+    });
+    document.getElementById('usBody').innerHTML=usRows.map(r=>`<tr>
+      <td><div class="ticker">${r.t}${r.cat?' <span class="chip chip-cat">'+r.cat+'</span>':''}</div><div class="ticker-note">${r.note}</div></td>
+      <td class="right num">${r.qty}</td>
+      <td class="right num">$${fmt(r.costPerShare)}</td>
+      <td class="right num">$${fmt(r.px)}</td>
+      <td class="right num">${fmt(r.mvMyr,0)}</td>
+      <td class="right num ${colorOf(r.plMyr)}">${fmtSigned(r.plMyr,0)}<br><span style="font-size:10px">${fmtPct(r.plPct)}</span></td>
+    </tr>`).join('')+`<tr class="subtotal">
+      <td>Subtotal</td><td></td><td class="right num">$${fmt(usCostUsd,0)}</td><td></td>
+      <td class="right num">${fmt(usMvUsd*fx,0)}</td>
+      <td class="right num ${colorOf(usMvUsd-usCostUsd)}">${fmtSigned((usMvUsd-usCostUsd)*fx,0)}<br><span style="font-size:10px">${fmtPct((usMvUsd-usCostUsd)/usCostUsd*100)}</span></td>
+    </tr>`;
+
+    /* ===== US stocks by sector ===== */
+    const catAgg={};
+    usRows.forEach(r=>{const k=r.cat||'Other';catAgg[k]=(catAgg[k]||0)+r.mvMyr;});
+    const catSlices=catOrder.filter(k=>catAgg[k]).map(k=>({label:k,value:catAgg[k],color:catColors[k]||'#9a9a9a'}));
+    Object.keys(catAgg).forEach(k=>{if(!catOrder.includes(k))catSlices.push({label:k,value:catAgg[k],color:'#9a9a9a'});});
+    const catTotal=catSlices.reduce((a,b)=>a+b.value,0);
+    document.getElementById('catList').innerHTML=catSlices.map(s=>{
+      const pct=catTotal?s.value/catTotal*100:0;
+      return `<div class="alloc-row"><span><span class="alloc-dot" style="background:${s.color}"></span>${s.label}</span><span class="num">${fmt(s.value,0)} <span style="color:var(--muted);font-size:11px">${pct.toFixed(1)}%</span></span></div>`;
+    }).join('');
+    if(window._catChart)window._catChart.destroy();
+    const cctx=document.getElementById('catChart');
+    if(cctx&&window.Chart){
+      window._catChart=new Chart(cctx,{type:'doughnut',
+        data:{labels:catSlices.map(s=>s.label),datasets:[{data:catSlices.map(s=>s.value),backgroundColor:catSlices.map(s=>s.color),borderWidth:0}]},
+        options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.label+': '+fmt(c.parsed,0)+' MYR ('+(catTotal?c.parsed/catTotal*100:0).toFixed(1)+'%)'}}}}});
+    }
+
+    let myMv=0,myCost=0;
+    const myAll=holdings.my.map(s=>{
+      const mv=s.qty*s.px, cost=s.qty*s.cost, pl=mv-cost, plPct=cost?pl/cost*100:0;
+      myMv+=mv; myCost+=cost;
+      return {...s,mv,cost,pl,plPct};
+    });
+    const myCashRows=myAll.filter(r=>r.note==='cash');
+    const mbRow=myAll.find(r=>r.note==='partial margin');
+    const myCashMv=myCashRows.reduce((a,b)=>a+b.mv,0);
+    const myCashCost=myCashRows.reduce((a,b)=>a+b.cost,0);
+
+    document.getElementById('myBody').innerHTML=myCashRows.map(r=>`<tr>
+      <td><div class="ticker">${r.t}</div><div class="ticker-note">${r.name}</div></td>
+      <td class="right num">${r.qty.toLocaleString()}</td>
+      <td class="right num">${fmt(r.cost,4)}</td>
+      <td class="right num">${fmt(r.px,4)}</td>
+      <td class="right num">${fmt(r.mv,0)}</td>
+      <td class="right num ${colorOf(r.pl)}">${fmtSigned(r.pl,0)}<br><span style="font-size:10px">${fmtPct(r.plPct)}</span></td>
+    </tr>`).join('')+`<tr class="subtotal">
+      <td>Subtotal (cash)</td><td></td><td class="right num">${fmt(myCashCost,0)}</td><td></td>
+      <td class="right num">${fmt(myCashMv,0)}</td>
+      <td class="right num ${colorOf(myCashMv-myCashCost)}">${fmtSigned(myCashMv-myCashCost,0)}<br><span style="font-size:10px">${fmtPct((myCashMv-myCashCost)/myCashCost*100)}</span></td>
+    </tr>`;
+
+    if(mbRow){
+      const mbEquityCost=mbRow.cost-margin;
+      const mbCurEquity=mbRow.mv-margin;
+      const mbPLEquityPct=mbEquityCost?mbRow.pl/mbEquityCost*100:0;
+      const equityPct=mbRow.cost?mbEquityCost/mbRow.cost*100:0;
+      const marginPct=100-equityPct;
+      document.getElementById('mbTitle').textContent=mbRow.t+' ('+mbRow.name+') — margin-financed';
+      document.getElementById('mbQty').textContent=mbRow.qty.toLocaleString();
+      document.getElementById('mbAvgCost').textContent=fmt(mbRow.cost,4);
+      document.getElementById('mbLast').textContent=fmt(mbRow.px,4);
+      document.getElementById('mbEquitySeg').style.width=equityPct+'%';
+      document.getElementById('mbEquitySeg').textContent='Equity '+equityPct.toFixed(1)+'%';
+      document.getElementById('mbMarginSeg').style.width=marginPct+'%';
+      document.getElementById('mbMarginSeg').textContent='Margin '+marginPct.toFixed(1)+'%';
+      document.getElementById('mbCost').textContent=fmt(mbRow.cost,0);
+      document.getElementById('mbEquity').textContent=fmt(mbEquityCost,0);
+      document.getElementById('mbMargin').textContent='-'+fmt(margin,0);
+      document.getElementById('mbMv').textContent=fmt(mbRow.mv,0);
+      document.getElementById('mbCurEquity').textContent=fmt(mbCurEquity,0);
+      document.getElementById('mbPL').innerHTML=`<span class="${colorOf(mbRow.pl)}">${fmtSigned(mbRow.pl,0)}</span> <span style="font-size:11px;font-weight:400;color:var(--muted)">(${fmtPct(mbRow.plPct)})</span>`;
+      document.getElementById('mbPLEquity').innerHTML=`<span class="${colorOf(mbRow.pl)}">${fmtPct(mbPLEquityPct)}</span>`;
+    }
+
+    const g=holdings.gold;
+    const goldMult=goldMode==='buyback'?UOB_BUYBACK_MULT:1.0;
+    const valPerOzMyr=g.spotUsd*fx*goldMult;
+    const goldMv=g.oz*valPerOzMyr;
+    const goldCost=g.oz*g.costPerOz;
+    const goldPL=goldMv-goldCost;
+    document.getElementById('goldBody').innerHTML=`<tr>
+      <td><div class="ticker">Kangaroo 1 oz</div><div class="ticker-note">Perth Mint 99.99% · UOB · 7 oz</div></td>
+      <td class="right num">${g.oz}</td>
+      <td class="right num">${fmt(g.costPerOz,0)}</td>
+      <td class="right num">${fmt(valPerOzMyr,0)}</td>
+      <td class="right num">${fmt(goldMv,0)}</td>
+      <td class="right num ${colorOf(goldPL)}">${fmtSigned(goldPL,0)}<br><span style="font-size:10px">${fmtPct(goldPL/goldCost*100)}</span></td>
+    </tr>`;
+    document.getElementById('goldModeLabel').textContent='Gold: '+(goldMode==='buyback'?'UOB buyback est.':'Spot only');
+
+    const c=holdings.crypto;
+    const cryptoMv=c.qty*c.pxUsd*fx;
+    const cryptoCost=c.costMyr;
+    const cryptoPL=cryptoMv-cryptoCost;
+    const cryptoAvgCostPerBtcMyr=c.costMyr/c.qty;
+    const cryptoLastPerBtcMyr=c.pxUsd*fx;
+    document.getElementById('cryptoBody').innerHTML=`<tr>
+      <td><div class="ticker">BTC</div><div class="ticker-note">Bitcoin · ${c.broker}</div></td>
+      <td class="right num">${c.qty.toFixed(7)}</td>
+      <td class="right num">${fmt(cryptoAvgCostPerBtcMyr,0)}</td>
+      <td class="right num">${fmt(cryptoLastPerBtcMyr,0)}</td>
+      <td class="right num">${fmt(cryptoMv,0)}</td>
+      <td class="right num ${colorOf(cryptoPL)}">${fmtSigned(cryptoPL,0)}<br><span style="font-size:10px">${fmtPct(cryptoPL/cryptoCost*100)}</span></td>
+    </tr>`;
+
+    /* ===== Option strategy & cash ===== */
+    const cashUsdMyr=holdings.cash.usd*fx;
+    const cashTotal=cashUsdMyr+holdings.cash.myr;
+    document.getElementById('cashBody').innerHTML=`
+      <tr><td>USD cash <span class="chip chip-info">Moomoo</span>
+        <div class="ticker-note">us_cash $254.58 + USD 货币基金 $32,708.10（Moomoo money market fund · fund_assets 256,454.44 HKD ÷ 7.8407）</div></td>
+        <td class="right num">$${fmt(holdings.cash.usd)}</td>
+        <td class="right num">${fmt(cashUsdMyr,0)}</td></tr>
+      <tr><td>MYR cash <span class="chip chip-info">Maybank</span>
+        <div class="ticker-note">Maybank 货币基金 + 现金（手动维护）</div></td>
+        <td class="right num">—</td>
+        <td class="right num">${fmt(holdings.cash.myr,0)}</td></tr>
+      <tr class="subtotal"><td>Cash total (MYR)</td><td></td><td class="right num">${fmt(cashTotal,0)}</td></tr>`;
+
+    const opts=holdings.options;
+    const csp=opts.filter(o=>o.kind==='csp');
+    const moneyness=o=>{
+      if(o.ulPx==null)return{txt:'—',cls:''};
+      const itm=o.side==='call'?o.ulPx>o.strike:o.ulPx<o.strike;
+      return itm?{txt:'ITM',cls:'chip-warn'}:{txt:'OTM',cls:'chip-ok'};
+    };
+    const openPrem=opts.reduce((a,o)=>a+o.premium,0);
+    const openExpPL=opts.reduce((a,o)=>a+o.expPL,0);
+    const optPutLiabUsd=csp.reduce((a,o)=>a+o.closePx*100*o.contracts,0);
+    document.getElementById('optCount').textContent=opts.length+' 张';
+    if(opts.length===0){
+      document.getElementById('optBody').innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:14px 3px">当前无持仓期权 — 2 张 sold put（NVDA $195 · AMZN $230）已于 8 月初买回平仓（非接货）。</td></tr>`;
+    }else{
+    const optRank=o=>o.kind==='covered'?0:(moneyness(o).cls==='chip-warn'?1:2);
+    document.getElementById('optBody').innerHTML=[...opts].sort((a,b)=>optRank(a)-optRank(b)).map(o=>{
+      const m=moneyness(o);
+      const rowCls=o.kind==='covered'?'row-cc':(m.cls==='chip-warn'?'row-itm':(m.cls==='chip-ok'?'row-otm':'row-cc'));
+      return `<tr class="${rowCls}">
+        <td><div class="ticker" style="font-size:12px">${o.ul} <span style="font-weight:400;color:var(--muted)">${o.side==='call'?'covered call':'sold put'}</span></div>
+          <div class="ticker-note">${o.opn?'开仓 '+o.opn.slice(5).replace('-','/'):'Moomoo 持仓'}</div></td>
+        <td class="right num">$${fmt(o.strike,o.strike%1?2:0)}</td>
+        <td class="right" style="font-size:11px">${o.expiry.slice(5).replace('-','/')}</td>
+        <td class="right num pos">+$${fmt(o.premium,0)}</td>
+        <td class="right num ${o.expPL>=0?'pos':'neg'}">${(o.expPL>=0?'+$':'-$')+fmt(Math.abs(o.expPL),0)}</td>
+        <td class="right">${m.txt==='—'?'—':'<span class="chip '+m.cls+'">'+m.txt+'</span>'}</td>
+      </tr>`;
+    }).join('')+`<tr class="subtotal">
+      <td>持仓 ${opts.length} 张</td><td></td><td></td>
+      <td class="right num pos">+$${fmt(openPrem,0)}</td>
+      <td class="right num ${openExpPL>=0?'pos':'neg'}">${(openExpPL>=0?'+$':'-$')+fmt(Math.abs(openExpPL),0)}</td>
+      <td></td>
+    </tr>`;
+    }
+
+    const usdCash=holdings.cash.usd;
+    const myrCashUsd=holdings.cash.myr/fx;
+    const availUsd=usdCash+myrCashUsd;
+    if(csp.length===0){
+      document.getElementById('collateralBox').innerHTML=`
+        <div class="opt-sec-title">Collateral · 抵押占用</div>
+        <div class="opt-box ok">✓ 当前无 sold put，无抵押占用。可动用现金 $${fmt(availUsd,0)}（USD $${fmt(usdCash,0)} + MYR 折 $${fmt(myrCashUsd,0)}）全部自由。</div>`;
+    }else{
+    const cspCollat=csp.map(o=>({ul:o.ul,strike:o.strike,amt:o.strike*100*o.contracts,itm:o.ulPx!=null&&o.ulPx<o.strike,unk:o.ulPx==null}));
+    const totalCollat=cspCollat.reduce((a,c)=>a+c.amt,0);
+    const itmCollat=cspCollat.filter(c=>c.itm).reduce((a,c)=>a+c.amt,0);
+    const surplus=availUsd-totalCollat;
+    const cspSorted=[...cspCollat].sort((a,b)=>(b.itm?1:0)-(a.itm?1:0));
+    const itmCount=cspCollat.filter(c=>c.itm).length;
+    document.getElementById('collateralBox').innerHTML=`
+      <div class="opt-sec-title">Collateral · 抵押占用</div>
+      ${cspSorted.map(c=>`<div class="collat-put ${c.unk?'unk':c.itm?'itm':'otm'}">
+        <span>${c.ul} put $${fmt(c.strike,c.strike%1?2:0)} <span class="chip ${c.unk?'':c.itm?'chip-warn':'chip-ok'}">${c.unk?'?':c.itm?'ITM':'OTM'}</span></span>
+        <span style="font-weight:600">$${fmt(c.amt,0)}</span>
+      </div>`).join('')}
+      <div class="collat-box">
+        <div class="collat-card need">
+          <div class="cc-label">需要 · ${csp.length} 张全接货</div>
+          <div class="cc-value">$${fmt(totalCollat,0)}</div>
+          <div class="cc-hint">ITM ${itmCount} 张（较可能接货）需 $${fmt(itmCollat,0)}</div>
+        </div>
+        <div class="collat-card have">
+          <div class="cc-label">可动用现金</div>
+          <div class="cc-value">$${fmt(availUsd,0)}</div>
+          <div class="cc-hint">USD $${fmt(usdCash,0)} + MYR 折 $${fmt(myrCashUsd,0)}</div>
+        </div>
+      </div>
+      <div class="opt-box ${surplus>=0?'ok':'warn'}">
+        ${surplus>=0
+          ?`✓ 现金覆盖最坏情况（${csp.length} 张全接货）后还剩 <b>$${fmt(surplus,0)}</b> — 不需动用 margin。`
+          :`⚠ 最坏情况现金差 <b>$${fmt(Math.abs(surplus),0)}</b>，需动用 margin。`}
+      </div>`;
+    }
+
+    const realized=holdings.wheelRealized;
+    document.getElementById('optPLBox').innerHTML=`
+      <div class="opt-sec-title">Wheel 收入 · 轮动 premium</div>
+      <div class="opt-row"><span class="label">持仓 ${opts.length} 张 · 收到 premium</span><span class="value pos">+$${fmt(openPrem,0)}</span></div>
+      <div class="opt-row"><span class="label">持仓 ${opts.length} 张 · 预估盈亏（按当前平仓价）</span><span class="value ${openExpPL>=0?'pos':'neg'}">${(openExpPL>=0?'+$':'-$')+fmt(Math.abs(openExpPL),0)}</span></div>
+      <div class="opt-row"><span class="label">2026 已实现（1–4 月）</span><span class="value ${realized>=0?'pos':'neg'}">${(realized>=0?'+$':'-$')+fmt(Math.abs(realized),0)}</span></div>
+      <div class="opt-row"><span class="label" style="font-weight:600;color:var(--ink)">2026 wheel 收入（已实现 + 持仓预估）</span><span class="value pos">+$${fmt(realized+openExpPL,0)}</span></div>
+      <div class="footnote">⚠ 未结事项：2026-08 初平掉的 NVDA $195 put 与 AMZN $230 put（买回平仓，非接货）的实际盈亏尚未回填进「2026 已实现」。补上数字后需更新 <code>wheelRealized</code>。</div>`;
+
+    const usMvMyr=usMvUsd*fx, usCostMyr=usCostUsd*fx;
+    const optPutLiabMyr=optPutLiabUsd*fx;
+    const gross=usMvMyr+myMv+goldMv+cryptoMv+cashTotal;
+    const netWorth=gross-margin-optPutLiabMyr;
+    const grossInvested=usCostMyr+myCost+goldCost+cryptoCost;
+    const totalDeployed=grossInvested+cashTotal-margin;
+    const investedMv=usMvMyr+myMv+goldMv+cryptoMv;
+    const totalPL=investedMv-grossInvested;
+    const returnPct=totalDeployed?totalPL/totalDeployed*100:0;
+
+    document.getElementById('netWorth').textContent=fmt(netWorth,0);
+    document.getElementById('grossAssets').textContent=fmt(gross,0);
+    document.getElementById('marginDisp').textContent='-'+fmt(margin,0);
+    document.getElementById('putLiabDisp').textContent='-'+fmt(optPutLiabMyr,0);
+    document.getElementById('totalPL').innerHTML=`<span class="${colorOf(totalPL)}">${fmtSigned(totalPL,0)}</span> <span style="font-size:11px;font-weight:400;color:var(--muted)">(${fmtPct(returnPct)})</span>`;
+    document.getElementById('totalCost').textContent=fmt(totalDeployed,0);
+    document.getElementById('wheelPremium').textContent='+'+fmt(realized*fx,0);
+
+    const totalCollat0=csp.reduce((a,o)=>a+o.strike*100*o.contracts,0);
+    const cashCollatMyr=Math.min(totalCollat0*fx,cashTotal);
+    const cashIdleMyr=Math.max(0,cashTotal-cashCollatMyr);
+    const slices=[
+      {label:'US stocks',value:usMvMyr,color:'#1b5ea8'},
+      {label:'MY stocks · net equity',value:Math.max(0,myMv-margin),color:'#c53030'},
+      {label:'Gold',value:goldMv,color:'#b8620a'},
+      {label:'Crypto',value:cryptoMv,color:'#7c3aed'},
+      {label:'Cash · 抵押 collateral',value:cashCollatMyr,color:'#9ba9a0'},
+      {label:'Cash · 闲置 idle',value:cashIdleMyr,color:'#2e8b57'},
+    ].filter(s=>s.value>0);
+    const totalAlloc=slices.reduce((a,b)=>a+b.value,0);
+    document.getElementById('allocList').innerHTML=slices.map(s=>{
+      const pct=s.value/totalAlloc*100;
+      return `<div class="alloc-row"><span><span class="alloc-dot" style="background:${s.color}"></span>${s.label}</span><span class="num">${fmt(s.value,0)} <span style="color:var(--muted);font-size:11px">${pct.toFixed(1)}%</span></span></div>`;
+    }).join('');
+    const collatPctCash=cashTotal?cashCollatMyr/cashTotal*100:0;
+    const idlePctCash=cashTotal?cashIdleMyr/cashTotal*100:0;
+    document.getElementById('cashSplitNote').innerHTML=`现金 RM${fmt(cashTotal,0)} 拆分：<b style="color:var(--ink)">抵押 RM${fmt(cashCollatMyr,0)} (${collatPctCash.toFixed(1)}%)</b> 锁给 sold put，<b style="color:var(--green)">真正闲置 RM${fmt(cashIdleMyr,0)} (${idlePctCash.toFixed(1)}%)</b>。${csp.length===0?'当前无 sold put，现金全部自由。':''}`;
+
+    const sharesVal=myMv;
+    const lsr=margin/sharesVal*100;
+    const bufferToCall=MARGIN_CALL_LSR-lsr;
+    const pumpCall=margin*(1-TARGET_LSR/MARGIN_CALL_LSR);
+    const pumpForce=margin*(1-TARGET_LSR/FORCE_SELL_LSR);
+    document.getElementById('lsrVal').textContent=lsr.toFixed(2)+'%';
+    document.getElementById('lsrBar').style.width=Math.min(lsr,100)+'%';
+    document.getElementById('lsrBar').style.background=lsr<55?'#0f7a3a':lsr<70?'#b8620a':'#c53030';
+    document.getElementById('lsrLoan').textContent=fmt(margin,0);
+    document.getElementById('lsrShares').textContent=fmt(sharesVal,0);
+    document.getElementById('lsrBuffer').textContent='距离 margin call 还有 '+bufferToCall.toFixed(2)+' pp';
+
+    /* MAYBANK 触发价反推 */
+    if(mbRow){
+      const otherMyMv=myMv-mbRow.mv;
+      const trigPx=(margin/(MARGIN_CALL_LSR/100)-otherMyMv)/mbRow.qty;
+      const dropPct=(trigPx-mbRow.px)/mbRow.px*100;
+      document.getElementById('lsrTrigger').innerHTML=
+        `触发 margin call 的 MAYBANK 价格 ≈ <b style="color:var(--amber)">RM${fmt(trigPx,3)}</b>（较现价 ${fmt(mbRow.px,3)} 还有 <b>${fmt(Math.abs(dropPct),1)}%</b> 的下跌空间）`;
+    }
+    document.getElementById('pumpCall').textContent=fmt(pumpCall,0);
+    document.getElementById('pumpForce').textContent=fmt(pumpForce,0);
+
+    if(window._allocChart)window._allocChart.destroy();
+    const ctx=document.getElementById('allocChart');
+    if(ctx&&window.Chart){
+      window._allocChart=new Chart(ctx,{type:'doughnut',
+        data:{labels:slices.map(s=>s.label),datasets:[{data:slices.map(s=>s.value),backgroundColor:slices.map(s=>s.color),borderWidth:0}]},
+        options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.label+': '+fmt(c.parsed,0)+' MYR'}}}}});
+    }
+  }
+
+  const ulPxFallback={AMZN:258.51,GOOGL:338.46,NVDA:230.36,PLTR:174.33,NOW:141.26};
+
+  function setSyncStatus(t,l){
+    const el=document.getElementById('syncStatus');
+    if(!el)return;
+    el.textContent=t;
+    el.style.color=l==='ok'?'var(--green)':l==='warn'?'var(--amber)':'var(--hint)';
+  }
+
+  /* 尝试从 portfolio-data.json 载入（GitHub Pages / 本地 server 有效；
+     用 file:// 直接打开时浏览器会拦截，自动回退到内联快照）。 */
+  async function loadFromJson(){
+    try{
+      const r=await fetch('./portfolio-data.json',{cache:'no-store'});
+      if(!r.ok)throw new Error('HTTP '+r.status);
+      const d=await r.json();
+      if(d.us)holdings.us=d.us;
+      if(d.my)holdings.my=d.my;
+      if(d.gold)holdings.gold=d.gold;
+      if(d.crypto)holdings.crypto=d.crypto;
+      if(d.cash)holdings.cash=d.cash;
+      if(d.options)holdings.options=d.options;
+      if(typeof d.wheelRealized==='number')holdings.wheelRealized=d.wheelRealized;
+      if(d.fx&&typeof d.fx.usdMyr==='number')holdings.fx=d.fx.usdMyr;
+      if(d.constants&&typeof d.constants.marginLoanMyr==='number')margin=d.constants.marginLoanMyr;
+      document.getElementById('dataSrc').textContent=' · 数据载自 portfolio-data.json'+(d.meta&&d.meta.lastRefresh?'（'+d.meta.lastRefresh+'）':'');
+      render();
+    }catch(e){
+      document.getElementById('dataSrc').textContent=' · 用内联快照（portfolio-data.json 未载入：'+String(e.message||e).slice(0,30)+'）';
+    }
+  }
+
+  document.getElementById('goldToggle').addEventListener('change',e=>{goldMode=e.target.checked?'buyback':'spot';render();});
+  render();
+  setSyncStatus('✓ 2026-09-07 刷新（周一 08:44 MYT）— 0 持仓期权','ok');
+  loadFromJson();
+})();
+</script></body></html>
