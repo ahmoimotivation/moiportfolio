@@ -5,8 +5,8 @@
     "owner": "Moi",
     "timezone": "Asia/Kuala_Lumpur (MYT)",
     "displayCurrency": "MYR",
-    "lastRefresh": "2026-09-25T14:04:00+08:00",
-    "lastRefreshNote": "OpenD 已连接；按 owner SOP，以 Google Chrome Search 更新 MAYBANK、黄金 spot 与 BTC。IGBREIT/SUNREIT 因 Moomoo 无马股行情权限而沿用 2026-09-09 快照。",
+    "lastRefresh": "2026-09-25T14:20:00+08:00",
+    "lastRefreshNote": "OpenD 已连接；按 owner SOP，以 Google Chrome Search 更新 MAYBANK、黄金 spot 与 BTC。IGBREIT/SUNREIT 沿用 2026-09-09 快照。Wheel YTD 已由 OpenD fills 重算为净收入 $13,080.82（含买回/roll 成本及订单费用）。",
     "priceAsOf": {
       "usStocks": "2026-09-25 13:50 MYT (Moomoo latest)",
       "myStocks": "MAYBANK 2026-09-25 12:29 MYT (Google); IGBREIT/SUNREIT 2026-09-09 snapshot",
@@ -73,7 +73,7 @@
 
   "options": [],
 
-  "wheelRealized": 8698.98,
+  "wheelRealized": 13080.82,
 
   "ulPxFallback": {
     "AMZN": 249.38,

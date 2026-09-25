@@ -321,7 +321,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     crypto:{qty:0.0351549,costMyr:15994.97,pxUsd:84159.8671875,broker:"HATA"},
     cash:{usd:32970.11,myr:38003.47},
     options:[],
-    wheelRealized:8698.98,
+    wheelRealized:13080.82,
     fx:4.0710
   };
 
@@ -546,9 +546,9 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       <div class="opt-sec-title">Wheel 收入 · 轮动 premium</div>
       <div class="opt-row"><span class="label">持仓 ${opts.length} 张 · 收到 premium</span><span class="value pos">+$${fmt(openPrem,0)}</span></div>
       <div class="opt-row"><span class="label">持仓 ${opts.length} 张 · 预估盈亏（按当前平仓价）</span><span class="value ${openExpPL>=0?'pos':'neg'}">${(openExpPL>=0?'+$':'-$')+fmt(Math.abs(openExpPL),0)}</span></div>
-      <div class="opt-row"><span class="label">2026 已实现（1–4 月）</span><span class="value ${realized>=0?'pos':'neg'}">${(realized>=0?'+$':'-$')+fmt(Math.abs(realized),0)}</span></div>
+      <div class="opt-row"><span class="label">2026 YTD 已实现（截至 7/31）</span><span class="value ${realized>=0?'pos':'neg'}">${(realized>=0?'+$':'-$')+fmt(Math.abs(realized),0)}</span></div>
       <div class="opt-row"><span class="label" style="font-weight:600;color:var(--ink)">2026 wheel 收入（已实现 + 持仓预估）</span><span class="value pos">+$${fmt(realized+openExpPL,0)}</span></div>
-      <div class="footnote">⚠ 未结事项：2026-08 初平掉的 NVDA $195 put 与 AMZN $230 put（买回平仓，非接货）的实际盈亏尚未回填进「2026 已实现」。补上数字后需更新 <code>wheelRealized</code>。</div>`;
+      <div class="footnote">OpenD 2026 YTD 成交汇总：卖出 premium $24,343.00 − 买回/roll 成本 $11,147.00 − 订单费用 $115.18 = <b>净收入 $13,080.82</b>。共 101 笔期权 fills / 99 张订单；最后一笔期权成交为 7/31。</div>`;
 
     const usMvMyr=usMvUsd*fx, usCostMyr=usCostUsd*fx;
     const optPutLiabMyr=optPutLiabUsd*fx;
