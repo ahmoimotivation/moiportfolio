@@ -235,9 +235,9 @@ pumpForce = margin × (1 − 69/80)
 | 2026-08 初 | NVDA $195 put、AMZN $230 put 双双买回平仓（**非**接货）。此后 sold-put liability = $0 |
 | 2026-09-07 | Moomoo 马股行情权限失效（`No permission to get quotes for MY.1155`）|
 | 2026-09-25 | Owner 指定 MAYBANK、黄金 spot、BTC 每次必须由 Google Chrome Search 更新，不再以 OpenD 报价作为这三项的来源 |
-| 2026-09-25 | 由 OpenD 2026 YTD fills 重算 wheel：卖出 premium $24,343 − 买回/roll $11,147 − fees $115.18 = `wheelRealized` $13,080.82 |
+| 2026-09-25 | 复核 Google Sheet「Wheel 2026」：期权净收益 $15,038.56 + MMF $1,150.5355 = `wheelRealized` $16,189.0955（显示 $16,189.10） |
 
-> ✅ **已解决**：NVDA $195 put 与 AMZN $230 put 的买回成本已包含在 2026 YTD OpenD 汇总；当前 `wheelRealized` 为扣除全部买回/roll 成本及订单费用后的 $13,080.82。
+> ✅ **已解决**：当前 `wheelRealized` 沿用 owner 的 Google Sheet「Wheel 2026」TOTAL 定义，包含已扣亏损、roll/buy-back 与表内费用后的期权净收益，以及 MMF 收益。OpenD 成交对账得到期权净收益 $15,085.55，较 Sheet 高 $46.99（手填成交价/费用差异）；dashboard 采用 Sheet 总数 $16,189.10。
 
 ---
 

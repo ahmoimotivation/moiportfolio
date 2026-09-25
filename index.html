@@ -321,7 +321,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     crypto:{qty:0.0351549,costMyr:15994.97,pxUsd:84159.8671875,broker:"HATA"},
     cash:{usd:32970.11,myr:38003.47},
     options:[],
-    wheelRealized:13080.82,
+    wheelRealized:16189.10,
     fx:4.0710
   };
 
@@ -548,7 +548,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       <div class="opt-row"><span class="label">持仓 ${opts.length} 张 · 预估盈亏（按当前平仓价）</span><span class="value ${openExpPL>=0?'pos':'neg'}">${(openExpPL>=0?'+$':'-$')+fmt(Math.abs(openExpPL),0)}</span></div>
       <div class="opt-row"><span class="label">2026 YTD 已实现（截至 7/31）</span><span class="value ${realized>=0?'pos':'neg'}">${(realized>=0?'+$':'-$')+fmt(Math.abs(realized),0)}</span></div>
       <div class="opt-row"><span class="label" style="font-weight:600;color:var(--ink)">2026 wheel 收入（已实现 + 持仓预估）</span><span class="value pos">+$${fmt(realized+openExpPL,0)}</span></div>
-      <div class="footnote">OpenD 2026 YTD 成交汇总：卖出 premium $24,343.00 − 买回/roll 成本 $11,147.00 − 订单费用 $115.18 = <b>净收入 $13,080.82</b>。共 101 笔期权 fills / 99 张订单；最后一笔期权成交为 7/31。</div>`;
+      <div class="footnote">Google Sheet「Wheel 2026」YTD：期权净收益 <b>$15,038.56</b>（已扣亏损、roll/buy-back 与表内费用）+ MMF 收益 <b>$1,150.54</b> = <b>$16,189.10</b>。OpenD 对账口径的期权净收益为 $15,085.55；$46.99 差额来自 Sheet 手填成交价与费用高于 OpenD 实际值。</div>`;
 
     const usMvMyr=usMvUsd*fx, usCostMyr=usCostUsd*fx;
     const optPutLiabMyr=optPutLiabUsd*fx;
