@@ -149,7 +149,16 @@ soldPutLiabMyr = soldPutLiabUsd × fx
 
 grossAssets = usMvMyr + myMv + goldMv + cryptoMv + cashTotal
 netWorth    = grossAssets − margin − soldPutLiabMyr
+
+grossInvested = usCostMyr + myCost + goldCost + cryptoCost
+totalDeployed = grossInvested + cashTotal − margin
+unrealizedPL  = (usMvMyr + myMv + goldMv + cryptoMv) − grossInvested
+realizedMyr   = wheelRealized × fx
+totalROI      = unrealizedPL + realizedMyr
+totalROIPct   = totalROI / totalDeployed × 100
 ```
+
+Hero 的 **Total ROI 26'** 必须显示 `totalROI` 金额和 `totalROIPct`，口径固定为「未实现 P&L + Wheel 已实现收入」。
 
 ### LSR（margin health，Public Bank）
 ```

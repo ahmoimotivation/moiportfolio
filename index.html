@@ -22,6 +22,7 @@ h2{font-size:12px;color:var(--muted);font-weight:500;text-transform:uppercase;le
 .hero-value{font-size:30px;font-weight:600;letter-spacing:-0.02em;line-height:1.1}
 .hero-sub{font-size:12px;color:var(--muted);margin-top:6px}
 .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;padding-top:14px;border-top:0.5px solid var(--border)}
+.roi-total{grid-column:1/-1;margin-top:2px;padding-top:10px;border-top:0.5px dashed var(--border)}
 .stat-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 .stat-value{font-size:15px;font-weight:600;margin-top:2px}
 .pos{color:var(--green)}.neg{color:var(--red)}
@@ -153,6 +154,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     <div><div class="stat-label">Total deployed <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(扣 margin)</span></div><div class="stat-value num" id="totalCost">—</div></div>
     <div><div class="stat-label">Unrealized P&L <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(股·金·币)</span></div><div class="stat-value num" id="totalPL">—</div></div>
     <div><div class="stat-label">Wheel 收入 26' <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(已实现)</span></div><div class="stat-value num pos" id="wheelPremium">—</div></div>
+    <div class="roi-total"><div class="stat-label">Total ROI 26' <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(未实现 + 已实现)</span></div><div class="stat-value num" id="totalROI">—</div></div>
   </div>
 </div>
 
@@ -559,6 +561,9 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     const investedMv=usMvMyr+myMv+goldMv+cryptoMv;
     const totalPL=investedMv-grossInvested;
     const returnPct=totalDeployed?totalPL/totalDeployed*100:0;
+    const realizedMyr=realized*fx;
+    const totalROI=totalPL+realizedMyr;
+    const totalROIPct=totalDeployed?totalROI/totalDeployed*100:0;
 
     document.getElementById('netWorth').textContent=fmt(netWorth,0);
     document.getElementById('grossAssets').textContent=fmt(gross,0);
@@ -566,7 +571,8 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     document.getElementById('putLiabDisp').textContent='-'+fmt(optPutLiabMyr,0);
     document.getElementById('totalPL').innerHTML=`<span class="${colorOf(totalPL)}">${fmtSigned(totalPL,0)}</span> <span style="font-size:11px;font-weight:400;color:var(--muted)">(${fmtPct(returnPct)})</span>`;
     document.getElementById('totalCost').textContent=fmt(totalDeployed,0);
-    document.getElementById('wheelPremium').textContent='+'+fmt(realized*fx,0);
+    document.getElementById('wheelPremium').textContent=fmtSigned(realizedMyr,0);
+    document.getElementById('totalROI').innerHTML=`<span class="${colorOf(totalROI)}">${fmtSigned(totalROI,0)}</span> <span style="font-size:11px;font-weight:400;color:var(--muted)">(${fmtPct(totalROIPct)})</span>`;
 
     const totalCollat0=csp.reduce((a,o)=>a+o.strike*100*o.contracts,0);
     const cashCollatMyr=Math.min(totalCollat0*fx,cashTotal);
