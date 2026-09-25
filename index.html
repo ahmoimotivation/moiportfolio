@@ -134,7 +134,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     <h1>Moi Investment Portfolio</h1>
     <div class="timestamp">股票/现金: Moomoo (us_cash · USD 货币基金) · 马股: Public Bank</div>
     <div class="timestamp" id="syncStatus" style="margin-top:2px">期权来自 Moomoo</div>
-    <div class="timestamp" style="margin-top:2px;color:var(--amber)">✓ 2026-09-25（周五 13:50 MYT）刷新：<b>OpenD 已连接</b>，美股/BTC/现金/期权已更新；Moomoo 无马股行情权限，马股沿用 09-09 快照。黄金 spot <b>$4,288.55/oz</b> · BTC <b>$84,264.99</b> · USD/MYR <b>4.071</b>。当前 0 持仓期权。</div>
+    <div class="timestamp" style="margin-top:2px;color:var(--red)">⚠⚠ 2026-09-25（周五 14:04 MYT）刷新：<b>LSR 70.62%，已越过 70% margin-call 线</b>。按 SOP 由 Google Chrome Search 更新 MAYBANK <b>RM10.16</b>、黄金 spot <b>$4,282.80/oz</b>、BTC <b>$84,159.87</b>；OpenD 更新美股/现金/期权。IGBREIT、SUNREIT 沿用 09-09 快照。</div>
   </div>
   <div class="toggle-row">
     <span id="goldModeLabel">Gold: UOB buyback est.</span>
@@ -283,7 +283,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 </div>
 
 <div style="height:10px"></div>
-<div class="footnote" style="text-align:center;padding-bottom:12px">✓ 2026-09-25（周五 13:50 MYT）刷新。<b>OpenD 已连接</b>：美股、BTC、现金与期权已更新。美股：GOOGL $342.87 · PLTR $192.59 · NVDA $224.83 · META $777.59 · MSFT $497.61 · NOW $137.80 · QQQ $741.10 · UNH $375.01 · SOXX $571.83；AMZN fallback $249.38。BTC <b>$84,264.99</b>。黄金 spot <b>$4,288.55/oz</b> · USD/MYR <b>4.071</b>。现金 = us_cash $284.90 + USD 货币基金 $32,685.21。0 持仓期权 · sold-put liability $0。⚠ Moomoo 无马股行情权限，沿用 09-09 快照：MAYBANK <b>10.560</b> · IGBREIT <b>2.750</b> · SUNREIT <b>2.100</b>。Margin thresholds per Public Bank PDS Ver032026.</div>
+<div class="footnote" style="text-align:center;padding-bottom:12px">⚠⚠ 2026-09-25（周五 14:04 MYT）刷新。<b>OpenD 已连接</b>：美股、现金与期权已更新。按 owner SOP，Google Chrome Search 更新：MAYBANK <b>10.160</b>（12:29 MYT）· 黄金 spot <b>$4,282.80/oz</b>（Kitco）· BTC <b>$84,159.87</b>（Google Finance）。USD/MYR <b>4.071</b>。美股：GOOGL $342.87 · PLTR $192.59 · NVDA $224.83 · META $777.59 · MSFT $497.61 · NOW $137.80 · QQQ $741.10 · UNH $375.01 · SOXX $571.83；AMZN fallback $249.38。现金 = us_cash $284.90 + USD 货币基金 $32,685.21。0 持仓期权。IGBREIT <b>2.750</b> · SUNREIT <b>2.100</b> 沿用 09-09 快照。LSR <b>70.62%</b>，已越过 margin-call 70%。</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <script>
@@ -314,11 +314,11 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     ],
     my:[
       {t:"IGBREIT",name:"IGB REIT",qty:11800,cost:2.67,px:2.75,note:"cash"},
-      {t:"MAYBANK",name:"Malayan Banking",qty:45300,cost:11.6964,px:10.56,note:"partial margin"},
+      {t:"MAYBANK",name:"Malayan Banking",qty:45300,cost:11.6964,px:10.16,note:"partial margin"},
       {t:"SUNREIT",name:"Sunway REIT",qty:10000,cost:2.11,px:2.10,note:"cash"},
     ],
-    gold:{oz:7,costPerOz:21246,spotUsd:4288.55},
-    crypto:{qty:0.0351549,costMyr:15994.97,pxUsd:84264.99311,broker:"HATA"},
+    gold:{oz:7,costPerOz:21246,spotUsd:4282.80},
+    crypto:{qty:0.0351549,costMyr:15994.97,pxUsd:84159.8671875,broker:"HATA"},
     cash:{usd:32970.11,myr:38003.47},
     options:[],
     wheelRealized:8698.98,
@@ -654,7 +654,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 
   document.getElementById('goldToggle').addEventListener('change',e=>{goldMode=e.target.checked?'buyback':'spot';render();});
   render();
-  setSyncStatus('✓ 2026-09-25 刷新（OpenD 已连接；马股沿用快照）— 0 持仓期权','warn');
+  setSyncStatus('⚠⚠ 2026-09-25 刷新（LSR 70.62%）— 0 持仓期权','warn');
   loadFromJson();
 })();
 </script></body></html>

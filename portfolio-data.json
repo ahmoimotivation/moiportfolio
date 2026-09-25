@@ -5,13 +5,13 @@
     "owner": "Moi",
     "timezone": "Asia/Kuala_Lumpur (MYT)",
     "displayCurrency": "MYR",
-    "lastRefresh": "2026-09-25T13:50:00+08:00",
-    "lastRefreshNote": "OpenD 已连接：美股、BTC、现金与期权已更新。Moomoo 无马股行情权限，马股沿用 2026-09-09 快照；黄金与汇率由 WebSearch 更新。",
+    "lastRefresh": "2026-09-25T14:04:00+08:00",
+    "lastRefreshNote": "OpenD 已连接；按 owner SOP，以 Google Chrome Search 更新 MAYBANK、黄金 spot 与 BTC。IGBREIT/SUNREIT 因 Moomoo 无马股行情权限而沿用 2026-09-09 快照。",
     "priceAsOf": {
       "usStocks": "2026-09-25 13:50 MYT (Moomoo latest)",
-      "myStocks": "2026-09-09 snapshot (no Moomoo quote permission)",
-      "btc": "2026-09-25 13:49 MYT",
-      "goldSpot": "2026-09-25",
+      "myStocks": "MAYBANK 2026-09-25 12:29 MYT (Google); IGBREIT/SUNREIT 2026-09-09 snapshot",
+      "btc": "2026-09-25 14:01 MYT (Google Finance)",
+      "goldSpot": "2026-09-25 11:00 MYT (Google Search / Kitco)",
       "fx": "2026-09-25"
     }
   },
@@ -45,14 +45,14 @@
 
   "my": [
     { "t": "IGBREIT", "code": "5227", "name": "IGB REIT",        "qty": 11800, "cost": 2.67,    "px": 2.75,  "note": "cash" },
-    { "t": "MAYBANK", "code": "1155", "name": "Malayan Banking", "qty": 45300, "cost": 11.6964, "px": 10.56, "note": "partial margin" },
+    { "t": "MAYBANK", "code": "1155", "name": "Malayan Banking", "qty": 45300, "cost": 11.6964, "px": 10.16, "note": "partial margin" },
     { "t": "SUNREIT", "code": "5176", "name": "Sunway REIT",     "qty": 10000, "cost": 2.11,    "px": 2.10,  "note": "cash" }
   ],
 
   "gold": {
     "oz": 7,
     "costPerOz": 21246,
-    "spotUsd": 4288.55,
+    "spotUsd": 4282.80,
     "custodian": "UOB",
     "note": "Kangaroo 1 oz · Perth Mint 99.99% · purchased 28 Jan 2026 @ USD spot ATH (~$5,400/oz)"
   },
@@ -60,7 +60,7 @@
   "crypto": {
     "qty": 0.0351549,
     "costMyr": 15994.97,
-    "pxUsd": 84264.99311,
+    "pxUsd": 84159.8671875,
     "broker": "HATA"
   },
 
@@ -94,10 +94,10 @@
 
   "derived": {
     "_comment": "Recomputed on every refresh. Do not hand-edit — recalculate from the formulas in UPDATE_INSTRUCTIONS.md §5.",
-    "netWorthMyr": 1468321,
-    "grossAssetsMyr": 1831084,
-    "lsrPct": 68.21,
-    "lsrBufferToCallPp": 1.79,
+    "netWorthMyr": 1450020,
+    "grossAssetsMyr": 1812784,
+    "lsrPct": 70.62,
+    "lsrBufferToCallPp": -0.62,
     "soldPutLiabilityUsd": 0
   }
 }

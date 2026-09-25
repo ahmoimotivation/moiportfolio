@@ -33,7 +33,7 @@ Moi 的投资组合看板 + 完整更新规程。设计成**任何 AI 拿到这�
 1. 先完整读 UPDATE_INSTRUCTIONS.md —— 里面有所有红线和公式，特别是
    §0（严禁触碰的字段）和 §5（计算公式）。
 2. 读 portfolio-data.json 拿到我的持仓。
-3. 帮我查最新价格：美股、马股(1155/5227/5176)、BTC、黄金 spot USD/oz、USD/MYR。
+3. 帮我查最新价格：美股用 Moomoo；MAYBANK、黄金 spot、BTC 必须用 Google Chrome Search；IGBREIT/SUNREIT 也优先用 Chrome；USD/MYR 用 WebSearch。
 4. 按 §5 重算净资产和 LSR。
 5. 按 §6 给我中文早晨简报。
 6. 把更新后的完整 portfolio-data.json 给我，我自己贴回去。

@@ -29,11 +29,14 @@
 |---|---|---|
 | 美股价格 | Moomoo OpenD `quote_snapshot` | 若无 Moomoo，用任意可靠财经源（Yahoo/Google Finance），标注来源 |
 | 美股/期权持仓、现金 | Moomoo OpenD `positions` + `account_info` | **只有 Moi 的本地 OpenD 能拿到**。外部 AI 请让 Moi 贴数据 |
-| 马股 1155 / 5227 / 5176 | Moomoo `MY.1155` 等；失败则 KLSE Screener / i3investor | Moomoo 的 MY 行情权限会过期，失败很常见 |
-| BTC | Moomoo `CC.BTCUSD` | 或任意主流交易所现价 |
-| 黄金 spot USD/oz | **WebSearch**（Moomoo 只有 GLD/IAU ETF，不是 per-oz spot） | 要的是 spot，不是 ETF 价 |
+| MAYBANK 1155 | **Google Chrome Search** | 必须读取 Google 财经卡片的现价与时间；MAYBANK 决定 LSR，不得用 OpenD 代替 |
+| IGBREIT 5227 / SUNREIT 5176 | Google Chrome Search；失败才沿用旧值并标注 | Moomoo 的 MY 行情权限常失效 |
+| BTC | **Google Chrome Search** | 读取 Google Finance 的 BTC/USD 即时报价与时间；不得用 OpenD 代替 |
+| 黄金 spot USD/oz | **Google Chrome Search** | 从 Google 结果里的可靠 live spot 来源（优先 Kitco）读取；要 spot，不是 GLD/IAU ETF |
 | USD/MYR | **WebSearch**（Moomoo 报 "Unsupported quote market"） | |
 | USD/HKD | **WebSearch** | 只用于把 Moomoo `fund_assets`（HKD 计价）折算成 USD |
+
+> **Owner standing instruction（2026-09-25）**：MAYBANK、黄金 spot、BTC 三项价格每次都必须通过 **Google Chrome Search** 更新，即使 OpenD 正常也一样。把来源与报价时间写入 `meta.priceAsOf` 和页面 footnote。
 
 ### 如果你是 ChatGPT / 没有 Moomoo 的 AI
 你**拿不到**持仓、现金、期权（那些只存在于 Moi 本地的 OpenD gateway）。你能做的是：
@@ -50,9 +53,9 @@
 调 `moomoo_get_global_state`，要求 `ok:true` 且 `trd_logined` 与 `qot_logined` 都为 `true`。
 
 **失败 = OpenD 没开。** 这时候：
-- 保留 artifact 上次所有 Moomoo 来源的值（期权/股票/马股/BTC/现金）**原封不动**
+- 保留上次所有 OpenD 来源的值（期权/美股/现金）**原封不动**
 - 简报顶部标：`⚠⚠ OpenD 没开 — 大部分数据没更新，请打开 OpenD gateway 后让我手动再刷一次`
-- 只用 WebSearch 刷黄金 + FX，然后发简报
+- 仍用 Google Chrome Search 刷 MAYBANK、黄金与 BTC；用 WebSearch 刷 FX，然后发简报
 
 ### 2.2 ⚠ acc_id 的坑（踩过）
 真实账户 `acc_id` 是 **18 位数字**，超过 JavaScript 安全整数上限（2^53）。
@@ -208,8 +211,8 @@ pumpForce = margin × (1 − 69/80)
 
 ## 8. 更新流程 checklist
 
-1. [ ] 确认数据源可用（OpenD / WebSearch）
-2. [ ] 拉价格：美股 · 马股 · BTC · 黄金 spot · USD/MYR (· USD/HKD)
+1. [ ] 确认数据源可用（OpenD / Google Chrome Search / WebSearch）
+2. [ ] 拉价格：美股（OpenD）· MAYBANK/黄金/BTC（Google Chrome Search）· IGBREIT/SUNREIT（Chrome）· USD/MYR (· USD/HKD)
 3. [ ] 拉持仓 + 现金（有 Moomoo 时），侦测行权接货
 4. [ ] Sanity check（§7）
 5. [ ] 更新 `portfolio-data.json` 的价格类字段 + `meta.*`
@@ -231,6 +234,7 @@ pumpForce = margin × (1 − 69/80)
 | 2026-08-01 | BOXX 全部换成 SOXX 18 股；META Moomoo 加仓 17 股 |
 | 2026-08 初 | NVDA $195 put、AMZN $230 put 双双买回平仓（**非**接货）。此后 sold-put liability = $0 |
 | 2026-09-07 | Moomoo 马股行情权限失效（`No permission to get quotes for MY.1155`）|
+| 2026-09-25 | Owner 指定 MAYBANK、黄金 spot、BTC 每次必须由 Google Chrome Search 更新，不再以 OpenD 报价作为这三项的来源 |
 
 > ⚠ **未结事项**：2026-08 初平掉的那两张 put 的实际盈亏，尚未回填进 `wheelRealized`（目前仍是 1–4 月的 8698.98）。Moi 补上数字后才能更新。
 
