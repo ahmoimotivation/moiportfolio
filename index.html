@@ -134,7 +134,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     <h1>Moi Investment Portfolio</h1>
     <div class="timestamp">股票/现金: Moomoo (us_cash · USD 货币基金) · 马股: Public Bank</div>
     <div class="timestamp" id="syncStatus" style="margin-top:2px">期权来自 Moomoo</div>
-    <div class="timestamp" style="margin-top:2px;color:var(--green)">✓ 2026-09-07（周一 08:44 MYT）刷新。美股 Labor Day 休市，价格为 09-04 收盘。马股 Bursa 未开盘，沿用 09-04 收盘。黄金 spot <b>$4,443.53/oz</b> · BTC <b>$80,141.71</b> · USD/MYR <b>4.038</b>。当前 0 持仓期权。</div>
+    <div class="timestamp" style="margin-top:2px;color:var(--amber)">⚠⚠ 2026-09-16（周三 MYT）部分刷新：<b>OpenD 未连线</b>，美股/马股/BTC/现金/期权沿用 09-09 快照；仅黄金 spot 与 USD/MYR 更新。黄金 spot <b>$4,320.80/oz</b> · BTC <b>$78,769.74</b> · USD/MYR <b>4.045</b>。当前 0 持仓期权。</div>
   </div>
   <div class="toggle-row">
     <span id="goldModeLabel">Gold: UOB buyback est.</span>
@@ -283,7 +283,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 </div>
 
 <div style="height:10px"></div>
-<div class="footnote" style="text-align:center;padding-bottom:12px">✓ 2026-09-07（周一 08:44 MYT）刷新，数据源 Moomoo OpenD + WebSearch。美股 <b>Labor Day 休市</b>，价格为 09-04 收盘：GOOGL $338.46 · PLTR $174.33 · NVDA $230.36 · META $616.77 · MSFT $499.70 · NOW $141.26 · QQQ $718.96 · UNH $397.14 · SOXX $519.86 · AMZN $258.51。BTC <b>$80,141.71</b>（09-06 20:44）。黄金 spot <b>$4,443.53/oz</b> · USD/MYR <b>4.038</b>。现金 = us_cash $254.58 + USD 货币基金 $32,708.10（fund_assets 256,454.44 HKD ÷ 7.8407）。0 持仓期权 · sold-put liability $0。🇲🇾 马股 Bursa 未开盘（Moomoo 无 MY 报价权限），沿用 09-04 收盘 MAYBANK <b>10.560</b> · IGBREIT <b>2.750</b> · SUNREIT <b>2.100</b>。Margin thresholds per Public Bank PDS Ver032026.</div>
+<div class="footnote" style="text-align:center;padding-bottom:12px">⚠ 2026-09-16（周三 MYT）部分刷新。<b>OpenD 未连线</b>：Moomoo 来源数据（美股 09-08 收盘、马股、BTC、现金、期权）沿用 09-09 快照。仅 WebSearch 更新：黄金 spot <b>$4,320.80/oz</b> · USD/MYR <b>4.045</b>。美股快照：GOOGL $338.36 · PLTR $170.30 · NVDA $225.73 · META $613.48 · MSFT $494.20 · NOW $134.21 · QQQ $718.36 · UNH $400.84 · SOXX $529.77 · AMZN $256.97。BTC <b>$78,769.74</b>。现金 = us_cash $254.58 + USD 货币基金 $32,683.14。0 持仓期权 · sold-put liability $0。🇲🇾 马股沿用 MAYBANK <b>10.560</b> · IGBREIT <b>2.750</b> · SUNREIT <b>2.100</b>。Margin thresholds per Public Bank PDS Ver032026.</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <script>
@@ -302,27 +302,27 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
      ========================================================================== */
   const holdings={
     us:[
-      {t:"GOOGL",name:"Alphabet-A",qty:100,cost:387.50,px:338.46,cat:"Hyperscaler",note:"Moomoo · 6/18 $387.5 put 接货"},
-      {t:"META",name:"Meta",qty:55,cost:611.42,px:616.77,cat:"Hyperscaler",note:"blended · M+ 38 @ $639.45 + Moomoo 17 @ $548.78（8/1 加仓）"},
-      {t:"MSFT",name:"Microsoft",qty:63,cost:432.45,px:499.70,cat:"Hyperscaler",note:"blended · Moomoo 17 + M+ 46（6/15 加仓 14 股 @ $398.28）"},
-      {t:"NVDA",name:"Nvidia",qty:110.4,cost:214.01,px:230.36,cat:"AI Capex",note:"Moomoo only（平均成本 $214.01 · option premium 已计入下方 wheel 收入）· M+ 26 股 6/15 @ $209.15 已卖出"},
-      {t:"SOXX",name:"iShares Semiconductor ETF",qty:18,cost:513.09,px:519.86,cat:"AI Capex",note:"Moomoo · 8/1 买入（BOXX 换股）"},
-      {t:"NOW",name:"ServiceNow",qty:200,cost:108.00,px:141.26,cat:"SaaS",note:"Moomoo · $108 put 行权接货 (2 张)"},
-      {t:"PLTR",name:"Palantir",qty:139,cost:134.499,px:174.33,cat:"Defense",note:"Moomoo · 6/29 买 39 + 7/2 $141 put 行权接货 100 股 · 8/3 财报后续涨"},
-      {t:"QQQ",name:"Invesco QQQ",qty:46,cost:435.53,px:718.96,cat:"ETF",note:"M+ · 2026-07-03"},
-      {t:"UNH",name:"UnitedHealth",qty:31,cost:319.89,px:397.14,cat:"Healthcare",note:"M+ · 2026-07-03"},
+      {t:"GOOGL",name:"Alphabet-A",qty:100,cost:387.50,px:338.36,cat:"Hyperscaler",note:"Moomoo · 6/18 $387.5 put 接货"},
+      {t:"META",name:"Meta",qty:55,cost:611.42,px:613.48,cat:"Hyperscaler",note:"blended · M+ 38 @ $639.45 + Moomoo 17 @ $548.78（8/1 加仓）"},
+      {t:"MSFT",name:"Microsoft",qty:63,cost:432.45,px:494.20,cat:"Hyperscaler",note:"blended · Moomoo 17 + M+ 46（6/15 加仓 14 股 @ $398.28）"},
+      {t:"NVDA",name:"Nvidia",qty:110.4,cost:214.01,px:225.73,cat:"AI Capex",note:"Moomoo only（平均成本 $214.01 · option premium 已计入下方 wheel 收入）· M+ 26 股 6/15 @ $209.15 已卖出"},
+      {t:"SOXX",name:"iShares Semiconductor ETF",qty:18,cost:513.09,px:529.77,cat:"AI Capex",note:"Moomoo · 8/1 买入（BOXX 换股）"},
+      {t:"NOW",name:"ServiceNow",qty:200,cost:108.00,px:134.21,cat:"SaaS",note:"Moomoo · $108 put 行权接货 (2 张)"},
+      {t:"PLTR",name:"Palantir",qty:139,cost:134.499,px:170.30,cat:"Defense",note:"Moomoo · 6/29 买 39 + 7/2 $141 put 行权接货 100 股 · 8/3 财报后续涨"},
+      {t:"QQQ",name:"Invesco QQQ",qty:46,cost:435.53,px:718.36,cat:"ETF",note:"M+ · 2026-07-03"},
+      {t:"UNH",name:"UnitedHealth",qty:31,cost:319.89,px:400.84,cat:"Healthcare",note:"M+ · 2026-07-03"},
     ],
     my:[
       {t:"IGBREIT",name:"IGB REIT",qty:11800,cost:2.67,px:2.75,note:"cash"},
       {t:"MAYBANK",name:"Malayan Banking",qty:45300,cost:11.6964,px:10.56,note:"partial margin"},
       {t:"SUNREIT",name:"Sunway REIT",qty:10000,cost:2.11,px:2.10,note:"cash"},
     ],
-    gold:{oz:7,costPerOz:21246,spotUsd:4443.53},
-    crypto:{qty:0.0351549,costMyr:15994.97,pxUsd:80141.71,broker:"HATA"},
-    cash:{usd:32962.68,myr:38003.47},
+    gold:{oz:7,costPerOz:21246,spotUsd:4320.80},
+    crypto:{qty:0.0351549,costMyr:15994.97,pxUsd:78769.74,broker:"HATA"},
+    cash:{usd:32937.72,myr:38003.47},
     options:[],
     wheelRealized:8698.98,
-    fx:4.038
+    fx:4.045
   };
 
   const catColors={'AI Capex':'#76b900','Hyperscaler':'#1b5ea8','SaaS':'#7c3aed','Healthcare':'#0f7a3a','Defense':'#c53030','ETF':'#b8620a'};
@@ -620,7 +620,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     }
   }
 
-  const ulPxFallback={AMZN:258.51,GOOGL:338.46,NVDA:230.36,PLTR:174.33,NOW:141.26};
+  const ulPxFallback={AMZN:256.97,GOOGL:338.36,NVDA:225.73,PLTR:170.30,NOW:134.21};
 
   function setSyncStatus(t,l){
     const el=document.getElementById('syncStatus');
@@ -654,7 +654,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 
   document.getElementById('goldToggle').addEventListener('change',e=>{goldMode=e.target.checked?'buyback':'spot';render();});
   render();
-  setSyncStatus('✓ 2026-09-07 刷新（周一 08:44 MYT）— 0 持仓期权','ok');
+  setSyncStatus('⚠ 2026-09-16 部分刷新（OpenD 未连线）— 0 持仓期权','warn');
   loadFromJson();
 })();
 </script></body></html>
