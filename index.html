@@ -285,7 +285,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 </div>
 
 <div style="height:10px"></div>
-<div class="footnote" style="text-align:center;padding-bottom:12px">⚠⚠ 2026-09-30（周三 08:35 MYT）刷新。<b>OpenD 已连接</b>：美股、现金与期权已更新。按 owner SOP，Google Chrome Search 更新：MAYBANK <b>9.990</b> · IGBREIT <b>2.790</b> · SUNREIT <b>2.050</b>（09-29 收盘）· 黄金 spot <b>$4,179.00/oz</b>（Kitco）· BTC <b>$83,538.96</b>（Google Finance，08:31 MYT）。USD/MYR <b>4.0827</b> · USD/HKD <b>7.8468</b>。美股：GOOGL $341.13 · PLTR $187.53 · NVDA $228.41 · META $738.79 · MSFT $508.96 · NOW $129.75 · QQQ $737.93 · UNH $374.94 · SOXX $570.35；AMZN fallback $246.67。现金 = us_cash $291.15 + USD 货币基金 $32,724.20。0 持仓期权。LSR <b>71.70%</b>，已越过 margin-call 70% 线 1.70 pp。</div>
+<div class="footnote" style="text-align:center;padding-bottom:12px">⚠⚠ 2026-09-30（周三 08:35 MYT）价格刷新；22:22 MYT 现金复核。<b>OpenD 已连接</b>：美股、现金与期权已更新。按 owner SOP，Google Chrome Search 更新：MAYBANK <b>9.990</b> · IGBREIT <b>2.790</b> · SUNREIT <b>2.050</b>（09-29 收盘）· 黄金 spot <b>$4,179.00/oz</b>（Kitco）· BTC <b>$83,538.96</b>（Google Finance，08:31 MYT）。USD/MYR <b>4.0827</b> · USD/HKD <b>7.8468</b>。美股：GOOGL $341.13 · PLTR $187.53 · NVDA $228.41 · META $738.79 · MSFT $508.96 · NOW $129.75 · QQQ $737.93 · UNH $374.94 · SOXX $570.35；AMZN fallback $246.67。现金 = us_cash $694.72 + USD 货币基金 $32,732.70。0 持仓期权。LSR <b>71.70%</b>，已越过 margin-call 70% 线 1.70 pp。</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <script>
@@ -321,7 +321,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     ],
     gold:{oz:7,costPerOz:21246,spotUsd:4179.00},
     crypto:{qty:0.0351549,costMyr:15994.97,pxUsd:83538.9609375,broker:"HATA"},
-    cash:{usd:33015.35,myr:38003.47},
+    cash:{usd:33427.42,myr:38003.47},
     options:[],
     wheelRealized:16189.10,
     fx:4.0827
@@ -460,7 +460,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     const cashTotal=cashUsdMyr+holdings.cash.myr;
     document.getElementById('cashBody').innerHTML=`
       <tr><td>USD cash <span class="chip chip-info">Moomoo</span>
-        <div class="ticker-note">us_cash $291.15 + USD 货币基金 $32,724.20（Moomoo money market fund · fund_assets 256,780.24 HKD ÷ 7.8468）</div></td>
+        <div class="ticker-note">us_cash $694.72 + USD 货币基金 $32,732.70（Moomoo money market fund · fund_assets 256,846.93 HKD ÷ 7.8468）</div></td>
         <td class="right num">$${fmt(holdings.cash.usd)}</td>
         <td class="right num">${fmt(cashUsdMyr,0)}</td></tr>
       <tr><td>MYR cash <span class="chip chip-info">Maybank</span>
@@ -660,7 +660,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 
   document.getElementById('goldToggle').addEventListener('change',e=>{goldMode=e.target.checked?'buyback':'spot';render();});
   render();
-  setSyncStatus('⚠⚠ 2026-09-30 刷新（LSR 71.70%）— 0 持仓期权','warn');
+  setSyncStatus('⚠⚠ 2026-09-30 现金已复核（LSR 71.70%）— 0 持仓期权','warn');
   loadFromJson();
 })();
 </script></body></html>

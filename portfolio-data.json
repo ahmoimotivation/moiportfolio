@@ -5,14 +5,15 @@
     "owner": "Moi",
     "timezone": "Asia/Kuala_Lumpur (MYT)",
     "displayCurrency": "MYR",
-    "lastRefresh": "2026-09-30T08:35:00+08:00",
-    "lastRefreshNote": "OpenD 已连接；美股、现金及期权已刷新，当前 0 持仓期权。按 owner SOP，以 Google Chrome Search 更新 MAYBANK、IGBREIT、SUNREIT、黄金 spot 与 BTC；Wheel YTD 沿用 owner 已核准的 $16,189.10。",
+    "lastRefresh": "2026-09-30T22:23:00+08:00",
+    "lastRefreshNote": "OpenD 已连接；22:22 MYT 复核现金，纠正为 us_cash（不是 us_avl_withdrawal_cash）加 USD 货币基金。当前 0 持仓期权；Wheel YTD 沿用 owner 已核准的 $16,189.10。",
     "priceAsOf": {
       "usStocks": "2026-09-30 08:32 MYT (Moomoo; US 2026-09-29 after-hours)",
       "myStocks": "2026-09-29 close (Google Chrome Search)",
       "btc": "2026-09-30 08:31 MYT (Google Finance)",
       "goldSpot": "2026-09-30 08:33 MYT (Google Search / Kitco)",
-      "fx": "2026-09-30 (WebSearch; USD/MYR 4.0827, USD/HKD 7.8468)"
+      "fx": "2026-09-30 (WebSearch; USD/MYR 4.0827, USD/HKD 7.8468)",
+      "cash": "2026-09-30 22:22 MYT (OpenD account_info)"
     }
   },
 
@@ -65,9 +66,9 @@
   },
 
   "cash": {
-    "usd": 33015.35,
+    "usd": 33427.42,
     "myr": 38003.47,
-    "usdBreakdown": "us_cash $291.15 + USD 货币基金 $32,724.20（fund_assets 256,780.24 HKD ÷ 7.8468）",
+    "usdBreakdown": "us_cash $694.72 + USD 货币基金 $32,732.70（fund_assets 256,846.93 HKD ÷ 7.8468）",
     "myrBreakdown": "Maybank 货币基金 + 现金（Moomoo 拉不到，手动维护）"
   },
 
@@ -94,8 +95,8 @@
 
   "derived": {
     "_comment": "Recomputed on every refresh. Do not hand-edit — recalculate from the formulas in UPDATE_INSTRUCTIONS.md §5.",
-    "netWorthMyr": 1427967,
-    "grossAssetsMyr": 1790731,
+    "netWorthMyr": 1429650,
+    "grossAssetsMyr": 1792413,
     "lsrPct": 71.70,
     "lsrBufferToCallPp": -1.70,
     "soldPutLiabilityUsd": 0
