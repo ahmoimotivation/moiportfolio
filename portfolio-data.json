@@ -5,14 +5,14 @@
     "owner": "Moi",
     "timezone": "Asia/Kuala_Lumpur (MYT)",
     "displayCurrency": "MYR",
-    "lastRefresh": "2026-09-25T14:20:00+08:00",
-    "lastRefreshNote": "OpenD 已连接；按 owner SOP，以 Google Chrome Search 更新 MAYBANK、黄金 spot 与 BTC。IGBREIT/SUNREIT 沿用 2026-09-09 快照。Wheel YTD 已由 OpenD fills 重算为净收入 $13,080.82（含买回/roll 成本及订单费用）。",
+    "lastRefresh": "2026-09-30T08:35:00+08:00",
+    "lastRefreshNote": "OpenD 已连接；美股、现金及期权已刷新，当前 0 持仓期权。按 owner SOP，以 Google Chrome Search 更新 MAYBANK、IGBREIT、SUNREIT、黄金 spot 与 BTC；Wheel YTD 沿用 owner 已核准的 $16,189.10。",
     "priceAsOf": {
-      "usStocks": "2026-09-25 13:50 MYT (Moomoo latest)",
-      "myStocks": "MAYBANK 2026-09-25 12:29 MYT (Google); IGBREIT/SUNREIT 2026-09-09 snapshot",
-      "btc": "2026-09-25 14:01 MYT (Google Finance)",
-      "goldSpot": "2026-09-25 11:00 MYT (Google Search / Kitco)",
-      "fx": "2026-09-25"
+      "usStocks": "2026-09-30 08:32 MYT (Moomoo; US 2026-09-29 after-hours)",
+      "myStocks": "2026-09-29 close (Google Chrome Search)",
+      "btc": "2026-09-30 08:31 MYT (Google Finance)",
+      "goldSpot": "2026-09-30 08:33 MYT (Google Search / Kitco)",
+      "fx": "2026-09-30 (WebSearch; USD/MYR 4.0827, USD/HKD 7.8468)"
     }
   },
 
@@ -27,32 +27,32 @@
   },
 
   "fx": {
-    "usdMyr": 4.0710,
-    "usdHkd": 7.8425
+    "usdMyr": 4.0827,
+    "usdHkd": 7.8468
   },
 
   "us": [
-    { "t": "GOOGL", "name": "Alphabet-A",                "qty": 100,   "cost": 387.50,  "px": 342.87, "cat": "Hyperscaler", "broker": "Moomoo",        "note": "Moomoo · 6/18 $387.5 put 接货" },
-    { "t": "META",  "name": "Meta",                      "qty": 55,    "cost": 611.42,  "px": 777.59, "cat": "Hyperscaler", "broker": "blended",       "note": "blended · M+ 38 @ $639.45 + Moomoo 17 @ $548.78（8/1 加仓）" },
-    { "t": "MSFT",  "name": "Microsoft",                 "qty": 63,    "cost": 432.45,  "px": 497.61, "cat": "Hyperscaler", "broker": "blended",       "note": "blended · Moomoo 17 + M+ 46（6/15 加仓 14 股 @ $398.28）" },
-    { "t": "NVDA",  "name": "Nvidia",                    "qty": 110.4, "cost": 214.01,  "px": 224.83, "cat": "AI Capex",    "broker": "Moomoo",        "note": "Moomoo only（平均成本 $214.01 · option premium 已计入 wheel 收入）· M+ 26 股 6/15 @ $209.15 已卖出" },
-    { "t": "SOXX",  "name": "iShares Semiconductor ETF", "qty": 18,    "cost": 513.09,  "px": 571.83, "cat": "AI Capex",    "broker": "Moomoo",        "note": "Moomoo · 8/1 买入（BOXX 换股）" },
-    { "t": "NOW",   "name": "ServiceNow",                "qty": 200,   "cost": 108.00,  "px": 137.80, "cat": "SaaS",        "broker": "Moomoo",        "note": "Moomoo · $108 put 行权接货 (2 张)" },
-    { "t": "PLTR",  "name": "Palantir",                  "qty": 139,   "cost": 134.499, "px": 192.59, "cat": "Defense",     "broker": "Moomoo",        "note": "Moomoo · 6/29 买 39 + 7/2 $141 put 行权接货 100 股 · 8/3 财报后续涨" },
-    { "t": "QQQ",   "name": "Invesco QQQ",               "qty": 46,    "cost": 435.53,  "px": 741.10, "cat": "ETF",         "broker": "M+",            "note": "M+ · 2026-07-03" },
-    { "t": "UNH",   "name": "UnitedHealth",              "qty": 31,    "cost": 319.89,  "px": 375.01, "cat": "Healthcare",  "broker": "M+",            "note": "M+ · 2026-07-03" }
+    { "t": "GOOGL", "name": "Alphabet-A",                "qty": 100,   "cost": 387.50,  "px": 341.13, "cat": "Hyperscaler", "broker": "Moomoo",        "note": "Moomoo · 6/18 $387.5 put 接货" },
+    { "t": "META",  "name": "Meta",                      "qty": 55,    "cost": 611.42,  "px": 738.79, "cat": "Hyperscaler", "broker": "blended",       "note": "blended · M+ 38 @ $639.45 + Moomoo 17 @ $548.78（8/1 加仓）" },
+    { "t": "MSFT",  "name": "Microsoft",                 "qty": 63,    "cost": 432.45,  "px": 508.96, "cat": "Hyperscaler", "broker": "blended",       "note": "blended · Moomoo 17 + M+ 46（6/15 加仓 14 股 @ $398.28）" },
+    { "t": "NVDA",  "name": "Nvidia",                    "qty": 110.4, "cost": 214.01,  "px": 228.41, "cat": "AI Capex",    "broker": "Moomoo",        "note": "Moomoo only（平均成本 $214.01 · option premium 已计入 wheel 收入）· M+ 26 股 6/15 @ $209.15 已卖出" },
+    { "t": "SOXX",  "name": "iShares Semiconductor ETF", "qty": 18,    "cost": 513.09,  "px": 570.35, "cat": "AI Capex",    "broker": "Moomoo",        "note": "Moomoo · 8/1 买入（BOXX 换股）" },
+    { "t": "NOW",   "name": "ServiceNow",                "qty": 200,   "cost": 108.00,  "px": 129.75, "cat": "SaaS",        "broker": "Moomoo",        "note": "Moomoo · $108 put 行权接货 (2 张)" },
+    { "t": "PLTR",  "name": "Palantir",                  "qty": 139,   "cost": 134.499, "px": 187.53, "cat": "Defense",     "broker": "Moomoo",        "note": "Moomoo · 6/29 买 39 + 7/2 $141 put 行权接货 100 股 · 8/3 财报后续涨" },
+    { "t": "QQQ",   "name": "Invesco QQQ",               "qty": 46,    "cost": 435.53,  "px": 737.93, "cat": "ETF",         "broker": "M+",            "note": "M+ · 2026-07-03" },
+    { "t": "UNH",   "name": "UnitedHealth",              "qty": 31,    "cost": 319.89,  "px": 374.94, "cat": "Healthcare",  "broker": "M+",            "note": "M+ · 2026-07-03" }
   ],
 
   "my": [
-    { "t": "IGBREIT", "code": "5227", "name": "IGB REIT",        "qty": 11800, "cost": 2.67,    "px": 2.75,  "note": "cash" },
-    { "t": "MAYBANK", "code": "1155", "name": "Malayan Banking", "qty": 45300, "cost": 11.6964, "px": 10.16, "note": "partial margin" },
-    { "t": "SUNREIT", "code": "5176", "name": "Sunway REIT",     "qty": 10000, "cost": 2.11,    "px": 2.10,  "note": "cash" }
+    { "t": "IGBREIT", "code": "5227", "name": "IGB REIT",        "qty": 11800, "cost": 2.67,    "px": 2.79,  "note": "cash" },
+    { "t": "MAYBANK", "code": "1155", "name": "Malayan Banking", "qty": 45300, "cost": 11.6964, "px": 9.99,  "note": "partial margin" },
+    { "t": "SUNREIT", "code": "5176", "name": "Sunway REIT",     "qty": 10000, "cost": 2.11,    "px": 2.05,  "note": "cash" }
   ],
 
   "gold": {
     "oz": 7,
     "costPerOz": 21246,
-    "spotUsd": 4282.80,
+    "spotUsd": 4179.00,
     "custodian": "UOB",
     "note": "Kangaroo 1 oz · Perth Mint 99.99% · purchased 28 Jan 2026 @ USD spot ATH (~$5,400/oz)"
   },
@@ -60,14 +60,14 @@
   "crypto": {
     "qty": 0.0351549,
     "costMyr": 15994.97,
-    "pxUsd": 84159.8671875,
+    "pxUsd": 83538.9609375,
     "broker": "HATA"
   },
 
   "cash": {
-    "usd": 32970.11,
+    "usd": 33015.35,
     "myr": 38003.47,
-    "usdBreakdown": "us_cash $284.90 + USD 货币基金 $32,685.21（fund_assets 256,333.75 HKD ÷ 7.8425）",
+    "usdBreakdown": "us_cash $291.15 + USD 货币基金 $32,724.20（fund_assets 256,780.24 HKD ÷ 7.8468）",
     "myrBreakdown": "Maybank 货币基金 + 现金（Moomoo 拉不到，手动维护）"
   },
 
@@ -76,11 +76,11 @@
   "wheelRealized": 16189.10,
 
   "ulPxFallback": {
-    "AMZN": 249.38,
-    "GOOGL": 342.36,
-    "NVDA": 224.58,
-    "PLTR": 192.59,
-    "NOW": 137.78
+    "AMZN": 246.67,
+    "GOOGL": 340.92,
+    "NVDA": 227.21,
+    "PLTR": 186.97,
+    "NOW": 129.94
   },
 
   "sectorMap": {
@@ -94,10 +94,10 @@
 
   "derived": {
     "_comment": "Recomputed on every refresh. Do not hand-edit — recalculate from the formulas in UPDATE_INSTRUCTIONS.md §5.",
-    "netWorthMyr": 1450020,
-    "grossAssetsMyr": 1812784,
-    "lsrPct": 70.62,
-    "lsrBufferToCallPp": -0.62,
+    "netWorthMyr": 1427967,
+    "grossAssetsMyr": 1790731,
+    "lsrPct": 71.70,
+    "lsrBufferToCallPp": -1.70,
     "soldPutLiabilityUsd": 0
   }
 }
