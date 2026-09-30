@@ -5,8 +5,8 @@
     "owner": "Moi",
     "timezone": "Asia/Kuala_Lumpur (MYT)",
     "displayCurrency": "MYR",
-    "lastRefresh": "2026-09-30T22:23:00+08:00",
-    "lastRefreshNote": "OpenD 已连接；22:22 MYT 复核现金，纠正为 us_cash（不是 us_avl_withdrawal_cash）加 USD 货币基金。当前 0 持仓期权；Wheel YTD 沿用 owner 已核准的 $16,189.10。",
+    "lastRefresh": "2026-09-30T22:30:00+08:00",
+    "lastRefreshNote": "Owner 指定 Idle Cash 只计算 Moomoo wallet + USD 货币基金，不再计入 Maybank MYR 现金/货币基金。OpenD 已连接，当前 0 持仓期权；Wheel YTD 沿用 owner 已核准的 $16,189.10。",
     "priceAsOf": {
       "usStocks": "2026-09-30 08:32 MYT (Moomoo; US 2026-09-29 after-hours)",
       "myStocks": "2026-09-29 close (Google Chrome Search)",
@@ -67,9 +67,9 @@
 
   "cash": {
     "usd": 33427.42,
-    "myr": 38003.47,
+    "myr": 0,
     "usdBreakdown": "us_cash $694.72 + USD 货币基金 $32,732.70（fund_assets 256,846.93 HKD ÷ 7.8468）",
-    "myrBreakdown": "Maybank 货币基金 + 现金（Moomoo 拉不到，手动维护）"
+    "myrBreakdown": "不计入：owner 2026-09-30 指定 Idle Cash 只算 Moomoo money market fund + wallet"
   },
 
   "options": [],
@@ -95,8 +95,8 @@
 
   "derived": {
     "_comment": "Recomputed on every refresh. Do not hand-edit — recalculate from the formulas in UPDATE_INSTRUCTIONS.md §5.",
-    "netWorthMyr": 1429650,
-    "grossAssetsMyr": 1792413,
+    "netWorthMyr": 1391646,
+    "grossAssetsMyr": 1754410,
     "lsrPct": 71.70,
     "lsrBufferToCallPp": -1.70,
     "soldPutLiabilityUsd": 0

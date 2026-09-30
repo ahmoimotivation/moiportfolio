@@ -14,7 +14,7 @@
 3. **严禁触碰**（除非 §3 的行权接货例外，或 Moi 明确指示）：
    - `constants.marginLoanMyr` = 362763.77
    - `constants.targetLsr` / `marginCallLsr` / `forceSellLsr`
-   - `cash.myr` = 38003.47（Moomoo 拉不到，Moi 手动维护）
+   - `cash.myr` = 0（Owner 2026-09-30 指定 Idle Cash 只算 Moomoo money market fund + wallet；不得再加回 Maybank 现金/货币基金）
    - `wheelRealized`
    - 任何持仓的 `qty` 和 `cost`
    - `index.html` 的 CSS / HTML 结构
@@ -120,7 +120,7 @@ USD 货币基金的取法，按顺序试：
 > ⚠ 不要再用 2026-07-03 之前的旧口径「+97321.89」。
 > 2026-08-01 起 BOXX 已换成 SOXX，货币基金改走 `fund_assets`。
 
-`cash.myr` = **38003.47 固定**（Maybank 货币基金 + 现金，Moomoo 拉不到）。不要动。
+`cash.myr` = **0 固定**。Owner 于 2026-09-30 指定 Idle Cash 只计算 Moomoo USD 货币基金 + wallet；Maybank MYR 现金/货币基金不再计入组合总值。不要自行加回。
 
 ---
 
@@ -245,6 +245,7 @@ pumpForce = margin × (1 − 69/80)
 | 2026-09-07 | Moomoo 马股行情权限失效（`No permission to get quotes for MY.1155`）|
 | 2026-09-25 | Owner 指定 MAYBANK、黄金 spot、BTC 每次必须由 Google Chrome Search 更新，不再以 OpenD 报价作为这三项的来源 |
 | 2026-09-25 | 复核 Google Sheet「Wheel 2026」：期权净收益 $15,038.56 + MMF $1,150.5355 = `wheelRealized` $16,189.0955（显示 $16,189.10） |
+| 2026-09-30 | Owner 指定 Idle Cash 只算 Moomoo money market fund + wallet；`cash.myr` 设为 0，不再计入 Maybank 现金/货币基金 |
 
 > ✅ **已解决**：当前 `wheelRealized` 沿用 owner 的 Google Sheet「Wheel 2026」TOTAL 定义，包含已扣亏损、roll/buy-back 与表内费用后的期权净收益，以及 MMF 收益。OpenD 成交对账得到期权净收益 $15,085.55，较 Sheet 高 $46.99（手填成交价/费用差异）；dashboard 采用 Sheet 总数 $16,189.10。
 

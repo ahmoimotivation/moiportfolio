@@ -133,7 +133,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 <div class="header">
   <div>
     <h1>Moi Investment Portfolio</h1>
-    <div class="timestamp">股票/现金: Moomoo (us_cash · USD 货币基金) · 马股: Public Bank</div>
+    <div class="timestamp">股票/Idle Cash: Moomoo (wallet · USD 货币基金) · 马股: Public Bank</div>
     <div class="timestamp" id="syncStatus" style="margin-top:2px">期权来自 Moomoo</div>
     <div class="timestamp" style="margin-top:2px;color:var(--red)">⚠⚠ 2026-09-30（周三 08:35 MYT）刷新：<b>LSR 71.70%，已越过 70% margin-call 线 1.70 pp</b>。按 SOP 由 Google Chrome Search 更新 MAYBANK <b>RM9.99</b>、IGBREIT <b>RM2.79</b>、SUNREIT <b>RM2.05</b>、黄金 spot <b>$4,179.00/oz</b>、BTC <b>$83,538.96</b>；OpenD 更新美股/现金/期权。</div>
   </div>
@@ -285,7 +285,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 </div>
 
 <div style="height:10px"></div>
-<div class="footnote" style="text-align:center;padding-bottom:12px">⚠⚠ 2026-09-30（周三 08:35 MYT）价格刷新；22:22 MYT 现金复核。<b>OpenD 已连接</b>：美股、现金与期权已更新。按 owner SOP，Google Chrome Search 更新：MAYBANK <b>9.990</b> · IGBREIT <b>2.790</b> · SUNREIT <b>2.050</b>（09-29 收盘）· 黄金 spot <b>$4,179.00/oz</b>（Kitco）· BTC <b>$83,538.96</b>（Google Finance，08:31 MYT）。USD/MYR <b>4.0827</b> · USD/HKD <b>7.8468</b>。美股：GOOGL $341.13 · PLTR $187.53 · NVDA $228.41 · META $738.79 · MSFT $508.96 · NOW $129.75 · QQQ $737.93 · UNH $374.94 · SOXX $570.35；AMZN fallback $246.67。现金 = us_cash $694.72 + USD 货币基金 $32,732.70。0 持仓期权。LSR <b>71.70%</b>，已越过 margin-call 70% 线 1.70 pp。</div>
+<div class="footnote" style="text-align:center;padding-bottom:12px">⚠⚠ 2026-09-30（周三 08:35 MYT）价格刷新；22:22 MYT 现金复核。<b>OpenD 已连接</b>：美股、现金与期权已更新。按 owner SOP，Google Chrome Search 更新：MAYBANK <b>9.990</b> · IGBREIT <b>2.790</b> · SUNREIT <b>2.050</b>（09-29 收盘）· 黄金 spot <b>$4,179.00/oz</b>（Kitco）· BTC <b>$83,538.96</b>（Google Finance，08:31 MYT）。USD/MYR <b>4.0827</b> · USD/HKD <b>7.8468</b>。美股：GOOGL $341.13 · PLTR $187.53 · NVDA $228.41 · META $738.79 · MSFT $508.96 · NOW $129.75 · QQQ $737.93 · UNH $374.94 · SOXX $570.35；AMZN fallback $246.67。Idle Cash 只算 Moomoo：wallet $694.72 + USD 货币基金 $32,732.70 = <b>RM136,474</b>；不计 Maybank MYR 现金/货币基金。0 持仓期权。LSR <b>71.70%</b>，已越过 margin-call 70% 线 1.70 pp。</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <script>
@@ -321,7 +321,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     ],
     gold:{oz:7,costPerOz:21246,spotUsd:4179.00},
     crypto:{qty:0.0351549,costMyr:15994.97,pxUsd:83538.9609375,broker:"HATA"},
-    cash:{usd:33427.42,myr:38003.47},
+    cash:{usd:33427.42,myr:0},
     options:[],
     wheelRealized:16189.10,
     fx:4.0827
@@ -463,8 +463,8 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
         <div class="ticker-note">us_cash $694.72 + USD 货币基金 $32,732.70（Moomoo money market fund · fund_assets 256,846.93 HKD ÷ 7.8468）</div></td>
         <td class="right num">$${fmt(holdings.cash.usd)}</td>
         <td class="right num">${fmt(cashUsdMyr,0)}</td></tr>
-      <tr><td>MYR cash <span class="chip chip-info">Maybank</span>
-        <div class="ticker-note">Maybank 货币基金 + 现金（手动维护）</div></td>
+      <tr><td>MYR cash <span class="chip chip-info">excluded</span>
+        <div class="ticker-note">按 owner 指示，不计入 Idle Cash</div></td>
         <td class="right num">—</td>
         <td class="right num">${fmt(holdings.cash.myr,0)}</td></tr>
       <tr class="subtotal"><td>Cash total (MYR)</td><td></td><td class="right num">${fmt(cashTotal,0)}</td></tr>`;
