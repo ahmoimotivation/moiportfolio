@@ -5,15 +5,25 @@
     "owner": "Moi",
     "timezone": "Asia/Kuala_Lumpur (MYT)",
     "displayCurrency": "MYR",
-    "lastRefresh": "2026-09-30T22:30:00+08:00",
-    "lastRefreshNote": "Owner 指定 Idle Cash 只计算 Moomoo wallet + USD 货币基金，不再计入 Maybank MYR 现金/货币基金。OpenD 已连接，当前 0 持仓期权；Wheel YTD 沿用 owner 已核准的 $16,189.10。",
+    "lastRefresh": "2026-10-01T09:35:00+08:00",
+    "lastRefreshNote": "OpenD 已连接；PLTR $225 covered call 1 张（11/06 到期），premium $405、未实现 +$80，short-call 平仓负债 $325 已从净值扣除。Idle Cash 只算 Moomoo wallet + USD 货币基金；Wheel 已实现沿用 $16,189.10。",
     "priceAsOf": {
-      "usStocks": "2026-09-30 08:32 MYT (Moomoo; US 2026-09-29 after-hours)",
-      "myStocks": "2026-09-29 close (Google Chrome Search)",
-      "btc": "2026-09-30 08:31 MYT (Google Finance)",
-      "goldSpot": "2026-09-30 08:33 MYT (Google Search / Kitco)",
-      "fx": "2026-09-30 (WebSearch; USD/MYR 4.0827, USD/HKD 7.8468)",
-      "cash": "2026-09-30 22:22 MYT (OpenD account_info)"
+      "usStocks": "2026-10-01 09:32 MYT (OpenD positions; blended/M+ 使用 US 09-30 夜盘 quote)",
+      "myStocks": "MAYBANK 2026-10-01 09:16 MYT (Google Finance); IGBREIT/SUNREIT 09:32 MYT 读取 (Chrome Search → KLSE Screener，延迟报价)",
+      "btc": "2026-10-01 09:30 MYT (Google Finance)",
+      "goldSpot": "2026-10-01 09:32 MYT (Chrome Search → Kitco spot bid)",
+      "fx": "2026-10-01 WebSearch / Investing.com (USD/MYR 4.0865, USD/HKD 7.8466)",
+      "cash": "2026-10-01 09:32 MYT (OpenD account_info)",
+      "options": "2026-10-01 09:32 MYT (OpenD positions)"
+    },
+    "sources": {
+      "gold": "https://www.kitco.com/charts/gold",
+      "btc": "https://www.google.com/finance/quote/BTC-USD",
+      "maybank": "https://www.google.com/finance/quote/MAYBANK:KLSE",
+      "igbreit": "https://www.klsescreener.com/v2/stocks/view/5227",
+      "sunreit": "https://www.klsescreener.com/v2/stocks/view/5176",
+      "usdMyr": "https://www.investing.com/currencies/usd-myr-historical-data",
+      "usdHkd": "https://ca.investing.com/currencies/usd-hkd-historical-data"
     }
   },
 
@@ -28,32 +38,32 @@
   },
 
   "fx": {
-    "usdMyr": 4.0827,
-    "usdHkd": 7.8468
+    "usdMyr": 4.0865,
+    "usdHkd": 7.8466
   },
 
   "us": [
-    { "t": "GOOGL", "name": "Alphabet-A",                "qty": 100,   "cost": 387.50,  "px": 341.13, "cat": "Hyperscaler", "broker": "Moomoo",        "note": "Moomoo · 6/18 $387.5 put 接货" },
-    { "t": "META",  "name": "Meta",                      "qty": 55,    "cost": 611.42,  "px": 738.79, "cat": "Hyperscaler", "broker": "blended",       "note": "blended · M+ 38 @ $639.45 + Moomoo 17 @ $548.78（8/1 加仓）" },
-    { "t": "MSFT",  "name": "Microsoft",                 "qty": 63,    "cost": 432.45,  "px": 508.96, "cat": "Hyperscaler", "broker": "blended",       "note": "blended · Moomoo 17 + M+ 46（6/15 加仓 14 股 @ $398.28）" },
-    { "t": "NVDA",  "name": "Nvidia",                    "qty": 110.4, "cost": 214.01,  "px": 228.41, "cat": "AI Capex",    "broker": "Moomoo",        "note": "Moomoo only（平均成本 $214.01 · option premium 已计入 wheel 收入）· M+ 26 股 6/15 @ $209.15 已卖出" },
-    { "t": "SOXX",  "name": "iShares Semiconductor ETF", "qty": 18,    "cost": 513.09,  "px": 570.35, "cat": "AI Capex",    "broker": "Moomoo",        "note": "Moomoo · 8/1 买入（BOXX 换股）" },
-    { "t": "NOW",   "name": "ServiceNow",                "qty": 200,   "cost": 108.00,  "px": 129.75, "cat": "SaaS",        "broker": "Moomoo",        "note": "Moomoo · $108 put 行权接货 (2 张)" },
-    { "t": "PLTR",  "name": "Palantir",                  "qty": 139,   "cost": 134.499, "px": 187.53, "cat": "Defense",     "broker": "Moomoo",        "note": "Moomoo · 6/29 买 39 + 7/2 $141 put 行权接货 100 股 · 8/3 财报后续涨" },
-    { "t": "QQQ",   "name": "Invesco QQQ",               "qty": 46,    "cost": 435.53,  "px": 737.93, "cat": "ETF",         "broker": "M+",            "note": "M+ · 2026-07-03" },
-    { "t": "UNH",   "name": "UnitedHealth",              "qty": 31,    "cost": 319.89,  "px": 374.94, "cat": "Healthcare",  "broker": "M+",            "note": "M+ · 2026-07-03" }
+    { "t": "GOOGL", "name": "Alphabet-A",                "qty": 100,   "cost": 387.50,  "px": 350.77, "cat": "Hyperscaler", "broker": "Moomoo",        "note": "Moomoo · 6/18 $387.5 put 接货" },
+    { "t": "META",  "name": "Meta",                      "qty": 55,    "cost": 611.42,  "px": 725.18, "cat": "Hyperscaler", "broker": "blended",       "note": "blended · M+ 38 @ $639.45 + Moomoo 17 @ $548.78（8/1 加仓）" },
+    { "t": "MSFT",  "name": "Microsoft",                 "qty": 63,    "cost": 432.45,  "px": 512.9, "cat": "Hyperscaler", "broker": "blended",       "note": "blended · Moomoo 17 + M+ 46（6/15 加仓 14 股 @ $398.28）" },
+    { "t": "NVDA",  "name": "Nvidia",                    "qty": 110.4, "cost": 214.01,  "px": 229.72, "cat": "AI Capex",    "broker": "Moomoo",        "note": "Moomoo only（平均成本 $214.01 · option premium 已计入 wheel 收入）· M+ 26 股 6/15 @ $209.15 已卖出" },
+    { "t": "SOXX",  "name": "iShares Semiconductor ETF", "qty": 18,    "cost": 513.09,  "px": 570.83, "cat": "AI Capex",    "broker": "Moomoo",        "note": "Moomoo · 8/1 买入（BOXX 换股）" },
+    { "t": "NOW",   "name": "ServiceNow",                "qty": 200,   "cost": 108.00,  "px": 134.3, "cat": "SaaS",        "broker": "Moomoo",        "note": "Moomoo · $108 put 行权接货 (2 张)" },
+    { "t": "PLTR",  "name": "Palantir",                  "qty": 139,   "cost": 134.499, "px": 187.3, "cat": "Defense",     "broker": "Moomoo",        "note": "Moomoo · 6/29 买 39 + 7/2 $141 put 行权接货 100 股 · 8/3 财报后续涨" },
+    { "t": "QQQ",   "name": "Invesco QQQ",               "qty": 46,    "cost": 435.53,  "px": 739.77, "cat": "ETF",         "broker": "M+",            "note": "M+ · 2026-07-03" },
+    { "t": "UNH",   "name": "UnitedHealth",              "qty": 31,    "cost": 319.89,  "px": 367.08, "cat": "Healthcare",  "broker": "M+",            "note": "M+ · 2026-07-03" }
   ],
 
   "my": [
-    { "t": "IGBREIT", "code": "5227", "name": "IGB REIT",        "qty": 11800, "cost": 2.67,    "px": 2.79,  "note": "cash" },
+    { "t": "IGBREIT", "code": "5227", "name": "IGB REIT",        "qty": 11800, "cost": 2.67,    "px": 2.81,  "note": "cash" },
     { "t": "MAYBANK", "code": "1155", "name": "Malayan Banking", "qty": 45300, "cost": 11.6964, "px": 9.99,  "note": "partial margin" },
-    { "t": "SUNREIT", "code": "5176", "name": "Sunway REIT",     "qty": 10000, "cost": 2.11,    "px": 2.05,  "note": "cash" }
+    { "t": "SUNREIT", "code": "5176", "name": "Sunway REIT",     "qty": 10000, "cost": 2.11,    "px": 2.04,  "note": "cash" }
   ],
 
   "gold": {
     "oz": 7,
     "costPerOz": 21246,
-    "spotUsd": 4179.00,
+    "spotUsd": 4160.5,
     "custodian": "UOB",
     "note": "Kangaroo 1 oz · Perth Mint 99.99% · purchased 28 Jan 2026 @ USD spot ATH (~$5,400/oz)"
   },
@@ -61,27 +71,41 @@
   "crypto": {
     "qty": 0.0351549,
     "costMyr": 15994.97,
-    "pxUsd": 83538.9609375,
+    "pxUsd": 83500,
     "broker": "HATA"
   },
 
   "cash": {
-    "usd": 33427.42,
+    "usd": 33423.86,
     "myr": 0,
-    "usdBreakdown": "us_cash $694.72 + USD 货币基金 $32,732.70（fund_assets 256,846.93 HKD ÷ 7.8468）",
+    "usdBreakdown": "us_cash $694.72 + USD 货币基金 $32,729.14（fund_assets 256,812.49 HKD ÷ 7.8466）",
     "myrBreakdown": "不计入：owner 2026-09-30 指定 Idle Cash 只算 Moomoo money market fund + wallet"
   },
 
-  "options": [],
+  "options": [
+    {
+      "ul": "PLTR",
+      "side": "call",
+      "kind": "covered",
+      "strike": 225.0,
+      "expiry": "2026-11-06",
+      "contracts": 1,
+      "premium": 405,
+      "closePx": 3.25,
+      "expPL": 80,
+      "opn": null,
+      "ulPx": 187.05
+    }
+  ],
 
   "wheelRealized": 16189.10,
 
   "ulPxFallback": {
-    "AMZN": 246.67,
-    "GOOGL": 340.92,
-    "NVDA": 227.21,
-    "PLTR": 186.97,
-    "NOW": 129.94
+    "AMZN": 249.15,
+    "GOOGL": 344.08,
+    "NVDA": 228.38,
+    "PLTR": 187.05,
+    "NOW": 134.01
   },
 
   "sectorMap": {
@@ -95,10 +119,12 @@
 
   "derived": {
     "_comment": "Recomputed on every refresh. Do not hand-edit — recalculate from the formulas in UPDATE_INSTRUCTIONS.md §5.",
-    "netWorthMyr": 1391646,
-    "grossAssetsMyr": 1754410,
-    "lsrPct": 71.70,
-    "lsrBufferToCallPp": -1.70,
-    "soldPutLiabilityUsd": 0
+    "netWorthMyr": 1396521,
+    "grossAssetsMyr": 1760613,
+    "lsrPct": 71.68,
+    "lsrBufferToCallPp": -1.68,
+    "soldPutLiabilityUsd": 0,
+    "soldCallLiabilityUsd": 325.0,
+    "soldOptionLiabilityUsd": 325.0
   }
 }

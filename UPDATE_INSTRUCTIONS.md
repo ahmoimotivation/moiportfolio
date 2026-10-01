@@ -146,9 +146,11 @@ cashTotal = cash.usd × fx + cash.myr
 
 soldPutLiabUsd = Σ over kind=="csp" of (closePx × 100 × contracts)
 soldPutLiabMyr = soldPutLiabUsd × fx
+soldCallLiabUsd = Σ over kind=="covered" of (closePx × 100 × contracts)
+soldOptionLiabMyr = (soldPutLiabUsd + soldCallLiabUsd) × fx
 
 grossAssets = usMvMyr + myMv + goldMv + cryptoMv + cashTotal
-netWorth    = grossAssets − margin − soldPutLiabMyr
+netWorth    = grossAssets − margin − soldOptionLiabMyr
 
 grossInvested = usCostMyr + myCost + goldCost + cryptoCost
 totalDeployed = grossInvested + cashTotal − margin
@@ -159,6 +161,8 @@ totalROIPct   = totalROI / totalDeployed × 100
 ```
 
 Hero 的 **Total ROI 26'** 必须显示 `totalROI` 金额和 `totalROIPct`，口径固定为「未实现 P&L + Wheel 已实现收入」。
+
+开仓 short call 的 premium 已进入 wallet；净值须扣除它当前的平仓负债，以免高估资产。期权浮盈亏直接用 OpenD `unrealized_pl`，显示于期权区；未平仓 premium 不自动加入 `wheelRealized`。Covered call 由标的股票覆盖，不按 sold-put strike 锁定现金。
 
 ### LSR（margin health，Public Bank）
 ```
@@ -246,6 +250,7 @@ pumpForce = margin × (1 − 69/80)
 | 2026-09-25 | Owner 指定 MAYBANK、黄金 spot、BTC 每次必须由 Google Chrome Search 更新，不再以 OpenD 报价作为这三项的来源 |
 | 2026-09-25 | 复核 Google Sheet「Wheel 2026」：期权净收益 $15,038.56 + MMF $1,150.5355 = `wheelRealized` $16,189.0955（显示 $16,189.10） |
 | 2026-09-30 | Owner 指定 Idle Cash 只算 Moomoo money market fund + wallet；`cash.myr` 设为 0，不再计入 Maybank 现金/货币基金 |
+| 2026-10-01 | OpenD 确认 PLTR 11/06 $225 short call 1 张，由 139 股覆盖；净值须包含 short-call 平仓负债 |
 
 > ✅ **已解决**：当前 `wheelRealized` 沿用 owner 的 Google Sheet「Wheel 2026」TOTAL 定义，包含已扣亏损、roll/buy-back 与表内费用后的期权净收益，以及 MMF 收益。OpenD 成交对账得到期权净收益 $15,085.55，较 Sheet 高 $46.99（手填成交价/费用差异）；dashboard 采用 Sheet 总数 $16,189.10。
 
