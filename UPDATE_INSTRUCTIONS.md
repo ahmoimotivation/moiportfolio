@@ -16,6 +16,7 @@
    - `constants.targetLsr` / `marginCallLsr` / `forceSellLsr`
    - `cash.myr` = 0（Owner 2026-09-30 指定 Idle Cash 只算 Moomoo money market fund + wallet；不得再加回 Maybank 现金/货币基金）
    - `wheelRealized`
+   - `stockRealizedUsd` / `stockRealizedEstimated` / `stockRealizedDetail`（须重新对账历史成交与费用，不得随每日行情刷新重置）
    - 任何持仓的 `qty` 和 `cost`
    - `index.html` 的 CSS / HTML 结构
    - **Allocation 饼图的 MY stocks 口径**：`value = Math.max(0, myMv - margin)`（net equity，非 gross）。这是 Moi 在 2026-07-07 明确指定的，不要改回 gross。
@@ -155,12 +156,26 @@ netWorth    = grossAssets − margin − soldOptionLiabMyr
 grossInvested = usCostMyr + myCost + goldCost + cryptoCost
 totalDeployed = grossInvested + cashTotal − margin
 unrealizedPL  = (usMvMyr + myMv + goldMv + cryptoMv) − grossInvested
-realizedMyr   = wheelRealized × fx
-totalROI      = unrealizedPL + realizedMyr
+realizedMyr   = (wheelRealized + stockRealizedUsd) × fx
+openOptionPL  = Σ(options[].expPL) × fx
+totalROI      = unrealizedPL + openOptionPL + realizedMyr
 totalROIPct   = totalROI / totalDeployed × 100
 ```
 
-Hero 的 **Total ROI 26'** 必须显示 `totalROI` 金额和 `totalROIPct`，口径固定为「未实现 P&L + Wheel 已实现收入」。
+Hero 的 **Total ROI / 成本口径** 显示 `totalROI` 金额和 `totalROIPct`：当前持仓相对购入成本的未实现 P&L（含期权）+ 本年股票买卖净收益 + Wheel/MMF 已实现收入。分母为当前 deployed capital。这**不是严格 YTD 回报**，不得与 Moomoo Trend Analysis YTD 硬对平；已有持仓可能含跨年浮盈，范围还包括 M+、马股、黄金、HATA。`stockRealizedEstimated=true` 时股票、已实现合计与 Total ROI 金额须显示 `≈`。
+
+### 5.1 股票已实现收益（Owner 2026-10-03 要求新增）
+
+- 读取完整本年 `history_deal_list_query`，包括期权行权产生的股票 BUY/SELL；缺少期初成本时追溯前一年成交。每段查询不超过 360 天。
+- 期权 premium 留在 `wheelRealized`，股票按买卖价与股票成本核算，不能用扣 premium 的 diluted cost 再计算一次收益。
+- 用 `order_fee_query` 核对股票买入、卖出费用；买入费用按卖出比例分摊，卖出费用全扣。暂不另加股票股息。
+- `positions.realized_pl` 是持仓生命周期口径、可含股息，且已清仓股票不会出现在 positions 中；不能直接累加当 YTD 股票买卖收益。
+- 2026-10-03 对账：AMZN +$3,454.64、GOOGL −$67.90 已核对；NVDA 卖出 200 股净收益约 +$7,644.35。NVDA 早期 0.4 股成本缺失，当前 average_cost 舍入后反推的成本为估算，待历史结单确认。`stockRealizedUsd` 约 **$11,031.09**，`stockRealizedEstimated=true`。
+- **BOXX 不能重复算**：Sheet「Wheel 2026」MMF 的 M67 公式已含 BOXX 卖出收益。OpenD BOXX 净收益 $45.7030 只列核对明细、不加入 `stockRealizedUsd`。保留已核准 Wheel/MMF $16,189.10（Sheet 使用舍入卖价，BOXX 较 OpenD 差 $0.7575，暂不调整）。
+- 已实现合计约 **$27,220.19**。新增已实现数字只影响收益与 ROI 展示；不得额外加回 cash、grossAssets 或 netWorth，买卖所得已在现金/再投资持仓中。
+- 原始成交、订单 ID、账户 ID 留在本地工作文件，不上传公开 GitHub；公开只保留汇总与方法。
+- 利润对账时间使用 `meta.profitReconciledAt`，与价格刷新 `meta.lastRefresh` 分开。此次价格、现金、期权持仓快照沿用 10/01，不得假称 10/03 全部刷新。
+- Moi 提供的 Moomoo YTD cumulative P/L **$35,906.50**（含未实现）仅作参考，存为 owner-reported、`verifiedByOpenD=false`、`status=not_reconciled`；不得写成已实现或用差额填补未知成本。
 
 开仓 short call 的 premium 已进入 wallet；净值须扣除它当前的平仓负债，以免高估资产。期权浮盈亏直接用 OpenD `unrealized_pl`，显示于期权区；未平仓 premium 不自动加入 `wheelRealized`。Covered call 由标的股票覆盖，不按 sold-put strike 锁定现金。
 
@@ -251,6 +266,7 @@ pumpForce = margin × (1 − 69/80)
 | 2026-09-25 | 复核 Google Sheet「Wheel 2026」：期权净收益 $15,038.56 + MMF $1,150.5355 = `wheelRealized` $16,189.0955（显示 $16,189.10） |
 | 2026-09-30 | Owner 指定 Idle Cash 只算 Moomoo money market fund + wallet；`cash.myr` 设为 0，不再计入 Maybank 现金/货币基金 |
 | 2026-10-01 | OpenD 确认 PLTR 11/06 $225 short call 1 张，由 139 股覆盖；净值须包含 short-call 平仓负债 |
+| 2026-10-03 | 按 Owner 要求加入股票买卖净收益约 $11,031.09（NVDA 为成本反推估算）；确认 BOXX 已在 Wheel/MMF，避免重复累计。已实现合计约 $27,220.19；Total ROI 标明成本口径、非严格 YTD。 |
 
 > ✅ **已解决**：当前 `wheelRealized` 沿用 owner 的 Google Sheet「Wheel 2026」TOTAL 定义，包含已扣亏损、roll/buy-back 与表内费用后的期权净收益，以及 MMF 收益。OpenD 成交对账得到期权净收益 $15,085.55，较 Sheet 高 $46.99（手填成交价/费用差异）；dashboard 采用 Sheet 总数 $16,189.10。
 

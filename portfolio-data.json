@@ -24,6 +24,16 @@
       "sunreit": "https://www.klsescreener.com/v2/stocks/view/5176",
       "usdMyr": "https://www.investing.com/currencies/usd-myr-historical-data",
       "usdHkd": "https://ca.investing.com/currencies/usd-hkd-historical-data"
+    },
+    "profitReconciledAt": "2026-10-03T05:04:46+08:00",
+    "profitReconciliationNote": "2026 股票买卖净收益约 US$11,031.09（NVDA 平均成本反推估算；AMZN/GOOGL $3,386.74 已核对）。BOXX 收益已含于 Wheel/MMF，避免重复累加。Wheel 已实现 $16,189.10 不变；只更新收益展示，不改资产/现金/净值或价格快照。",
+    "moomooYtdReference": {
+      "cumulativePlUsd": 35906.5,
+      "reportedAt": "2026-10-03",
+      "source": "Owner reported Moomoo YTD Trend Analysis",
+      "verifiedByOpenD": false,
+      "status": "not_reconciled",
+      "note": "含未实现；OpenD 本次没有直接提供该 Trend Analysis 指标。与看板跨券商、当前持仓购入成本口径不等同，不能作为已实现收益或强制差额倒算。"
     }
   },
 
@@ -98,6 +108,77 @@
     }
   ],
 
+  "stockRealizedUsd": 11031.09,
+
+  "stockRealizedEstimated": true,
+
+  "stockRealizedDetail": {
+    "year": 2026,
+    "asOf": "2026-10-03T05:04:46+08:00",
+    "scope": "Moomoo US 股票买卖；不含 M+、马股、股票股息、期权 premium；BOXX 收益已包含在 Wheel/MMF，不重复累加",
+    "method": "移动平均成本；买入费用按卖出数量比例分摊，卖出费用全扣；NVDA 成本反推为估算；剔除已计入 Wheel/MMF 的 BOXX",
+    "verifiedSubtotalUsd": 3386.74,
+    "status": "estimate_pending_nvda_opening_basis",
+    "rows": [
+      {
+        "ticker": "NVDA",
+        "soldQty": 200.0,
+        "proceedsUsd": 39000.0,
+        "basisUsd": 31282.76923076923,
+        "allocatedBuyFeesUsd": 32.59505703422053,
+        "sellFeesUsd": 40.29,
+        "netProfitUsd": 7644.345712196548,
+        "estimated": true,
+        "note": "平均成本法：由当前 110.4 股 × OpenD average_cost $214.01，扣除卖出后买入的 100 股 × $220，再除以余下 10.4 股，反推卖出前成本约 $156.413846/股。早期 0.4 股不在成交记录内，且 API 平均成本已舍入；该项为估算，需历史结单确认。",
+        "includedInStockRealized": true
+      },
+      {
+        "ticker": "AMZN",
+        "soldQty": 100.0,
+        "proceedsUsd": 24000.0,
+        "basisUsd": 20500.0,
+        "allocatedBuyFeesUsd": 20.67,
+        "sellFeesUsd": 24.69,
+        "netProfitUsd": 3454.64,
+        "estimated": false,
+        "note": "成交完整配对；含买入和卖出订单费用，排除期权 premium 与现金股息。",
+        "includedInStockRealized": true
+      },
+      {
+        "ticker": "GOOGL",
+        "soldQty": 100.0,
+        "proceedsUsd": 33500.0,
+        "basisUsd": 33500.0,
+        "allocatedBuyFeesUsd": 33.59,
+        "sellFeesUsd": 34.31,
+        "netProfitUsd": -67.9,
+        "estimated": false,
+        "note": "成交完整配对；含买入和卖出订单费用，排除期权 premium 与现金股息。",
+        "includedInStockRealized": true
+      },
+      {
+        "ticker": "BOXX",
+        "soldQty": 165.0,
+        "proceedsUsd": 19418.8575,
+        "basisUsd": 19317.7545,
+        "allocatedBuyFeesUsd": 26.82,
+        "sellFeesUsd": 28.58,
+        "netProfitUsd": 45.703,
+        "estimated": false,
+        "note": "成交和费用已核对，但 Wheel 2026 MMF 行已含 BOXX 卖出收益；不重复加入 stockRealizedUsd。",
+        "includedInStockRealized": false
+      }
+    ],
+    "assumptions": [
+      "NVDA 2024-2026 无额外转仓、成本手工调整或未显示的股票交易；2026-05-09 两笔卖出后仅 2026-06-26 买入 100 股。",
+      "不直接累加 positions.realized_pl：它是持仓生命周期口径、包含股息，而且已清仓 AMZN/BOXX 不在当前持仓里。",
+      "NVDA 早期零碎持仓成本不完整，不能称为已完全对账的精确 YTD 实现收益。"
+    ],
+    "netBeforeOverlapUsd": 11076.79,
+    "excludedBoxxOverlapUsd": 45.7,
+    "overlapEvidence": "只读复核 Wheel 2026!M67 公式：BOXX 75 股与 90 股卖出净额 − 165 股买入成本 − 买入费 + MMF $58.71；已包含 BOXX，不改 Sheet 已核准总额。Sheet 以卖价 $117.68/$117.69 舍入，BOXX 净收益 $44.9455；OpenD 实际 $45.7030，$0.7575 差额暂沿用 Sheet，不重复加入。"
+  },
+
   "wheelRealized": 16189.10,
 
   "ulPxFallback": {
@@ -125,6 +206,11 @@
     "lsrBufferToCallPp": -1.68,
     "soldPutLiabilityUsd": 0,
     "soldCallLiabilityUsd": 325.0,
-    "soldOptionLiabilityUsd": 325.0
+    "soldOptionLiabilityUsd": 325.0,
+    "realizedProfitUsd": 27220.19,
+    "realizedProfitMyr": 111235.31,
+    "realizedProfitEstimated": true,
+    "costBasisReturnMyr": 159957.58,
+    "costBasisReturnPct": 11.8535
   }
 }

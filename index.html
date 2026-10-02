@@ -154,8 +154,19 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     <div><div class="stat-label">Total deployed <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(扣 margin)</span></div><div class="stat-value num" id="totalCost">—</div></div>
     <div><div class="stat-label">Unrealized P&L <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(股·金·币)</span></div><div class="stat-value num" id="totalPL">—</div></div>
     <div><div class="stat-label">Wheel 收入 26' <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(已实现)</span></div><div class="stat-value num pos" id="wheelPremium">—</div></div>
-    <div class="roi-total"><div class="stat-label">Total ROI 26' <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(未实现 + 已实现)</span></div><div class="stat-value num" id="totalROI">—</div></div>
+    <div><div class="stat-label">股票买卖净收益 26' <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(OpenD · NVDA 估算)</span></div><div class="stat-value num" id="stockRealized">—</div></div>
+    <div><div class="stat-label">Realized P&amp;L 26' <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(股票 + Wheel · 估算)</span></div><div class="stat-value num" id="totalRealized">—</div></div>
+    <div class="roi-total"><div class="stat-label">Total ROI / 成本口径 <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(未实现含期权 + 已实现 · 非严格 YTD)</span></div><div class="stat-value num" id="totalROI">—</div></div>
   </div>
+</div>
+
+<div class="timestamp" style="margin-top:6px">2026-10-03 利润对账：股票买卖约 US$11,031.09（NVDA 估算）；BOXX 已含在 Wheel/MMF，不重复累加。价格与现金仍为 10/01 快照。</div>
+
+<h2>2026 已实现股票买卖 <span style="font-weight:400;text-transform:none;color:var(--hint);font-size:10px">(Moomoo US · 扣买卖费用 · 不含股息/premium)</span></h2>
+<div class="card">
+  <table><thead><tr><th>股票/ETF</th><th class="num">卖出股数</th><th class="num">净收益 USD</th><th>核对状态</th></tr></thead><tbody><tr><td>NVDA</td><td class="num">200</td><td class="num pos">≈ +7,644.35</td><td>成本反推估算</td></tr><tr><td>AMZN</td><td class="num">100</td><td class="num pos">+3,454.64</td><td>成交/费用已核对</td></tr><tr><td>GOOGL</td><td class="num">100</td><td class="num neg">-67.90</td><td>成交/费用已核对</td></tr><tr><td>BOXX</td><td class="num">165</td><td class="num pos">+45.70</td><td>已含在 Wheel/MMF，不再累加</td></tr></tbody></table>
+  <div class="footnote">2026-10-03 OpenD 利润对账（价格仍为 10/01 快照）。股票/ETF 净收益约 <b>US$11,031.09</b>，其中 AMZN、GOOGL 合计 <b>US$3,386.74</b> 已核对；NVDA 早期 0.4 股成本缺失，用当前平均成本反推，故不是精确结单数字。买入费用按已卖出比例分摊，卖出费用全扣。已复核 Sheet MMF 公式包含 BOXX 收益，因此 BOXX 不重复加入股票收益。股票收益只加到已实现与 ROI，<b>不重复加到现金或净值</b>。</div>
+  <div class="footnote">Moi 提供的 Moomoo YTD Trend Analysis cumulative P/L：<b>US$35,906.50（含未实现）</b>。该值尚未由 OpenD 独立验证/对平；是期间收益，不等同于当前持仓相对购入成本的浮盈，也不涵盖本看板的 M+、马股、实物金与 HATA。<b>不得当作已实现或用差额硬凑</b>。看板 Total ROI 是当前成本口径金额 ÷ 当前 deployed capital，非 Moomoo 的 YTD 回报率；股票股息未另行纳入。</div>
 </div>
 
 <h2>Allocation <span style="font-weight:400;text-transform:none;color:var(--hint);font-size:10px">(MY stocks 已扣 margin loan · 其余按 gross)</span></h2>
@@ -324,6 +335,8 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     cash:{usd:33423.86,myr:0},
     options:[{"ul":"PLTR","side":"call","kind":"covered","strike":225.0,"expiry":"2026-11-06","contracts":1,"premium":405,"closePx":3.25,"expPL":80,"opn":null,"ulPx":187.05}],
     wheelRealized:16189.10,
+    stockRealizedUsd:11031.09,
+    stockRealizedEstimated:true,
     fx:4.0865
   };
 
@@ -561,8 +574,11 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     const investedMv=usMvMyr+myMv+goldMv+cryptoMv;
     const totalPL=investedMv-grossInvested;
     const returnPct=totalDeployed?totalPL/totalDeployed*100:0;
+    const stockRealizedUsd=Number.isFinite(holdings.stockRealizedUsd)?holdings.stockRealizedUsd:0;
     const realizedMyr=realized*fx;
-    const totalROI=totalPL+realizedMyr;
+    const stockRealizedMyr=stockRealizedUsd*fx;
+    const totalRealizedMyr=realizedMyr+stockRealizedMyr;
+    const totalROI=totalPL+openExpPL*fx+totalRealizedMyr;
     const totalROIPct=totalDeployed?totalROI/totalDeployed*100:0;
 
     document.getElementById('netWorth').textContent=fmt(netWorth,0);
@@ -572,7 +588,10 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     document.getElementById('totalPL').innerHTML=`<span class="${colorOf(totalPL)}">${fmtSigned(totalPL,0)}</span> <span style="font-size:11px;font-weight:400;color:var(--muted)">(${fmtPct(returnPct)})</span>`;
     document.getElementById('totalCost').textContent=fmt(totalDeployed,0);
     document.getElementById('wheelPremium').textContent=fmtSigned(realizedMyr,0);
-    document.getElementById('totalROI').innerHTML=`<span class="${colorOf(totalROI)}">${fmtSigned(totalROI,0)}</span> <span style="font-size:11px;font-weight:400;color:var(--muted)">(${fmtPct(totalROIPct)})</span>`;
+    const approx=holdings.stockRealizedEstimated?'≈ ':'';
+    document.getElementById('stockRealized').innerHTML=`<span class="${colorOf(stockRealizedMyr)}">${approx}${fmtSigned(stockRealizedMyr,0)}</span>`;
+    document.getElementById('totalRealized').innerHTML=`<span class="${colorOf(totalRealizedMyr)}">${approx}${fmtSigned(totalRealizedMyr,0)}</span>`;
+    document.getElementById('totalROI').innerHTML=`<span class="${colorOf(totalROI)}">${approx}${fmtSigned(totalROI,0)}</span> <span style="font-size:11px;font-weight:400;color:var(--muted)">(${fmtPct(totalROIPct)})</span>`;
 
     const totalCollat0=csp.reduce((a,o)=>a+o.strike*100*o.contracts,0);
     const cashCollatMyr=Math.min(totalCollat0*fx,cashTotal);
@@ -649,9 +668,11 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       if(d.cash)holdings.cash=d.cash;
       if(d.options)holdings.options=d.options;
       if(typeof d.wheelRealized==='number')holdings.wheelRealized=d.wheelRealized;
+      if(typeof d.stockRealizedUsd==='number')holdings.stockRealizedUsd=d.stockRealizedUsd;
+      if(typeof d.stockRealizedEstimated==='boolean')holdings.stockRealizedEstimated=d.stockRealizedEstimated;
       if(d.fx&&typeof d.fx.usdMyr==='number')holdings.fx=d.fx.usdMyr;
       if(d.constants&&typeof d.constants.marginLoanMyr==='number')margin=d.constants.marginLoanMyr;
-      document.getElementById('dataSrc').textContent=' · 数据载自 portfolio-data.json'+(d.meta&&d.meta.lastRefresh?'（'+d.meta.lastRefresh+'）':'');
+      document.getElementById('dataSrc').textContent=' · 数据载自 portfolio-data.json'+(d.meta&&d.meta.lastRefresh?'（行情 '+d.meta.lastRefresh+'）':'')+(d.meta&&d.meta.profitReconciledAt?' · 利润对账 '+d.meta.profitReconciledAt:'');
       render();
     }catch(e){
       document.getElementById('dataSrc').textContent=' · 用内联快照（portfolio-data.json 未载入：'+String(e.message||e).slice(0,30)+'）';
