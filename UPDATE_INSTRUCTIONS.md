@@ -174,6 +174,7 @@ Hero 的 **Total ROI / 成本口径** 显示 `totalROI` 金额和 `totalROIPct`�
 - **BOXX 不能重复算**：Sheet「Wheel 2026」MMF 的 M67 公式已含 BOXX 卖出收益。OpenD BOXX 净收益 $45.7030 只列核对明细、不加入 `stockRealizedUsd`。保留已核准 Wheel/MMF $16,189.10（Sheet 使用舍入卖价，BOXX 较 OpenD 差 $0.7575，暂不调整）。
 - 已实现合计约 **$27,220.19**。新增已实现数字只影响收益与 ROI 展示；不得额外加回 cash、grossAssets 或 netWorth，买卖所得已在现金/再投资持仓中。
 - 原始成交、订单 ID、账户 ID 留在本地工作文件，不上传公开 GitHub；公开只保留汇总与方法。
+- **Owner 页面偏好（2026-10-03）**：不要在看板加入独立的「2026 已实现股票买卖」明细表及其长篇对账说明。保留顶部股票收益、已实现合计与 ROI 汇总及估算标记；详细方法仅留在数据与对账文档，不要在后续刷新时重新添加该区块。
 - 利润对账时间使用 `meta.profitReconciledAt`，与价格刷新 `meta.lastRefresh` 分开。此次价格、现金、期权持仓快照沿用 10/01，不得假称 10/03 全部刷新。
 - Moi 提供的 Moomoo YTD cumulative P/L **$35,906.50**（含未实现）仅作参考，存为 owner-reported、`verifiedByOpenD=false`、`status=not_reconciled`；不得写成已实现或用差额填补未知成本。
 
