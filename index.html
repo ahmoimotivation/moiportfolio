@@ -154,13 +154,13 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     <div><div class="stat-label">Total deployed <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(扣 margin)</span></div><div class="stat-value num" id="totalCost">—</div></div>
     <div><div class="stat-label">Unrealized P&L <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(股·金·币)</span></div><div class="stat-value num" id="totalPL">—</div></div>
     <div><div class="stat-label">Wheel 收入 26' <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(已实现)</span></div><div class="stat-value num pos" id="wheelPremium">—</div></div>
-    <div><div class="stat-label">股票买卖净收益 26' <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(OpenD · NVDA 估算)</span></div><div class="stat-value num" id="stockRealized">—</div></div>
+    <div><div class="stat-label">股票买卖净收益 26' <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(Moomoo + M+ · 含估算)</span></div><div class="stat-value num" id="stockRealized">—</div></div>
     <div><div class="stat-label">Realized P&amp;L 26' <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(股票 + Wheel · 估算)</span></div><div class="stat-value num" id="totalRealized">—</div></div>
     <div class="roi-total"><div class="stat-label">Total ROI / 成本口径 <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(未实现含期权 + 已实现 · 非严格 YTD)</span></div><div class="stat-value num" id="totalROI">—</div></div>
   </div>
 </div>
 
-<div class="timestamp" style="margin-top:6px">2026-10-03 利润对账：股票买卖约 US$11,031.09（NVDA 估算）；BOXX 已含在 Wheel/MMF，不重复累加。价格与现金仍为 10/01 快照。</div>
+<div class="timestamp" style="margin-top:6px">2026-10-04 利润对账：M+ 本年卖出 −US$56.73（12/31 市值基准，结单截至 09/30）已计入汇总；原 Moomoo 成本口径及估算沿用，非统一 YTD。价格与现金仍为 10/01 快照。</div>
 
 <h2>Allocation <span style="font-weight:400;text-transform:none;color:var(--hint);font-size:10px">(MY stocks 已扣 margin loan · 其余按 gross)</span></h2>
 <div class="card">
@@ -330,6 +330,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     wheelRealized:16189.10,
     stockRealizedUsd:11031.09,
     stockRealizedEstimated:true,
+    mplusRealizedUsd:-56.73,
     fx:4.0865
   };
 
@@ -567,7 +568,9 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     const investedMv=usMvMyr+myMv+goldMv+cryptoMv;
     const totalPL=investedMv-grossInvested;
     const returnPct=totalDeployed?totalPL/totalDeployed*100:0;
-    const stockRealizedUsd=Number.isFinite(holdings.stockRealizedUsd)?holdings.stockRealizedUsd:0;
+    const moomooStockRealizedUsd=Number.isFinite(holdings.stockRealizedUsd)?holdings.stockRealizedUsd:0;
+    const mplusRealizedUsd=Number.isFinite(holdings.mplusRealizedUsd)?holdings.mplusRealizedUsd:0;
+    const stockRealizedUsd=moomooStockRealizedUsd+mplusRealizedUsd;
     const realizedMyr=realized*fx;
     const stockRealizedMyr=stockRealizedUsd*fx;
     const totalRealizedMyr=realizedMyr+stockRealizedMyr;
@@ -662,6 +665,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       if(d.options)holdings.options=d.options;
       if(typeof d.wheelRealized==='number')holdings.wheelRealized=d.wheelRealized;
       if(typeof d.stockRealizedUsd==='number')holdings.stockRealizedUsd=d.stockRealizedUsd;
+      if(typeof d.mplusRealizedUsd==='number')holdings.mplusRealizedUsd=d.mplusRealizedUsd;
       if(typeof d.stockRealizedEstimated==='boolean')holdings.stockRealizedEstimated=d.stockRealizedEstimated;
       if(d.fx&&typeof d.fx.usdMyr==='number')holdings.fx=d.fx.usdMyr;
       if(d.constants&&typeof d.constants.marginLoanMyr==='number')margin=d.constants.marginLoanMyr;

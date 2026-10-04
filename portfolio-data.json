@@ -25,8 +25,8 @@
       "usdMyr": "https://www.investing.com/currencies/usd-myr-historical-data",
       "usdHkd": "https://ca.investing.com/currencies/usd-hkd-historical-data"
     },
-    "profitReconciledAt": "2026-10-03T05:04:46+08:00",
-    "profitReconciliationNote": "2026 股票买卖净收益约 US$11,031.09（NVDA 平均成本反推估算；AMZN/GOOGL $3,386.74 已核对）。BOXX 收益已含于 Wheel/MMF，避免重复累加。Wheel 已实现 $16,189.10 不变；只更新收益展示，不改资产/现金/净值或价格快照。",
+    "profitReconciledAt": "2026-10-04",
+    "profitReconciliationNote": "补入 M+ 2026 卖出净收益 −US$56.73：LLY −$607.46、NVDA +$550.73，以 2025-12-31 结单收盘市值为年初基准，剔除此前涨跌，已扣卖出费；结单核对至 09/30。原 Moomoo 股票成本口径 $11,031.09（NVDA 估算）及 Wheel/MMF $16,189.10 沿用，不重复加入 BOXX；合计非统一 YTD。资产/现金/行情仍为 10/01 快照。",
     "moomooYtdReference": {
       "cumulativePlUsd": 35906.5,
       "reportedAt": "2026-10-03",
@@ -34,7 +34,8 @@
       "verifiedByOpenD": false,
       "status": "not_reconciled",
       "note": "含未实现；OpenD 本次没有直接提供该 Trend Analysis 指标。与看板跨券商、当前持仓购入成本口径不等同，不能作为已实现收益或强制差额倒算。"
-    }
+    },
+    "mplusStatementsThrough": "2026-09-30"
   },
 
   "constants": {
@@ -179,6 +180,105 @@
     "overlapEvidence": "只读复核 Wheel 2026!M67 公式：BOXX 75 股与 90 股卖出净额 − 165 股买入成本 − 买入费 + MMF $58.71；已包含 BOXX，不改 Sheet 已核准总额。Sheet 以卖价 $117.68/$117.69 舍入，BOXX 净收益 $44.9455；OpenD 实际 $45.7030，$0.7575 差额暂沿用 Sheet，不重复加入。"
   },
 
+  "mplusRealizedUsd": -56.73,
+
+  "mplusRealizedDetail": {
+    "year": 2026,
+    "periodStart": "2026-01-01",
+    "statementsThrough": "2026-09-30",
+    "reconciledOn": "2026-10-04",
+    "currency": "USD",
+    "method": "Year-opening mark-to-market attribution: net sale proceeds minus 2025-12-31 statement closing price × shares sold",
+    "scope": "M+ 股票卖出，剔除 2026 前涨跌；含 2026 卖出费用；不含股票股息/现金利息、未卖浮盈、2025 买入费或 2025 卖出交易",
+    "status": "statement_reconciled",
+    "totalUsd": -56.73,
+    "sales": [
+      {
+        "ticker": "LLY",
+        "tradeDate": "2026-03-11",
+        "soldQty": 7,
+        "openingMarkPriceUsd": 1079.75,
+        "openingValueUsd": 7558.25,
+        "grossProceedsUsd": 6965.0,
+        "sellFeesUsd": 14.21,
+        "netProceedsUsd": 6950.79,
+        "profit2026Usd": -607.46,
+        "source": "Mplus March statement.pdf",
+        "sourcePages": 4
+      },
+      {
+        "ticker": "NVDA",
+        "tradeDate": "2026-06-15",
+        "soldQty": 26,
+        "openingMarkPriceUsd": 187.54,
+        "openingValueUsd": 4876.04,
+        "grossProceedsUsd": 5437.9,
+        "sellFeesUsd": 11.13,
+        "netProceedsUsd": 5426.77,
+        "profit2026Usd": 550.73,
+        "source": "Mplus June Statement.pdf",
+        "sourcePages": "3–4"
+      }
+    ],
+    "checks": {
+      "monthsReviewed": 9,
+      "year2026TradeCount": 4,
+      "sellCount": 2,
+      "buyCount": 2,
+      "monthEndShareQuantitiesAllMatched": true,
+      "feesTieToNetProceeds": true
+    },
+    "sourceStatements": [
+      {
+        "period": "2025-12",
+        "file": "Mplus Dec 2025 Statement.pdf"
+      },
+      {
+        "period": "2026-01",
+        "file": "Mplus Jan statement.pdf"
+      },
+      {
+        "period": "2026-02",
+        "file": "Mplus Feb statement.pdf"
+      },
+      {
+        "period": "2026-03",
+        "file": "Mplus March statement.pdf"
+      },
+      {
+        "period": "2026-04",
+        "file": "Mplus April statement.pdf"
+      },
+      {
+        "period": "2026-05",
+        "file": "Mplus May Statement.pdf"
+      },
+      {
+        "period": "2026-06",
+        "file": "Mplus June Statement.pdf"
+      },
+      {
+        "period": "2026-07",
+        "file": "Mplus july statement.pdf"
+      },
+      {
+        "period": "2026-08",
+        "file": "Mplus Aug Statement.pdf"
+      },
+      {
+        "period": "2026-09",
+        "file": "Mplus Sept Statement.pdf"
+      }
+    ],
+    "notes": [
+      "2025-12 Holdings Price 是 Close Price，而非原购入成本；用于 owner 指定的本年归属口径，不是券商税务/生命周期 realized P/L。",
+      "LLY 7 股在 2026-03-11 全卖，NVDA 26 股在 2026-06-15 全卖；其他持仓未卖，不计已实现。",
+      "META 10 股、MSFT 14 股是本年买入但未卖，其买入费用留待该持仓出售时处理，不计为本次卖出净收益。",
+      "本次未调整旧 Moomoo 的历史买入成本口径与 NVDA 估算，合计不是统一年初市值口径的 YTD 回报。",
+      "只覆盖已提供的 2026-01 至 2026-09 结单；2026-10-01 至 10-04 未核对，不虚构交易。"
+    ]
+  },
+
   "wheelRealized": 16189.10,
 
   "ulPxFallback": {
@@ -207,10 +307,12 @@
     "soldPutLiabilityUsd": 0,
     "soldCallLiabilityUsd": 325.0,
     "soldOptionLiabilityUsd": 325.0,
-    "realizedProfitUsd": 27220.19,
-    "realizedProfitMyr": 111235.31,
+    "realizedProfitUsd": 27163.46,
+    "realizedProfitMyr": 111003.48,
     "realizedProfitEstimated": true,
-    "costBasisReturnMyr": 159957.58,
-    "costBasisReturnPct": 11.8535
+    "costBasisReturnMyr": 159725.76,
+    "costBasisReturnPct": 11.8363,
+    "stockRealizedCombinedUsd": 10974.36,
+    "mplusRealizedMyr": -231.83
   }
 }

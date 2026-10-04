@@ -17,6 +17,7 @@
    - `cash.myr` = 0（Owner 2026-09-30 指定 Idle Cash 只算 Moomoo money market fund + wallet；不得再加回 Maybank 现金/货币基金）
    - `wheelRealized`
    - `stockRealizedUsd` / `stockRealizedEstimated` / `stockRealizedDetail`（须重新对账历史成交与费用，不得随每日行情刷新重置）
+   - `mplusRealizedUsd` / `mplusRealizedDetail`（仅凭新上传的 M+ 结单重新对账；不得逐次累加同一结单或用 OpenD 替代）
    - 任何持仓的 `qty` 和 `cost`
    - `index.html` 的 CSS / HTML 结构
    - **Allocation 饼图的 MY stocks 口径**：`value = Math.max(0, myMv - margin)`（net equity，非 gross）。这是 Moi 在 2026-07-07 明确指定的，不要改回 gross。
@@ -156,7 +157,7 @@ netWorth    = grossAssets − margin − soldOptionLiabMyr
 grossInvested = usCostMyr + myCost + goldCost + cryptoCost
 totalDeployed = grossInvested + cashTotal − margin
 unrealizedPL  = (usMvMyr + myMv + goldMv + cryptoMv) − grossInvested
-realizedMyr   = (wheelRealized + stockRealizedUsd) × fx
+realizedMyr   = (wheelRealized + stockRealizedUsd + mplusRealizedUsd) × fx
 openOptionPL  = Σ(options[].expPL) × fx
 totalROI      = unrealizedPL + openOptionPL + realizedMyr
 totalROIPct   = totalROI / totalDeployed × 100
@@ -179,6 +180,19 @@ Hero 的 **Total ROI / 成本口径** 显示 `totalROI` 金额和 `totalROIPct`�
 - Moi 提供的 Moomoo YTD cumulative P/L **$35,906.50**（含未实现）仅作参考，存为 owner-reported、`verifiedByOpenD=false`、`status=not_reconciled`；不得写成已实现或用差额填补未知成本。
 
 开仓 short call 的 premium 已进入 wallet；净值须扣除它当前的平仓负债，以免高估资产。期权浮盈亏直接用 OpenD `unrealized_pl`，显示于期权区；未平仓 premium 不自动加入 `wheelRealized`。Covered call 由标的股票覆盖，不按 sold-put strike 锁定现金。
+
+### 5.2 M+ 本年卖出收益（Owner 2026-10-04 指定，剔除 2026 前涨跌）
+
+- `stockRealizedUsd` 保留原 Moomoo 股票数，**不包含 M+**；M+ 单独保存在 `mplusRealizedUsd`。页面股票收益汇总 = 两者之和；已实现合计再加 `wheelRealized`，不可重复累计。
+- 本次来源：2025-12 + 2026-01 至 2026-09 十份 M+ 月结单。只覆盖截至 **2026-09-30**，不得假称已核对 10 月交易。
+- 2025 年底已持有、2026 年出售的股数，以 **2025-12-31 Holding Summary 的 Close Price × 已卖股数** 为期初基准，不用历史购入成本。2026 归属卖出收益 = 已扣费卖出净额 − 期初基准市值。这是 owner 指定的期间归属口径，不是券商生命周期/税务已实现。
+- 必须保留期间亏损，不能只累计上涨股票；也不得把仍持有股票的浮盈加入已实现。本年新买股票按本年买入成本和实际费用匹配，未卖部分留待以后出售。
+- LLY 7 股：年初 $1,079.75/股，03/11 卖出 $995/股，净入 $6,950.79（费用 $14.21）；2026 归属 **−$607.46**。
+- NVDA 26 股：年初 $187.54/股，06/15 卖出 $209.15/股，净入 $5,426.77（费用 $11.13）；2026 归属 **+$550.73**。
+- `mplusRealizedUsd` = **−$56.73**（1–9 月；股票卖出净收益，不含股息/现金利息）。META 买 10 股、MSFT 买 14 股而未卖，不计实现收益。已核对每月持仓数量与全部四笔成交一致。
+- 本次**不重算原 Moomoo 的历史成本口径**；Moomoo + M+ 的合计仍是混合口径，不能冒充统一、严格的 YTD 累计 P/L。
+- 已实现合计沿用 Moomoo 股票约 $11,031.09 + Wheel/MMF $16,189.10 − M+ $56.73 = **约 $27,163.46**（Moomoo NVDA 仍有估算）。只更新收益/ROI，净值、闲置现金、持仓成本数量与行情不重复增加。
+- 不上传原始 PDF、姓名住址、账户号、合同号；公开 GitHub 只保存收益汇总、计算方法、来源文件名与页码。页面不得重新加入已移除的独立股票明细表。
 
 ### LSR（margin health，Public Bank）
 ```
