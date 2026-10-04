@@ -3,7 +3,8 @@
 Moi 的投资组合看板 + 完整更新规程。设计成**任何 AI 拿到这个 repo 链接就能接手更新**。
 
 🔗 **看板**：[index.html](./index.html)（下载后用浏览器打开，或开 GitHub Pages）
-📊 **数据**：[portfolio-data.json](./portfolio-data.json) ← 唯一真源
+📊 **当前组合数据**：[portfolio-data.json](./portfolio-data.json) ← 当前持仓/行情唯一真源
+📅 **2026 区间盈亏**：[performance-2026.json](./performance-2026.json) · [口径与覆盖](./PERFORMANCE_2026.md)
 📖 **更新规程**：[UPDATE_INSTRUCTIONS.md](./UPDATE_INSTRUCTIONS.md) ← **AI 请先读这个**
 
 ---
@@ -19,7 +20,17 @@ Moi 的投资组合看板 + 完整更新规程。设计成**任何 AI 拿到这�
 | 现金 | USD（含货币基金）+ MYR | Moomoo / Maybank |
 | 期权 | Wheel 策略（sold put → covered call）| Moomoo |
 
-显示货币统一为 **MYR**。净资产已扣除 Public Bank margin loan 及 sold-put liability。
+当前资产看板货币为 **MYR**。净资产已扣除 Public Bank margin loan 及所有 sold-option liability。
+
+## 2026 区间盈亏
+
+看板新增按月、年初至已核对日和自选日期，分别显示区间已实现、未实现**变化**、合计盈亏及月度图。
+
+- 当前仅 **Moomoo / M+ 美股子组合**，金额 USD，日期按美股交易日；不是全组合收益。
+- Moomoo 覆盖至 2026-10-02，M+ 至 2026-09-30；合计只到共同覆盖日，不推算缺资料日期。
+- 以 2025-12-31 美股收盘重置成本，排除 2026 前涨跌；卖出已实现加**浮盈变化**，不重复计算。
+- 不含期权/Wheel、基金、股息利息、马股、黄金、BTC 及少量赠股。原顶部收益/ROI 不变，与此处期间口径不同。
+- 下载 `index.html` 可离线使用内嵌历史快照；在线历史真源是 `performance-2026.json`。测试：`node tests/performance.test.cjs`。
 
 ---
 
