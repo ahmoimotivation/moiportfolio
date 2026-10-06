@@ -144,7 +144,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     <h1>Moi Investment Portfolio</h1>
     <div class="timestamp">股票/Idle Cash: Moomoo (wallet · USD 货币基金) · 马股: Public Bank</div>
     <div class="timestamp" id="syncStatus" style="margin-top:2px">期权来自 Moomoo</div>
-    <div class="timestamp" style="margin-top:2px;color:var(--red)">⚠⚠ 2026-10-01（周四 09:35 MYT）刷新：<b>LSR 71.68%，超出 70% margin-call 线 1.68 pp</b>。PLTR $225 covered call 1 张（11/06 到期）已更新，浮盈 <b>US$80</b>。Idle Cash <b>RM136,587</b>（Moomoo wallet + money market fund）。</div>
+    <div class="timestamp" style="margin-top:2px;color:var(--red)">⚠⚠ 2026-10-06（周二 20:49 MYT）刷新：<b>LSR 71.86%，超出 70% margin-call 线 1.86 pp</b>（按固定贷款与市值估算）。PLTR $225 covered call 1 张（11/06 到期），浮盈 <b>US$124</b>。Idle Cash <b>US$33,457.19 / RM136,699</b>（只算 Moomoo wallet + USD money market fund）。</div>
   </div>
   <div class="toggle-row">
     <span id="goldModeLabel">Gold: UOB buyback est.</span>
@@ -169,7 +169,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
   </div>
 </div>
 
-<div class="timestamp" style="margin-top:6px">2026-10-04 利润对账：M+ 本年卖出 −US$56.73（12/31 市值基准，结单截至 09/30）已计入汇总；原 Moomoo 成本口径及估算沿用，非统一 YTD。价格与现金仍为 10/01 快照。</div>
+<div class="timestamp" style="margin-top:6px">2026-10-04 利润对账：M+ 本年卖出 −US$56.73（12/31 市值基准，结单截至 09/30）已计入汇总；原 Moomoo 成本口径及估算沿用，非统一 YTD。价格与现金已于 10/06 刷新。</div>
 
 <h2>2026 区间盈亏 <span style="font-weight:400;text-transform:none;color:var(--hint);font-size:10px">美股子组合 · USD · 非全组合</span></h2>
 <section class="card perf-card" aria-labelledby="perfHeading">
@@ -322,7 +322,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 </div>
 
 <div style="height:10px"></div>
-<div class="footnote" style="text-align:center;padding-bottom:12px">2026-10-01 09:35 MYT 刷新。OpenD：美股/现金/期权已核对；PLTR 11/06 $225 short call 1 张，premium $405，close $3.25，浮盈 +$80（OTM；139 股覆盖），净值已扣 US$325 平仓负债。Google Chrome Search：MAYBANK 9.990（09:16 MYT）· IGBREIT 2.810 · SUNREIT 2.040（KLSE Screener 延迟报价）· Kitco 黄金 spot bid $4,160.50/oz（09:32 MYT）· BTC $83,500.00（09:30 MYT）。USD/MYR 4.0865 · USD/HKD 7.8466（WebSearch / Investing.com）。Idle Cash 只算 Moomoo：us_cash $694.72 + USD 货币基金 $32,729.14（fund_assets 256,812.49 HKD ÷ 7.8466） = RM136,587。LSR 71.68%；Wheel 已实现保持 US$16,189.10，开仓 premium 不重复计入已实现。</div>
+<div class="footnote" style="text-align:center;padding-bottom:12px">2026-10-06 20:49 MYT 刷新。OpenD 20:42 MYT：Moomoo-only 持股采用盘前 nominal_price；blended/M+ 的 META/MSFT/QQQ/UNH 与期权 ulPx/Fallback 采用 snapshot last_price（10/05 常规收盘）。PLTR 11/06 $225 short call 1 张，premium $405，close $2.81，浮盈 +$124（OTM；139 股覆盖），净值已扣 US$281 平仓负债；无新成交/行权。Google Chrome Search：MAYBANK 9.970（10/06 17:00 MYT）· IGBREIT 2.780 · SUNREIT 2.040（KLSE Screener 10/06 日行情，延迟报价）· Kitco 黄金 spot bid $4,171.50/oz（20:44 MYT）· BTC $86,256.73（20:41 MYT）。USD/MYR 4.0858（WebSearch / BNM 10/06 KL 参考汇率，非即时价）；USD/HKD 7.8478（WebSearch / Investing.com 10/06，页面时区未列）。Idle Cash 只算 Moomoo：us_cash $714.04 + USD 货币基金 $32,743.15（fund_assets 256,961.68 HKD ÷ 7.8478） = RM136,699。LSR 71.86%；NVDA 较上次 10/01 大幅变动 +5.01%，采用核实新价。Wheel/MMF 已实现 US$16,189.10、股票收益及利润对账日 10/04 保持；开仓 premium 不重复计入已实现。历史区间资料未扩展：Moomoo 至 10/02，M+ / 合计至 09/30。</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <script>
@@ -341,30 +341,30 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
      ========================================================================== */
   const holdings={
     us:[
-      {t:"GOOGL",name:"Alphabet-A",qty:100,cost:387.50,px:350.77,cat:"Hyperscaler",note:"Moomoo · 6/18 $387.5 put 接货"},
-      {t:"META",name:"Meta",qty:55,cost:611.42,px:725.18,cat:"Hyperscaler",note:"blended · M+ 38 @ $639.45 + Moomoo 17 @ $548.78（8/1 加仓）"},
-      {t:"MSFT",name:"Microsoft",qty:63,cost:432.45,px:512.9,cat:"Hyperscaler",note:"blended · Moomoo 17 + M+ 46（6/15 加仓 14 股 @ $398.28）"},
-      {t:"NVDA",name:"Nvidia",qty:110.4,cost:214.01,px:229.72,cat:"AI Capex",note:"Moomoo only（平均成本 $214.01 · option premium 已计入下方 wheel 收入）· M+ 26 股 6/15 @ $209.15 已卖出"},
-      {t:"SOXX",name:"iShares Semiconductor ETF",qty:18,cost:513.09,px:570.83,cat:"AI Capex",note:"Moomoo · 8/1 买入（BOXX 换股）"},
-      {t:"NOW",name:"ServiceNow",qty:200,cost:108.00,px:134.3,cat:"SaaS",note:"Moomoo · $108 put 行权接货 (2 张)"},
-      {t:"PLTR",name:"Palantir",qty:139,cost:134.499,px:187.3,cat:"Defense",note:"Moomoo · 6/29 买 39 + 7/2 $141 put 行权接货 100 股 · 8/3 财报后续涨"},
-      {t:"QQQ",name:"Invesco QQQ",qty:46,cost:435.53,px:739.77,cat:"ETF",note:"M+ · 2026-07-03"},
-      {t:"UNH",name:"UnitedHealth",qty:31,cost:319.89,px:367.08,cat:"Healthcare",note:"M+ · 2026-07-03"},
+      {t:"GOOGL",name:"Alphabet-A",qty:100,cost:387.50,px:347.3,cat:"Hyperscaler",note:"Moomoo · 6/18 $387.5 put 接货"},
+      {t:"META",name:"Meta",qty:55,cost:611.42,px:741.9,cat:"Hyperscaler",note:"blended · M+ 38 @ $639.45 + Moomoo 17 @ $548.78（8/1 加仓）"},
+      {t:"MSFT",name:"Microsoft",qty:63,cost:432.45,px:525.18,cat:"Hyperscaler",note:"blended · Moomoo 17 + M+ 46（6/15 加仓 14 股 @ $398.28）"},
+      {t:"NVDA",name:"Nvidia",qty:110.4,cost:214.01,px:241.218,cat:"AI Capex",note:"Moomoo only（平均成本 $214.01 · option premium 已计入下方 wheel 收入）· M+ 26 股 6/15 @ $209.15 已卖出"},
+      {t:"SOXX",name:"iShares Semiconductor ETF",qty:18,cost:513.09,px:591.7,cat:"AI Capex",note:"Moomoo · 8/1 买入（BOXX 换股）"},
+      {t:"NOW",name:"ServiceNow",qty:200,cost:108.00,px:137.67,cat:"SaaS",note:"Moomoo · $108 put 行权接货 (2 张)"},
+      {t:"PLTR",name:"Palantir",qty:139,cost:134.499,px:190.99,cat:"Defense",note:"Moomoo · 6/29 买 39 + 7/2 $141 put 行权接货 100 股 · 8/3 财报后续涨"},
+      {t:"QQQ",name:"Invesco QQQ",qty:46,cost:435.53,px:756.2,cat:"ETF",note:"M+ · 2026-07-03"},
+      {t:"UNH",name:"UnitedHealth",qty:31,cost:319.89,px:378.58,cat:"Healthcare",note:"M+ · 2026-07-03"},
     ],
     my:[
-      {t:"IGBREIT",name:"IGB REIT",qty:11800,cost:2.67,px:2.81,note:"cash"},
-      {t:"MAYBANK",name:"Malayan Banking",qty:45300,cost:11.6964,px:9.99,note:"partial margin"},
+      {t:"IGBREIT",name:"IGB REIT",qty:11800,cost:2.67,px:2.78,note:"cash"},
+      {t:"MAYBANK",name:"Malayan Banking",qty:45300,cost:11.6964,px:9.97,note:"partial margin"},
       {t:"SUNREIT",name:"Sunway REIT",qty:10000,cost:2.11,px:2.04,note:"cash"},
     ],
-    gold:{oz:7,costPerOz:21246,spotUsd:4160.5},
-    crypto:{qty:0.0351549,costMyr:15994.97,pxUsd:83500,broker:"HATA"},
-    cash:{usd:33423.86,myr:0},
-    options:[{"ul":"PLTR","side":"call","kind":"covered","strike":225.0,"expiry":"2026-11-06","contracts":1,"premium":405,"closePx":3.25,"expPL":80,"opn":null,"ulPx":187.05}],
+    gold:{oz:7,costPerOz:21246,spotUsd:4171.5},
+    crypto:{qty:0.0351549,costMyr:15994.97,pxUsd:86256.73,broker:"HATA"},
+    cash:{usd:33457.19,myr:0},
+    options:[{"ul":"PLTR","side":"call","kind":"covered","strike":225.0,"expiry":"2026-11-06","contracts":1,"premium":405,"closePx":2.81,"expPL":124.0,"opn":null,"ulPx":189.4}],
     wheelRealized:16189.10,
     stockRealizedUsd:11031.09,
     stockRealizedEstimated:true,
     mplusRealizedUsd:-56.73,
-    fx:4.0865
+    fx:4.0858
   };
 
   const catColors={'AI Capex':'#76b900','Hyperscaler':'#1b5ea8','SaaS':'#7c3aed','Healthcare':'#0f7a3a','Defense':'#c53030','ETF':'#b8620a'};
@@ -500,7 +500,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     const cashTotal=cashUsdMyr+holdings.cash.myr;
     document.getElementById('cashBody').innerHTML=`
       <tr><td>USD cash <span class="chip chip-info">Moomoo</span>
-        <div class="ticker-note">us_cash $694.72 + USD 货币基金 $32,729.14（fund_assets 256,812.49 HKD ÷ 7.8466）</div></td>
+        <div class="ticker-note">us_cash $714.04 + USD 货币基金 $32,743.15（fund_assets 256,961.68 HKD ÷ 7.8478）</div></td>
         <td class="right num">$${fmt(holdings.cash.usd)}</td>
         <td class="right num">${fmt(cashUsdMyr,0)}</td></tr>
       <tr><td>MYR cash <span class="chip chip-info">excluded</span>
@@ -674,7 +674,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     }
   }
 
-  const ulPxFallback={"AMZN":249.15,"GOOGL":344.08,"NVDA":228.38,"PLTR":187.05,"NOW":134.01};
+  const ulPxFallback={"AMZN":251.4,"GOOGL":346.47,"NVDA":238.9,"PLTR":189.4,"NOW":136.08};
 
   function setSyncStatus(t,l){
     const el=document.getElementById('syncStatus');
@@ -711,7 +711,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 
   document.getElementById('goldToggle').addEventListener('change',e=>{goldMode=e.target.checked?'buyback':'spot';render();});
   render();
-  setSyncStatus('⚠⚠ 2026-10-01 已刷新（LSR 71.68%）— PLTR covered call 1 张，浮盈 +$80','warn');
+  setSyncStatus('⚠⚠ 2026-10-06 已刷新（LSR 71.86%）— PLTR covered call 1 张，浮盈 +$124','warn');
   loadFromJson();
 })();
 </script>
