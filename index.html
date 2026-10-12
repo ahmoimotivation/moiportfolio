@@ -144,7 +144,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     <h1>Moi Investment Portfolio</h1>
     <div class="timestamp">股票/Idle Cash: Moomoo (wallet · USD 货币基金) · 马股: Public Bank</div>
     <div class="timestamp" id="syncStatus" style="margin-top:2px">期权来自 Moomoo</div>
-    <div class="timestamp" style="margin-top:2px;color:var(--red)">⚠⚠ 2026-10-12（周一 22:29 MYT）刷新：<b>LSR 72.08%，超出 70% margin-call 线 2.08 pp</b>（固定贷款与市值估算）。PLTR $225 covered call 1 张（11/06），浮亏 <b>US$212.50</b>，OTM；无 sold put。Idle Cash <b>US$33,466.23 / RM136,606</b>（仅 Moomoo wallet + USD money market fund）。⚠ PLTR 平仓价涨幅 >30%，按 SOP 沿用 10/06 的 $2.81（负债 US$281）；OpenD 实际标记 $6.175 / 负债 US$617.50，按实价净值将少 RM1,373.56，为 RM1,420,437。浮亏 -US$212.50 直接采用 OpenD，未使用旧平仓价推算。</div>
+    <div class="timestamp" style="margin-top:2px;color:var(--red)">⚠⚠ 2026-10-12（周一 22:32 MYT）刷新：<b>LSR 72.08%，超出 70% margin-call 线 2.08 pp</b>（固定贷款与市值估算）。PLTR $225 covered call 1 张（11/06），浮亏 <b>US$212.50</b>，OTM；无 sold put。Idle Cash <b>US$33,466.23 / RM136,606</b>（仅 Moomoo wallet + USD money market fund）。</div>
   </div>
   <div class="toggle-row">
     <span id="goldModeLabel">Gold: UOB buyback est.</span>
@@ -153,7 +153,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 </div>
 
 <div class="card hero">
-  <div class="hero-label">Net worth (MYR · 期权旧价估算)</div>
+  <div class="hero-label">Net worth (MYR)</div>
   <div class="hero-value num" id="netWorth">—</div>
   <div class="hero-sub">after deducting margin loan &amp; sold-option liability</div>
   <div class="hero-grid">
@@ -322,7 +322,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 </div>
 
 <div style="height:10px"></div>
-<div class="footnote" style="text-align:center;padding-bottom:12px">2026-10-12 22:29 MYT 刷新。OpenD 22:19 MYT（10:19 EDT 常规时段）：Moomoo-only 用 positions nominal_price，blended/M+ 用 snapshot last_price；无新成交/行权。PLTR 11/06 $225 short call 1 张，premium $405，OpenD 浮亏 -$212.50（OTM；139 股覆盖）；看板平仓价 $2.81，净值扣 US$281.00 平仓负债。⚠ PLTR 平仓价涨幅 >30%，按 SOP 沿用 10/06 的 $2.81（负债 US$281）；OpenD 实际标记 $6.175 / 负债 US$617.50，按实价净值将少 RM1,373.56，为 RM1,420,437。浮亏 -US$212.50 直接采用 OpenD，未使用旧平仓价推算。 Google Chrome Search：MAYBANK 9.950（10/12 17:00 MYT）· IGBREIT 2.730 · SUNREIT 2.030（KLSE Screener 10/12 日行情，延迟报价）· Kitco 黄金 spot bid $4,162.30/oz（22:22 MYT）· BTC $82,909.49（22:21 MYT）。USD/MYR 4.0819（WebSearch / BNM 10/12 KL 参考汇率，非即时价）；USD/HKD 7.8476（WebSearch / Investing.com 10/12 日报价，页面时区未列）。Idle Cash 只算 Moomoo：us_cash $714.13 + USD 货币基金 $32,752.10（fund_assets 257,025.38 HKD ÷ 7.8476） = RM136,606。较上次 10/06 大幅变动：PLTR +8.53%、SOXX -7.67%、NVDA -6.50%。Wheel/MMF US$16,189.10、股票已实现及利润对账日 10/04 保持；开仓 premium 不重复计入已实现。历史区间数据未延长：Moomoo 至 10/02，M+ / 合计至 09/30。</div>
+<div class="footnote" style="text-align:center;padding-bottom:12px">2026-10-12 22:32 MYT 刷新。OpenD 22:19 MYT（10:19 EDT 常规时段）：Moomoo-only 用 positions nominal_price，blended/M+ 用 snapshot last_price；无新成交/行权。PLTR 11/06 $225 short call 1 张，premium $405，OpenD 浮亏 -$212.50（OTM；139 股覆盖）；看板平仓价 $6.175，净值扣 US$617.50 平仓负债。 Google Chrome Search：MAYBANK 9.950（10/12 17:00 MYT）· IGBREIT 2.730 · SUNREIT 2.030（KLSE Screener 10/12 日行情，延迟报价）· Kitco 黄金 spot bid $4,162.30/oz（22:22 MYT）· BTC $82,909.49（22:21 MYT）。USD/MYR 4.0819（WebSearch / BNM 10/12 KL 参考汇率，非即时价）；USD/HKD 7.8476（WebSearch / Investing.com 10/12 日报价，页面时区未列）。Idle Cash 只算 Moomoo：us_cash $714.13 + USD 货币基金 $32,752.10（fund_assets 257,025.38 HKD ÷ 7.8476） = RM136,606。较上次 10/06 大幅变动：PLTR +8.53%、SOXX -7.67%、NVDA -6.50%。Wheel/MMF US$16,189.10、股票已实现及利润对账日 10/04 保持；开仓 premium 不重复计入已实现。历史区间数据未延长：Moomoo 至 10/02，M+ / 合计至 09/30。 Owner 本次授权：已复核期权实价可超过 30% 变动，净值完整扣除 US$617.50；独立 quote 10:22 EDT 为 $6.03（bid $5.95 / ask $6.10），与 22:19 持仓快照仅有时点差异。</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <script>
@@ -359,7 +359,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     gold:{oz:7,costPerOz:21246,spotUsd:4162.3},
     crypto:{qty:0.0351549,costMyr:15994.97,pxUsd:82909.49,broker:"HATA"},
     cash:{usd:33466.23,myr:0},
-    options:[{"ul":"PLTR","side":"call","kind":"covered","strike":225.0,"expiry":"2026-11-06","contracts":1,"premium":405,"closePx":2.81,"expPL":-212.5,"opn":null,"ulPx":207.28}],
+    options:[{"ul":"PLTR","side":"call","kind":"covered","strike":225.0,"expiry":"2026-11-06","contracts":1,"premium":405,"closePx":6.175,"expPL":-212.5,"opn":null,"ulPx":207.28}],
     wheelRealized:16189.10,
     stockRealizedUsd:11031.09,
     stockRealizedEstimated:true,
@@ -711,7 +711,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 
   document.getElementById('goldToggle').addEventListener('change',e=>{goldMode=e.target.checked?'buyback':'spot';render();});
   render();
-  setSyncStatus('⚠⚠ 2026-10-12 已刷新（LSR 72.08%）— PLTR call 浮亏 -$212.50；平仓价 >30% 沿旧，净值有旧价限制','warn');
+  setSyncStatus('⚠⚠ 2026-10-12 已刷新（LSR 72.08%）— PLTR call 浮亏 -$212.50','warn');
   loadFromJson();
 })();
 </script>

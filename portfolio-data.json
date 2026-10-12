@@ -5,8 +5,8 @@
     "owner": "Moi",
     "timezone": "Asia/Kuala_Lumpur (MYT)",
     "displayCurrency": "MYR",
-    "lastRefresh": "2026-10-12T22:29:45+08:00",
-    "lastRefreshNote": "OpenD 已连接；10/06–10/12 无新成交、股数未变、未侦测到行权。PLTR 11/06 $225 covered call 1 张，由 139 股覆盖，OTM，OpenD 未实现 -US$212.50。Idle Cash 只算 Moomoo wallet + USD 货币基金；已核准收益和历史区间资料保持，不重复累计。⚠ PLTR 平仓价涨幅 >30%，按 SOP 沿用 10/06 的 $2.81（负债 US$281）；OpenD 实际标记 $6.175 / 负债 US$617.50，按实价净值将少 RM1,373.56，为 RM1,420,437。浮亏 -US$212.50 直接采用 OpenD，未使用旧平仓价推算。",
+    "lastRefresh": "2026-10-12T22:32:29+08:00",
+    "lastRefreshNote": "OpenD 已连接；10/06–10/12 无新成交、股数未变、未侦测到行权。PLTR 11/06 $225 covered call 1 张，由 139 股覆盖，OTM，OpenD 未实现 -US$212.50。Idle Cash 只算 Moomoo wallet + USD 货币基金；已核准收益和历史区间资料保持，不重复累计。Owner 本次明确授权：复核后的期权报价允许超过 30% 变动；平仓价 $6.175 与持仓负债 US$617.50 一致，独立合约 quote 10:22 EDT 为 $6.03（bid $5.95 / ask $6.10），不套用股票异常价格过滤。",
     "priceAsOf": {
       "usStocks": "2026-10-12 10:19 EDT / 22:19 MYT (OpenD：Moomoo-only 用 positions nominal_price，blended/M+ 用 snapshot last_price；均为 10/12 常规交易时段即时价)",
       "myStocks": "2026-10-12 收盘/日行情：MAYBANK 17:00 MYT (Chrome Search → Google Finance); IGBREIT/SUNREIT (Chrome Search → KLSE Screener 30-days Price，已核实 10/12 日期，15 分钟延迟报价)",
@@ -14,7 +14,7 @@
       "goldSpot": "2026-10-12 10:22 New York EDT / 22:22 MYT (Chrome Search → Kitco USD/oz spot bid)",
       "fx": "2026-10-12：USD/MYR 4.0819 (WebSearch → BNM KL reference rate，非即时价); USD/HKD 7.8476 (WebSearch → Investing.com 10/12 日报价，页面时区未列)",
       "cash": "2026-10-12 22:19 MYT (OpenD account_info)",
-      "options": "期权 expPL/持仓/ulPx：2026-10-12 22:19 MYT OpenD；closePx 因 >30% guard 沿用 2026-10-06 $2.81，未刷新平仓负债"
+      "options": "2026-10-12 22:19 MYT (OpenD positions；ulPx/Fallback 用 10:19 EDT snapshot last_price；期权 closePx 按 owner 本次授权采用实价)"
     },
     "sources": {
       "gold": "https://www.kitco.com/charts/gold",
@@ -41,26 +41,25 @@
       "NVDA 较上次 10/06 大幅变动 -6.50%（已核实新价）",
       "SOXX 较上次 10/06 大幅变动 -7.67%（已核实新价）",
       "PLTR 较上次 10/06 大幅变动 +8.53%（已核实新价）",
-      "⚠ PLTR option close 新报价 6.175 较上次偏差 +119.75% >30%；按 SOP 未更新平仓价，沿用 10/06 旧值 2.81，净值存在旧价限制",
+      "PLTR option close 较上次 10/06 大幅变动 +119.75%（已核实新价）",
       "NVDA ulPx 较上次 10/06 大幅变动 -5.59%（已核实新价）",
       "PLTR ulPx 较上次 10/06 大幅变动 +9.44%（已核实新价）",
-      "NOW ulPx 较上次 10/06 大幅变动 +5.18%（已核实新价）",
-      "⚠ PLTR 平仓价涨幅 >30%，按 SOP 沿用 10/06 的 $2.81（负债 US$281）；OpenD 实际标记 $6.175 / 负债 US$617.50，按实价净值将少 RM1,373.56，为 RM1,420,437。浮亏 -US$212.50 直接采用 OpenD，未使用旧平仓价推算。"
+      "NOW ulPx 较上次 10/06 大幅变动 +5.18%（已核实新价）"
     ],
     "optionPriceSanity": {
       "observedAsOf": "2026-10-12T22:19:37+08:00",
       "observedMarkPrice": 6.175,
       "observedLiabilityUsd": 617.5,
-      "displayedClosePx": 2.81,
-      "liabilityGuardHeld": true,
-      "ownerAuthorizedOverride": false,
+      "displayedClosePx": 6.175,
+      "liabilityGuardHeld": false,
+      "ownerAuthorizedOverride": true,
       "independentQuote": {
         "asOf": "2026-10-12 10:22:31 EDT",
         "lastPrice": 6.03,
         "bid": 5.95,
         "ask": 6.1
       },
-      "netWorthOverstatementMyrIfHeld": 1373.56
+      "netWorthOverstatementMyrIfHeld": 0.0
     }
   },
 
@@ -128,7 +127,7 @@
       "expiry": "2026-11-06",
       "contracts": 1,
       "premium": 405,
-      "closePx": 2.81,
+      "closePx": 6.175,
       "expPL": -212.5,
       "opn": null,
       "ulPx": 207.28
@@ -326,13 +325,13 @@
 
   "derived": {
     "_comment": "Recomputed on every refresh. Do not hand-edit — recalculate from the formulas in UPDATE_INSTRUCTIONS.md §5.",
-    "netWorthMyr": 1421811,
+    "netWorthMyr": 1420437,
     "grossAssetsMyr": 1785722,
     "lsrPct": 72.08,
     "lsrBufferToCallPp": -2.08,
     "soldPutLiabilityUsd": 0,
-    "soldCallLiabilityUsd": 281.0,
-    "soldOptionLiabilityUsd": 281.0,
+    "soldCallLiabilityUsd": 617.5,
+    "soldOptionLiabilityUsd": 617.5,
     "realizedProfitUsd": 27163.46,
     "realizedProfitMyr": 110878.53,
     "realizedProfitEstimated": true,
