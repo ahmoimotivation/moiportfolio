@@ -34,6 +34,10 @@ Moi 的投资组合看板 + 完整更新规程。设计成**任何 AI 拿到这�
 
 ---
 
+## Margin loan 的更新来源
+
+Owner 于 2026-10-28 指定每次按私人 Google Sheet 的 **moi journal** 最新已入账净欠款刷新贷款，不再固定使用三月底 RM362,763.77。当前已核对至 10/23，余额 **RM355,897.77**；未计未入账十月利息。股息已减少贷款，不重复加入现金。MAYBANK 报价仍须每次用 Google Chrome 核对。详细步骤见 UPDATE_INSTRUCTIONS.md §4.1；私人 Sheet 链接与账户资料不放公开仓库。
+
 ## 给 AI 的快速上手
 
 复制这段话发给 ChatGPT / Gemini / 任何 AI：

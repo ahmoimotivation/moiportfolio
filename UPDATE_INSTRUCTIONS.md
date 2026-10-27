@@ -12,7 +12,7 @@
 1. **绝不编造价格。** 拿不到就说拿不到，沿用旧值并明确标注 `⚠ 未更新`。一个假价格会让 LSR 算错，Moi 可能因此错过 margin call 预警。
 2. **不下单、不动钱。** 这份工作只读取、计算、更新展示。任何情况下都不要建议或执行买卖。
 3. **严禁触碰**（除非 §3 的行权接货例外，或 Moi 明确指示）：
-   - `constants.marginLoanMyr` = 362763.77
+   - `constants.marginLoanMyr` 须按下方 §4.1 的 moi journal 已入账余额更新，不得再固定为旧的 362763.77
    - `constants.targetLsr` / `marginCallLsr` / `forceSellLsr`
    - `cash.myr` = 0（Owner 2026-09-30 指定 Idle Cash 只算 Moomoo money market fund + wallet；不得再加回 Maybank 现金/货币基金）
    - `wheelRealized`
@@ -21,7 +21,7 @@
    - 任何持仓的 `qty` 和 `cost`
    - `index.html` 的 CSS / HTML 结构
    - **Allocation 饼图的 MY stocks 口径**：`value = Math.max(0, myMv - margin)`（net equity，非 gross）。这是 Moi 在 2026-07-07 明确指定的，不要改回 gross。
-4. **你只更新「价格类」字段**：`px`、`spotUsd`、`pxUsd`、`fx`、`cash.usd`、`options[]`、`ulPxFallback`、`meta.*`、`derived.*`。
+4. **日常刷新更新行情及 journal 贷款余额**：`constants.marginLoanMyr` 按 §4.1 更新；其余字段范围为 `px`、`spotUsd`、`pxUsd`、`fx`、`cash.usd`、`options[]`、`ulPxFallback`、`meta.*`、`derived.*`。
 
 ---
 
@@ -123,6 +123,18 @@ USD 货币基金的取法，按顺序试：
 > 2026-08-01 起 BOXX 已换成 SOXX，货币基金改走 `fund_assets`。
 
 `cash.myr` = **0 固定**。Owner 于 2026-09-30 指定 Idle Cash 只计算 Moomoo USD 货币基金 + wallet；Maybank MYR 现金/货币基金不再计入组合总值。不要自行加回。
+
+---
+
+## 4.1 Margin loan — owner 2026-10-28 指定
+
+- 每次刷新都只读 owner 指定 Google Sheet 的 **moi journal** tab。Sheet 链接留在 owner 私人上下文，不上传公开仓库；缺链接时请 owner 提供，不能自行沿用一个假称最新的余额。
+- 先读 tab 元数据，再读总览和最新已填日志；确认最新实际入账日期、净欠款、利息、股息、现金进出、费用与回补。参考估值列不用于推算贷款。不得把未来预估利息当成已入账。
+- 使用最新日志净欠款（目前 L59，与 B6 一致），并检查前后变动；买入扣款 Q 已含费用，不重复扣 E；股票转入是非现金，不增加贷款；回补只记一次。将 `constants.marginLoanMyr` 同步至 HTML 的 `margin`，重算净值、LSR、净股权与 allocation。
+- 2026-10-28 已逐笔复算 47 行：10/23 股息入账后贷款 **RM355,897.77**。三月底旧余额 RM362,763.77 + 4–9 月利息 RM8,659.16 − 后续股息 RM15,525.16 = RM355,897.77。十月尚未月结，未包含未入账十月利息。
+- 股息已用于减少贷款，不再重复加入现金、Wheel 或股票已实现收入。保留 `meta.marginLoanReconciliation` 的数据日期、复核日与局限；公开仅保存汇总，不上传账户号、银行交易编号或私人 Sheet URL/ID。
+- MAYBANK 价格仍每次通过 Google Chrome 核对，记录实际报价日期；贷款日期与行情日期分开。Dashboard LSR 继续采用马股市值，不能冒充银行认可抵押值口径或正式 margin-call 通知。
+- OpenD 无法登录时，完成可核实的 journal、马股、黄金、BTC 与 FX 更新；美股、现金和期权保留旧快照并在页首标明日期，不能写成全部更新。期权报价超过旧值 30% 时按既有规则处理，历史单次授权不自动延续。
 
 ---
 
@@ -274,7 +286,7 @@ pumpForce = margin × (1 − 69/80)
 2. [ ] 拉价格：美股（OpenD）· MAYBANK/黄金/BTC（Google Chrome Search）· IGBREIT/SUNREIT（Chrome）· USD/MYR (· USD/HKD)
 3. [ ] 拉持仓 + 现金（有 Moomoo 时），侦测行权接货
 4. [ ] Sanity check（§7）
-5. [ ] 更新 `portfolio-data.json` 的价格类字段 + `meta.*`
+5. [ ] 只读 moi journal 最新已入账余额并核对，更新 `constants.marginLoanMyr`；更新行情字段 + `meta.*`，区分每类数据日期
 6. [ ] 把**同样的数字**镜像进 `index.html` 里的 `const holdings={...}` 块
 7. [ ] 更新 `index.html` 顶部 header 那行日期说明 + 底部 footnote
 8. [ ] 按 §5 重算 `derived.*`
@@ -313,3 +325,4 @@ pumpForce = margin × (1 − 69/80)
 | **Wheel** | 卖 put 接货 → 卖 covered call 的轮动策略 |
 | **UOB buyback** | 实物金回购价，估算 = spot × 1.01 |
 | **OpenD** | Moomoo 的本地行情/交易 gateway，必须在 Moi 电脑上运行 |
+
