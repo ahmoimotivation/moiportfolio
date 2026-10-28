@@ -38,6 +38,18 @@ Moi 的投资组合看板 + 完整更新规程。设计成**任何 AI 拿到这�
 
 Owner 于 2026-10-28 指定每次按私人 Google Sheet 的 **moi journal** 最新已入账净欠款刷新贷款，不再固定使用三月底 RM362,763.77。当前已核对至 10/23，余额 **RM355,897.77**；未计未入账十月利息。股息已减少贷款，不重复加入现金。MAYBANK 报价仍须每次用 Google Chrome 核对。详细步骤见 UPDATE_INSTRUCTIONS.md §4.1；私人 Sheet 链接与账户资料不放公开仓库。
 
+## Maybank 损益与本金回报
+
+2026-10-28 按 owner 指示，margin 区改为与 moi journal H6/I6 对应：
+
+- 净损益 = Maybank 股价损益＋已记 Maybank 股息−已记净融资利息。
+- 本金回报率 = 净损益÷（外部现金存入−取出＋Maybank转入本金参考）。
+- 股息再投资仍计收益，不增加外部本金；REIT本金/股息与融资借款不进入该本金分母。当前未另扣交易/账户费用。
+- 每次刷新由 agent 查 Google Sheet 最新流水，包括新增现金、买入和转仓，更新 `marginJournal` 与 Maybank 股数/成本；Maybank 股价继续用 Google Chrome。不能硬编码旧行号或平均成本。
+- 页面显示已同步的聚合快照，私人 Sheet URL/ID 和原始流水不放公开仓库。操作步骤与缺资料处理见 UPDATE_INSTRUCTIONS.md §4.2。
+- Total ROI 只额外计入 Maybank 股息减净利息；净资产已经通过贷款反映股息，不再重复加回。
+- 校验：净损益 **−RM59,271.79**，净本金 **RM157,970**，本金回报 **−37.52%**（日志截至10/23；参考股价RM9.99；转入本金尚为参考）。以后每次重新读取。
+
 ## 给 AI 的快速上手
 
 复制这段话发给 ChatGPT / Gemini / 任何 AI：
@@ -49,7 +61,7 @@ Owner 于 2026-10-28 指定每次按私人 Google Sheet 的 **moi journal** 最�
    §0（严禁触碰的字段）和 §5（计算公式）。
 2. 读 portfolio-data.json 拿到我的持仓。
 3. 帮我查最新价格：美股用 Moomoo；MAYBANK、黄金 spot、BTC 必须用 Google Chrome Search；IGBREIT/SUNREIT 也优先用 Chrome；USD/MYR 用 WebSearch。
-4. 按 §5 重算净资产和 LSR。
+4. 每次重新读取 moi journal 新增流水，按 §4.2 同步 Maybank 本金、股数成本、股息利息与贷款；按 §5 重算净资产和 LSR。
 5. 按 §6 给我中文早晨简报。
 6. 把更新后的完整 portfolio-data.json 给我，我自己贴回去。
 

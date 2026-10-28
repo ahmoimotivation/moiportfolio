@@ -18,10 +18,10 @@
    - `wheelRealized`
    - `stockRealizedUsd` / `stockRealizedEstimated` / `stockRealizedDetail`（须重新对账历史成交与费用，不得随每日行情刷新重置）
    - `mplusRealizedUsd` / `mplusRealizedDetail`（仅凭新上传的 M+ 结单重新对账；不得逐次累加同一结单或用 OpenD 替代）
-   - 任何持仓的 `qty` 和 `cost`
+   - 其他持仓的 `qty` 和 `cost`；Maybank 依 owner 2026-10-28 授权按 §4.2 的 Journal 新买入、转入和最新成本记录同步
    - `index.html` 的 CSS / HTML 结构
    - **Allocation 饼图的 MY stocks 口径**：`value = Math.max(0, myMv - margin)`（net equity，非 gross）。这是 Moi 在 2026-07-07 明确指定的，不要改回 gross。
-4. **日常刷新更新行情及 journal 贷款余额**：`constants.marginLoanMyr` 按 §4.1 更新；其余字段范围为 `px`、`spotUsd`、`pxUsd`、`fx`、`cash.usd`、`options[]`、`ulPxFallback`、`meta.*`、`derived.*`。
+4. **日常刷新更新行情及 journal 贷款余额**：`constants.marginLoanMyr` 按 §4.1 更新；其余字段范围为 `px`、`spotUsd`、`pxUsd`、`fx`、`cash.usd`、`options[]`、`ulPxFallback`、`meta.*`、`derived.*`，以及按 §4.2 更新 `marginJournal`、Maybank `qty/cost`。
 
 ---
 
@@ -104,7 +104,7 @@
 处理：按 Moomoo positions 的实际值**重建**该股票行的 `qty` 与 `cost`（用 `cost_price` / `diluted_cost`），
 `note` 注明「X/X $XXX put 行权接货」，并在简报里**点名**。
 
-> 这是「严禁触碰 qty/cost」规则的**唯一例外**。
+> 这是美股 qty/cost 规则的例外；Maybank 另按 owner 授权的 §4.2 Journal 流程更新。
 
 ---
 
@@ -128,13 +128,51 @@ USD 货币基金的取法，按顺序试：
 
 ## 4.1 Margin loan — owner 2026-10-28 指定
 
-- 每次刷新都只读 owner 指定 Google Sheet 的 **moi journal** tab。Sheet 链接留在 owner 私人上下文，不上传公开仓库；缺链接时请 owner 提供，不能自行沿用一个假称最新的余额。
+- 每次刷新都只读 owner 指定 Google Sheet 的 **moi journal** tab。Sheet 链接留在 owner 私人上下文，不上传公开仓库；缺链接时优先通过已连接 Google Drive 查找 Margin Calculator 并确认 moi journal tab，仍无法确认才请 owner 提供。不能沿用旧余额冒充最新值。
 - 先读 tab 元数据，再读总览和最新已填日志；确认最新实际入账日期、净欠款、利息、股息、现金进出、费用与回补。参考估值列不用于推算贷款。不得把未来预估利息当成已入账。
-- 使用最新日志净欠款（目前 L59，与 B6 一致），并检查前后变动；买入扣款 Q 已含费用，不重复扣 E；股票转入是非现金，不增加贷款；回补只记一次。将 `constants.marginLoanMyr` 同步至 HTML 的 `margin`，重算净值、LSR、净股权与 allocation。
+- 使用最新有效日期日志的净欠款（2026-10-28 复核时为 L59，与 B6 一致；以后不得硬编码行59），并检查前后变动；买入扣款 Q 已含费用，不重复扣 E；股票转入是非现金，不增加贷款；回补只记一次。将 `constants.marginLoanMyr` 同步至 HTML 的 `margin`，重算净值、LSR、净股权与 allocation。
 - 2026-10-28 已逐笔复算 47 行：10/23 股息入账后贷款 **RM355,897.77**。三月底旧余额 RM362,763.77 + 4–9 月利息 RM8,659.16 − 后续股息 RM15,525.16 = RM355,897.77。十月尚未月结，未包含未入账十月利息。
 - 股息已用于减少贷款，不再重复加入现金、Wheel 或股票已实现收入。保留 `meta.marginLoanReconciliation` 的数据日期、复核日与局限；公开仅保存汇总，不上传账户号、银行交易编号或私人 Sheet URL/ID。
 - MAYBANK 价格仍每次通过 Google Chrome 核对，记录实际报价日期；贷款日期与行情日期分开。Dashboard LSR 继续采用马股市值，不能冒充银行认可抵押值口径或正式 margin-call 通知。
 - OpenD 无法登录时，完成可核实的 journal、马股、黄金、BTC 与 FX 更新；美股、现金和期权保留旧快照并在页首标明日期，不能写成全部更新。期权报价超过旧值 30% 时按既有规则处理，历史单次授权不自动延续。
+
+---
+
+## 4.2 Maybank 专属损益与本金回报 — owner 2026-10-28 的持续指示
+
+Owner 会把之后的现金存入/取出、Maybank 买入、转仓、利息和股息记录在 **Margin Calculator / moi journal**。每次 requested portfolio refresh 必须重新读取该 tab，不能只改报价，不能把旧的净投入本金、股数或平均成本当作常量。本次已明确要求把该方法发布到 portfolio GitHub。
+
+### 每次刷新如何读取
+
+1. 通过私有上下文链接或连接的 Drive 找到正确文件，读元数据确认 tab。只读实际日志及必要成本参考，公开仓库只存聚合后的 `marginJournal`；不上传私人 Sheet URL/ID、账户/交易编号、截图或原始逐笔流水。
+2. 找出全部**有效日期＋交易类型**日志。先读标题和最后已填行，再分页扩展到新增行；不要把行59、47笔或某个旧固定区间当作永久边界。下方证券报表/月份对账区有日期，不能当作银行流水重复加。最后日期、贷款和股数必须与日志核对。
+3. 汇总外部现金存入、取出、Maybank 转入本金参考、**仅 Maybank** 已入账股息、Interest/Interest Credit 净额、最新实际欠款。股息再投资是收益的再配置，不是新的外部投入；借来的 margin loan 不算自己的本金。REIT 转入成本与股息不得进入 Maybank 专属回报。
+4. 更新 Maybank 持股数及成本：以最新已核对证券报表为基准，加入其后新增交易，先验证 Journal 总览是否已涵盖新行。若 B7 仍指旧报表、买入后均价未更新，必须用已核实的成交价与股数更新移动平均成本，不能只增加股数继续套旧均价。当前 H6 口径不另外扣交易/账户费用，新增买入按成交金额更新成本；银行 Q 扣款已含费，仅用于贷款余额对账，不再重复扣 E。缺成交价或遇卖出/成本重设等需额外处理的交易，先完成对账，不能把卖出已实现损益漏掉后仍宣称完整回报。
+5. 用 **Google Chrome** 查 Maybank 最新报价和交易时间，更新 `my.MAYBANK.px`；Sheet K5 只是参考价，不替代 Chrome 行情。若报价不同，网站按 Chrome 价重算，不能照抄 H6 金额却换了股价。缺来源则保留上次快照并标明。
+6. 同价时，独立算出的净损益与本金回报应对应 Sheet H6 / I6。当前本金来源对应 B147现金净投入＋D135 Maybank转入本金参考，而不是 G6（含 REIT），也不是股票成本减当前欠款。若汇总公式尚未涵盖新行，以核实后的完整流水计算并说明差异，不继续称旧单元格已核对。
+7. 写入 `portfolio-data.json.marginJournal`，同步 HTML `holdings.marginJournal`，并更新 `loadFromJson` 加载字段。保留 `asOf`（已入账日期）与 `checkedOn`（复核日），不混称报价时间。网页读取的是已同步聚合快照；每次由 agent 查 Sheet 后发布，不是在公开网页暴露 Sheet 访问入口，也不是自动排程。
+
+### 统一公式
+
+```
+maybankCost = Maybank qty × journal.averageCostMyr
+maybankMV = Maybank qty × Chrome price
+maybankPricePL = maybankMV − maybankCost
+
+maybankPrincipal = external cash deposits − withdrawals
+                 + transferred Maybank original-capital reference
+maybankNetIncome = recorded Maybank dividends − recorded net financing interest
+maybankNetPL = maybankPricePL + maybankNetIncome
+maybankPrincipalReturn = maybankNetPL / maybankPrincipal × 100
+```
+
+- H6 对应净损益，I6 对应净投入本金回报；本金非正数或资料缺失时显示「未计算」。股数与快照不一致时不能用旧成本/旧本金产生看似有效的新回报。
+- 当前融资买入仅 Maybank，所以已记融资利息净额归 Maybank；未来若融资买其他证券，需要按实际资金用途分摊，不能把别人的利息全放进 Maybank。
+- 当前方法**不另扣买入手续费及账户费用**；报表均价取位、Maybank转入本金及转入前股息仍有已披露限制。不得把当前 H6 写成已完整扣费/已核实全生命周期回报。
+- 股息抵贷款已经反映到实际借款及净资产；不再重复加现金、总资产或净资产。但计算收益时保留股息收入。Total ROI 的未实现部分已包含 Maybank 股价损益，因此只额外加入 `maybankNetIncome`，不能再加整个 `maybankNetPL`。不改 USD Wheel/MMF 或美股已实现总额。
+- 本金回报仅适用于 Maybank 区；顶部 Total ROI 仍按标明的全组合成本口径分母，不能混称为同一个本金回报率。Historical performance-2026 仍为原美股子组合，禁止因本次调整改写覆盖范围。
+- 2026-10-28 同价校验：qty45,300，报表均价11.6960，Chrome9.99；成本529,828.80，股价损益−77,281.80，Maybank股息29,133.38，净利息11,123.37，净损益−59,271.79；本金152,420−5,000＋10,550=157,970，回报−37.520915%。转入本金10,550仍为参考值。后续必须重新读取。
+- 回归检查：`node margin.test.cjs` 与 `node tests/performance.test.cjs`。
 
 ---
 
@@ -171,11 +209,12 @@ totalDeployed = grossInvested + cashTotal − margin
 unrealizedPL  = (usMvMyr + myMv + goldMv + cryptoMv) − grossInvested
 realizedMyr   = (wheelRealized + stockRealizedUsd + mplusRealizedUsd) × fx
 openOptionPL  = Σ(options[].expPL) × fx
-totalROI      = unrealizedPL + openOptionPL + realizedMyr
+maybankIncome = marginJournal.maybankDividendsMyr − marginJournal.netFinancingInterestMyr
+totalROI      = unrealizedPL + openOptionPL + realizedMyr + maybankIncome
 totalROIPct   = totalROI / totalDeployed × 100
 ```
 
-Hero 的 **Total ROI / 成本口径** 显示 `totalROI` 金额和 `totalROIPct`：当前持仓相对购入成本的未实现 P&L（含期权）+ 本年股票买卖净收益 + Wheel/MMF 已实现收入。分母为当前 deployed capital。这**不是严格 YTD 回报**，不得与 Moomoo Trend Analysis YTD 硬对平；已有持仓可能含跨年浮盈，范围还包括 M+、马股、黄金、HATA。`stockRealizedEstimated=true` 时股票、已实现合计与 Total ROI 金额须显示 `≈`。
+Hero 的 **Total ROI / 成本口径** 显示 `totalROI` 金额和 `totalROIPct`：当前持仓相对购入成本的未实现 P&L（含期权）+ 本年股票买卖净收益 + Wheel/MMF 已实现收入 + Maybank已记股息减净融资利息。分母为当前 deployed capital。这**不是严格 YTD 回报**，不得与 Moomoo Trend Analysis YTD 硬对平；已有持仓可能含跨年浮盈，范围还包括 M+、马股、黄金、HATA。`stockRealizedEstimated=true` 时股票、已实现合计与 Total ROI 金额须显示 `≈`。
 
 ### 5.1 股票已实现收益（Owner 2026-10-03 要求新增）
 
@@ -286,7 +325,7 @@ pumpForce = margin × (1 − 69/80)
 2. [ ] 拉价格：美股（OpenD）· MAYBANK/黄金/BTC（Google Chrome Search）· IGBREIT/SUNREIT（Chrome）· USD/MYR (· USD/HKD)
 3. [ ] 拉持仓 + 现金（有 Moomoo 时），侦测行权接货
 4. [ ] Sanity check（§7）
-5. [ ] 只读 moi journal 最新已入账余额并核对，更新 `constants.marginLoanMyr`；更新行情字段 + `meta.*`，区分每类数据日期
+5. [ ] 按 §4.2 重新读 moi journal 全部新增有效流水，核对贷款/Maybank股数成本/净本金/股息利息，更新 `constants.marginLoanMyr`、`marginJournal` 及 Maybank字段；区分每类日期
 6. [ ] 把**同样的数字**镜像进 `index.html` 里的 `const holdings={...}` 块
 7. [ ] 更新 `index.html` 顶部 header 那行日期说明 + 底部 footnote
 8. [ ] 按 §5 重算 `derived.*`
@@ -325,4 +364,3 @@ pumpForce = margin × (1 − 69/80)
 | **Wheel** | 卖 put 接货 → 卖 covered call 的轮动策略 |
 | **UOB buyback** | 实物金回购价，估算 = spot × 1.01 |
 | **OpenD** | Moomoo 的本地行情/交易 gateway，必须在 Moi 电脑上运行 |
-

@@ -165,11 +165,11 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     <div><div class="stat-label">Wheel 收入 26' <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(已实现)</span></div><div class="stat-value num pos" id="wheelPremium">—</div></div>
     <div><div class="stat-label">股票买卖净收益 26' <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(Moomoo + M+ · 含估算)</span></div><div class="stat-value num" id="stockRealized">—</div></div>
     <div><div class="stat-label">Realized P&amp;L 26' <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(股票 + Wheel · 估算)</span></div><div class="stat-value num" id="totalRealized">—</div></div>
-    <div class="roi-total"><div class="stat-label">Total ROI / 成本口径 <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(未实现含期权 + 已实现 · 非严格 YTD)</span></div><div class="stat-value num" id="totalROI">—</div></div>
+    <div class="roi-total"><div class="stat-label">Total ROI / 成本口径 <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint)">(含期权、美股/Wheel已实现及Maybank股息净利息 · 非严格 YTD)</span></div><div class="stat-value num" id="totalROI">—</div></div>
   </div>
 </div>
 
-<div class="timestamp" style="margin-top:6px">2026-10-04 利润对账：M+ 本年卖出 −US$56.73（12/31 市值基准，结单截至 09/30）已计入汇总；原 Moomoo 成本口径及估算沿用，非统一 YTD。本次已补齐 10/28 OpenD 持仓、现金及期权；其他行情沿用同次刷新已核对的来源日期，历史收益对账覆盖不延长。</div>
+<div class="timestamp" style="margin-top:6px">2026-10-04 利润对账：M+ 本年卖出 −US$56.73（12/31 市值基准，结单截至 09/30）已计入汇总；原 Moomoo 成本口径及估算沿用，非统一 YTD。本次已补齐 10/28 OpenD 持仓、现金及期权；其他行情沿用同次刷新已核对的来源日期，历史收益对账覆盖不延长。Maybank 损益按 Journal 独立计算；Total ROI 加入 Maybank 已记股息减净融资利息，净资产不重复加股息。</div>
 
 <h2>2026 区间盈亏 <span style="font-weight:400;text-transform:none;color:var(--hint);font-size:10px">美股子组合 · USD · 非全组合</span></h2>
 <section class="card perf-card" aria-labelledby="perfHeading">
@@ -238,29 +238,29 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     </div>
   </div>
   <div class="mb-card">
-    <div class="mb-title" id="mbTitle">MAYBANK (margin-financed)</div>
-    <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Qty <span id="mbQty">—</span> · avg <span id="mbAvgCost">—</span> · last <span id="mbLast">—</span></div>
-    <div class="mb-stack-bar">
-      <div class="mb-equity-seg" id="mbEquitySeg">—</div>
-      <div class="mb-margin-seg" id="mbMarginSeg">—</div>
-    </div>
-    <div class="mb-row"><span class="label">Cost total</span><span class="value" id="mbCost">—</span></div>
-    <div class="mb-row"><span class="label">↳ Your equity (掏出来的)</span><span class="value pos" id="mbEquity">—</span></div>
-    <div class="mb-row"><span class="label">↳ Margin loan (借来的)</span><span class="value neg" id="mbMargin">—</span></div>
-    <div class="mb-row"><span class="label">Current MV</span><span class="value" id="mbMv">—</span></div>
-    <div class="mb-row"><span class="label">↳ Current equity (MV − margin)</span><span class="value" id="mbCurEquity">—</span></div>
+    <div class="mb-title" id="mbTitle">MAYBANK — Journal 损益</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Qty <span id="mbQty">—</span> · 报表均价 <span id="mbAvgCost">—</span> · 股价 <span id="mbLast">—</span></div>
+    <div class="mb-row"><span class="label">Maybank 股票成本（报表均价）</span><span class="value" id="mbCost">—</span></div>
+    <div class="mb-row"><span class="label">你的净投入本金（Journal）</span><span class="value" id="mbEquity">—</span></div>
+    <div class="mb-row"><span class="label">账户实际贷款（Journal）</span><span class="value neg" id="mbMargin">—</span></div>
+    <div class="mb-row"><span class="label">Maybank 当前市值</span><span class="value" id="mbMv">—</span></div>
+    <div class="mb-row"><span class="label">股票市值 − 账户实际贷款</span><span class="value" id="mbCurEquity">—</span></div>
+    <div class="mb-row"><span class="label">股价损益</span><span class="value" id="mbPricePL">—</span></div>
+    <div class="mb-row"><span class="label">已记 Maybank 股息</span><span class="value" id="mbDividends">—</span></div>
+    <div class="mb-row"><span class="label">已记净融资利息（扣回扣）</span><span class="value" id="mbInterest">—</span></div>
     <div class="mb-pl-grid">
       <div class="mb-pl-box">
-        <div class="mb-pl-label">Position P&L</div>
+        <div class="mb-pl-label">Maybank 净损益</div>
         <div class="mb-pl-value" id="mbPL">—</div>
-        <div class="mb-pl-sub">on cost basis (unleveraged)</div>
+        <div class="mb-pl-sub">股价损益 ＋ 已记股息 − 净融资利息</div>
       </div>
       <div class="mb-pl-box">
-        <div class="mb-pl-label">Equity P&L (leveraged)</div>
+        <div class="mb-pl-label">本金回报率</div>
         <div class="mb-pl-value" id="mbPLEquity">—</div>
-        <div class="mb-pl-sub">on your own money</div>
+        <div class="mb-pl-sub">Maybank 净损益 ÷ 净投入本金</div>
       </div>
     </div>
+    <div class="footnote" id="mbJournalNote"></div>
   </div>
 </div>
 
@@ -322,7 +322,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 </div>
 
 <div style="height:10px"></div>
-<div class="footnote" style="text-align:center;padding-bottom:12px">2026-10-28 08:12 MYT 刷新。OpenD 已登录，08:11 MYT 实盘持仓与现金已核对，主要股数与前次一致，未从快照发现行权接货；未断言期间无往返成交。美股：Moomoo-only 用 positions nominal_price（10/27 美东夜盘估值），META/MSFT blended 与 M+ QQQ/UNH 用 snapshot.last_price（10/27 常规收盘），不混称同一时点收盘。PLTR 11/06 $225 short call 1 张，由 139 股覆盖；OpenD 未实现 +US$75.17，平仓负债 US$329.83；合约独立 quote last $3.28 / bid $3.20 / ask $3.40（10/27 15:57 EDT）已核对。期权相对 10/12 负债减少 46.59%，已复核而非误读；closePx $3.2983 按 market_val/100 计算，避免 nominal_price 三位小数舍入差。Idle Cash：wallet $714.16 + USD 货币基金 $32,817.05（fund_assets HKD257,439.93 ÷ USD/HKD7.8447）= $33,531.21；不加入 MYR cash 或重复累加股息。Margin loan 按 moi journal 最新已入账余额 RM355,897.77（10/23），十月未月结，不计未入账利息。Google Chrome：MAYBANK RM9.99（10/27 17:00 MYT，08:13 MYT 再核对）、IGBREIT RM2.72 / SUNREIT RM2.03（同次刷新已核对的延迟收盘报价）；黄金 Kitco spot bid $4,059.30/oz（10/27 19:45 EDT），BTC $80,839.34（10/27 23:45 UTC）。USD/MYR4.0859（BNM 10/27 KL 参考）；USD/HKD7.8447（Investing.com 10/28 日报价，页面时区未列）。LSR 按马股市场价值估算，银行认可抵押值可能不同。持仓成本数量、Wheel/MMF、股票已实现、利润对账日10/04及历史覆盖保持；M+ 未虚构十月交易。沿用既有范围，不新增零碎赠股（本次合计约 US$199.68）。</div>
+<div class="footnote" style="text-align:center;padding-bottom:12px">2026-10-28 08:12 MYT 刷新。OpenD 已登录，08:11 MYT 实盘持仓与现金已核对，主要股数与前次一致，未从快照发现行权接货；未断言期间无往返成交。美股：Moomoo-only 用 positions nominal_price（10/27 美东夜盘估值），META/MSFT blended 与 M+ QQQ/UNH 用 snapshot.last_price（10/27 常规收盘），不混称同一时点收盘。PLTR 11/06 $225 short call 1 张，由 139 股覆盖；OpenD 未实现 +US$75.17，平仓负债 US$329.83；合约独立 quote last $3.28 / bid $3.20 / ask $3.40（10/27 15:57 EDT）已核对。期权相对 10/12 负债减少 46.59%，已复核而非误读；closePx $3.2983 按 market_val/100 计算，避免 nominal_price 三位小数舍入差。Idle Cash：wallet $714.16 + USD 货币基金 $32,817.05（fund_assets HKD257,439.93 ÷ USD/HKD7.8447）= $33,531.21；不加入 MYR cash 或重复累加股息。Margin loan 按 moi journal 最新已入账余额 RM355,897.77（10/23），十月未月结，不计未入账利息。Google Chrome：MAYBANK RM9.99（10/27 17:00 MYT，08:13 MYT 再核对）、IGBREIT RM2.72 / SUNREIT RM2.03（同次刷新已核对的延迟收盘报价）；黄金 Kitco spot bid $4,059.30/oz（10/27 19:45 EDT），BTC $80,839.34（10/27 23:45 UTC）。USD/MYR4.0859（BNM 10/27 KL 参考）；USD/HKD7.8447（Investing.com 10/28 日报价，页面时区未列）。LSR 按马股市场价值估算，银行认可抵押值可能不同。除 Maybank 成本按 Journal 报表均价11.6960对齐外，其余持仓成本数量、Wheel/MMF、股票已实现、利润对账日10/04及历史覆盖保持；M+ 未虚构十月交易。沿用既有范围，不新增零碎赠股（本次合计约 US$199.68）。Margin 算法已按10/28确认的 Journal H6/I6：净损益−RM59,271.79，本金RM157,970，回报率−37.52%；Total ROI仅另加Maybank股息减净融资利息RM18,010.01，股价损益已在未实现部分，资产不重复加回。</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <script>
@@ -447,7 +447,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       "code": "1155",
       "name": "Malayan Banking",
       "qty": 45300,
-      "cost": 11.6964,
+      "cost": 11.696,
       "px": 9.99,
       "note": "partial margin"
     },
@@ -495,12 +495,52 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       "ulPx": 198.73
     }
   ],
+  "marginJournal": {
+    "sourceLabel": "Margin Calculator / moi journal",
+    "asOf": "2026-10-23",
+    "checkedOn": "2026-10-28",
+    "quantity": 45300,
+    "averageCostMyr": 11.696,
+    "cashDepositsMyr": 152420,
+    "cashWithdrawalsMyr": 5000,
+    "transferredMaybankCapitalMyr": 10550,
+    "maybankDividendsMyr": 29133.38,
+    "netFinancingInterestMyr": 11123.37,
+    "loanBalanceMyr": 355897.77,
+    "referencePriceMyr": 9.99,
+    "sheetNetProfitMyr": -59271.79,
+    "sheetCapitalReturnPct": -37.52091536367665,
+    "transferCapitalEstimated": true,
+    "feesSeparatelyDeducted": false,
+    "unpostedInterestIncluded": false,
+    "financingInterestScope": "Recorded margin interest net of interest credits, allocated to Maybank because current financed purchases are Maybank only.",
+    "basisNote": "Statement average 11.6960; transferred Maybank principal RM10,550 is provisional. Excludes REIT capital/dividends and unposted interest. Trading/account fees are not additionally deducted under the owner-approved H6 method.",
+    "refreshMode": "Agent reads owner Google Sheet on each requested portfolio refresh; website consumes a saved aggregate snapshot."
+  },
   "wheelRealized": 16189.1,
   "stockRealizedUsd": 11031.09,
   "stockRealizedEstimated": true,
   "mplusRealizedUsd": -56.73,
   "fx": 4.0859
 };
+
+  /* MAYBANK_JOURNAL_CALC_START */
+  function calculateMaybankJournal(stock,journal){
+    const fields=['quantity','averageCostMyr','cashDepositsMyr','cashWithdrawalsMyr','transferredMaybankCapitalMyr','maybankDividendsMyr','netFinancingInterestMyr'];
+    if(!stock||!journal||!fields.every(k=>Number.isFinite(journal[k]))||
+       !Number.isFinite(stock.qty)||!Number.isFinite(stock.px)||stock.qty<=0||stock.px<0||
+       journal.averageCostMyr<=0||Math.abs(stock.qty-journal.quantity)>1e-8)return null;
+    const round=n=>Math.round((n+Number.EPSILON)*100)/100;
+    const costMyr=round(stock.qty*journal.averageCostMyr);
+    const marketValueMyr=round(stock.qty*stock.px);
+    const priceProfitMyr=round(marketValueMyr-costMyr);
+    const principalMyr=round(journal.cashDepositsMyr-journal.cashWithdrawalsMyr+journal.transferredMaybankCapitalMyr);
+    const netIncomeMyr=round(journal.maybankDividendsMyr-journal.netFinancingInterestMyr);
+    const netProfitMyr=round(priceProfitMyr+netIncomeMyr);
+    return {costMyr,marketValueMyr,priceProfitMyr,principalMyr,netIncomeMyr,netProfitMyr,
+      capitalReturnPct:principalMyr>0?netProfitMyr/principalMyr*100:null};
+  }
+/* MAYBANK_JOURNAL_CALC_END */
 
   const catColors={'AI Capex':'#76b900','Hyperscaler':'#1b5ea8','SaaS':'#7c3aed','Healthcare':'#0f7a3a','Defense':'#c53030','ETF':'#b8620a'};
   const catOrder=['AI Capex','Hyperscaler','SaaS','Healthcare','Defense','ETF'];
@@ -560,6 +600,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     });
     const myCashRows=myAll.filter(r=>r.note==='cash');
     const mbRow=myAll.find(r=>r.note==='partial margin');
+    const mbJournal=calculateMaybankJournal(mbRow,holdings.marginJournal);
     const myCashMv=myCashRows.reduce((a,b)=>a+b.mv,0);
     const myCashCost=myCashRows.reduce((a,b)=>a+b.cost,0);
 
@@ -577,26 +618,24 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     </tr>`;
 
     if(mbRow){
-      const mbEquityCost=mbRow.cost-margin;
-      const mbCurEquity=mbRow.mv-margin;
-      const mbPLEquityPct=mbEquityCost?mbRow.pl/mbEquityCost*100:0;
-      const equityPct=mbRow.cost?mbEquityCost/mbRow.cost*100:0;
-      const marginPct=100-equityPct;
-      document.getElementById('mbTitle').textContent=mbRow.t+' ('+mbRow.name+') — margin-financed';
+      const j=holdings.marginJournal;
+      document.getElementById('mbTitle').textContent=mbRow.t+' ('+mbRow.name+') — Journal 损益';
       document.getElementById('mbQty').textContent=mbRow.qty.toLocaleString();
-      document.getElementById('mbAvgCost').textContent=fmt(mbRow.cost/mbRow.qty,4);
+      document.getElementById('mbAvgCost').textContent=fmt(mbJournal?j.averageCostMyr:mbRow.cost/mbRow.qty,4);
       document.getElementById('mbLast').textContent=fmt(mbRow.px,4);
-      document.getElementById('mbEquitySeg').style.width=equityPct+'%';
-      document.getElementById('mbEquitySeg').textContent='Equity '+equityPct.toFixed(1)+'%';
-      document.getElementById('mbMarginSeg').style.width=marginPct+'%';
-      document.getElementById('mbMarginSeg').textContent='Margin '+marginPct.toFixed(1)+'%';
-      document.getElementById('mbCost').textContent=fmt(mbRow.cost,0);
-      document.getElementById('mbEquity').textContent=fmt(mbEquityCost,0);
-      document.getElementById('mbMargin').textContent='-'+fmt(margin,0);
-      document.getElementById('mbMv').textContent=fmt(mbRow.mv,0);
-      document.getElementById('mbCurEquity').textContent=fmt(mbCurEquity,0);
-      document.getElementById('mbPL').innerHTML=`<span class="${colorOf(mbRow.pl)}">${fmtSigned(mbRow.pl,0)}</span> <span style="font-size:11px;font-weight:400;color:var(--muted)">(${fmtPct(mbRow.plPct)})</span>`;
-      document.getElementById('mbPLEquity').innerHTML=`<span class="${colorOf(mbRow.pl)}">${fmtPct(mbPLEquityPct)}</span>`;
+      document.getElementById('mbCost').textContent=fmt(mbJournal?mbJournal.costMyr:mbRow.cost,2);
+      document.getElementById('mbEquity').textContent=mbJournal?fmt(mbJournal.principalMyr,2):'未同步 Journal';
+      document.getElementById('mbMargin').textContent='-'+fmt(margin,2);
+      document.getElementById('mbMv').textContent=fmt(mbRow.mv,2);
+      document.getElementById('mbCurEquity').textContent=fmt(mbRow.mv-margin,2);
+      document.getElementById('mbPricePL').innerHTML=mbJournal?'<span class="'+colorOf(mbJournal.priceProfitMyr)+'">'+fmtSigned(mbJournal.priceProfitMyr,2)+'</span>':'未计算';
+      document.getElementById('mbDividends').innerHTML=mbJournal?'<span class="pos">'+fmtSigned(j.maybankDividendsMyr,2)+'</span>':'未同步';
+      document.getElementById('mbInterest').innerHTML=mbJournal?'<span class="'+colorOf(-j.netFinancingInterestMyr)+'">'+fmtSigned(-j.netFinancingInterestMyr,2)+'</span>':'未同步';
+      document.getElementById('mbPL').innerHTML=mbJournal?'<span class="'+colorOf(mbJournal.netProfitMyr)+'">'+fmtSigned(mbJournal.netProfitMyr,2)+'</span>':'未同步 Journal';
+      document.getElementById('mbPLEquity').innerHTML=mbJournal&&mbJournal.capitalReturnPct!==null?'<span class="'+colorOf(mbJournal.capitalReturnPct)+'">'+fmtPct(mbJournal.capitalReturnPct)+'</span>':'未计算';
+      document.getElementById('mbJournalNote').textContent=mbJournal?
+        'Journal 已入账至 '+j.asOf+'；本金 = 存入 '+fmt(j.cashDepositsMyr,2)+' − 取出 '+fmt(j.cashWithdrawalsMyr,2)+' ＋ Maybank 转入本金参考 '+fmt(j.transferredMaybankCapitalMyr,2)+'。股息再投资仍计收益，不增加外部本金；不含 REIT 本金或股息。未另扣买入及账户费用，未计未入账利息；转入本金仍属暂估。本页为已同步快照，每次刷新重新读取 Journal，股价由 Chrome 核对。':
+        'Journal 资料缺失或与股数不一致，无法计算 Maybank 净损益和本金回报率；需先重新核对来源。';
     }
 
     const g=holdings.gold;
@@ -742,7 +781,8 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     const realizedMyr=realized*fx;
     const stockRealizedMyr=stockRealizedUsd*fx;
     const totalRealizedMyr=realizedMyr+stockRealizedMyr;
-    const totalROI=totalPL+openExpPL*fx+totalRealizedMyr;
+    const maybankNetIncomeMyr=mbJournal?mbJournal.netIncomeMyr:0;
+    const totalROI=totalPL+openExpPL*fx+totalRealizedMyr+maybankNetIncomeMyr;
     const totalROIPct=totalDeployed?totalROI/totalDeployed*100:0;
 
     document.getElementById('netWorth').textContent=fmt(netWorth,0);
@@ -831,6 +871,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       if(d.crypto)holdings.crypto=d.crypto;
       if(d.cash)holdings.cash=d.cash;
       if(d.options)holdings.options=d.options;
+      if(d.marginJournal)holdings.marginJournal=d.marginJournal;
       if(typeof d.wheelRealized==='number')holdings.wheelRealized=d.wheelRealized;
       if(typeof d.stockRealizedUsd==='number')holdings.stockRealizedUsd=d.stockRealizedUsd;
       if(typeof d.mplusRealizedUsd==='number')holdings.mplusRealizedUsd=d.mplusRealizedUsd;

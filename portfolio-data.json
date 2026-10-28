@@ -8,13 +8,14 @@
     "lastRefreshNote": "OpenD 登录已恢复：08:11 MYT 实盘持仓与现金快照已核对，主要持仓数量与前次一致，快照未发现行权接货；未额外断言 10/12 后没有往返成交。Moomoo-only 按 positions nominal_price（含夜盘估值），blended/M+ 按 snapshot last_price（10/27 常规收盘价）。PLTR 11/06 $225 covered call 1 张，OpenD 浮盈 US$75.17，当前平仓负债 US$329.83；独立合约 quote last 3.28 / bid 3.20 / ask 3.40 交叉核对。沿用同次刷新已核对的马股、黄金、BTC、USD/MYR 与 journal 贷款余额；历史期间收益、已实现收入及持仓成本数量未改。",
     "priceAsOf": {
       "usStocks": "2026-10-28 08:11 MYT / 10/27 20:11 EDT；Moomoo-only 用 positions nominal_price（夜盘估值）；META/MSFT blended 与 M+ QQQ/UNH 用 snapshot last_price（10/27 常规收盘）；extended-hours 价格不混称统一收盘",
-      "myStocks": "Chrome：MAYBANK Google 财经卡片 2026-10-27 17:00 MYT 收盘 RM9.99；IGBREIT RM2.72 / SUNREIT RM2.03，10/28 开盘前读取 KLSE Screener，并由 Yahoo 最新收盘报价与截至 10/27 的页面资料交叉核对（16:50:52 / 16:56:37 MYT，延迟报价）；10/28 马股未开盘；08:13 MYT 再次用 Chrome 核对 MAYBANK 收盘 RM9.99。",
+      "myStocks": "Chrome：MAYBANK Google 财经卡片 2026-10-27 17:00 MYT 收盘 RM9.99；IGBREIT RM2.72 / SUNREIT RM2.03，10/28 开盘前读取 KLSE Screener，并由 Yahoo 最新收盘报价与截至 10/27 的页面资料交叉核对（16:50:52 / 16:56:37 MYT，延迟报价）；10/28 马股未开盘；08:13 MYT 再次用 Chrome 核对 MAYBANK 收盘 RM9.99。；08:55 MYT 再次由 Google Chrome 核对 MAYBANK RM9.99（财经卡片10/27 16:58 MYT）。",
       "btc": "2026-10-27 23:45 UTC / 2026-10-28 07:45 MYT（Google Chrome Search 财经卡片）",
       "goldSpot": "2026-10-27 19:45 EDT / 2026-10-28 07:45 MYT（Google Chrome Search → Kitco，spot bid USD/oz）",
       "fx": "USD/MYR 4.0859：BNM 2026-10-27 KL 参考汇率，非即时价；USD/HKD 7.8447：Investing.com 10/28 日报价（08:12 MYT 读取，页面时间未列时区），用于当前 HKD fund_assets 折算",
       "cash": "2026-10-28 08:11 MYT（OpenD REAL/FUTUMY account_info；仅 USD wallet + USD 货币基金；myr cash 不加入）",
       "options": "2026-10-28 08:11 MYT OpenD positions；独立合约 snapshot 10/27 15:57:02 EDT；ulPx 用 10/27 常规收盘 snapshot.last_price",
-      "marginLoan": "moi journal：2026-10-23 股息入账后余额；2026-10-28 只读复核；十月未月结，未计未入账利息"
+      "marginLoan": "moi journal：2026-10-23 股息入账后余额；2026-10-28 只读复核；十月未月结，未计未入账利息",
+      "marginJournal": "2026-10-28 08:55 MYT复核；已入账日志截至2026-10-23；融资利息记至9月底，未包含未入账十月利息"
     },
     "sources": {
       "gold": "https://www.kitco.com/charts/gold",
@@ -86,7 +87,9 @@
       "check": "47 journal rows recomputed, each running balance matched; transfer-in is non-cash, transfer fee is reference only, fee rebate credited once.",
       "bankLsrCaveat": "Dashboard LSR uses current MY market values; bank-approved collateral values and lender notice may differ. Do not substitute stale September haircuts as current."
     },
-    "holdingsScopeNote": "主要 Moomoo 股数与前次一致；沿用既有看板范围，不新增 TSM/TSLA/CSCO/AAPL 零碎赠股（本次市值合计 US$199.68）。M+ 数量仍取已核对结单，未虚构十月交易；本次不是历史收益重新对账。"
+    "holdingsScopeNote": "主要 Moomoo 股数与前次一致；沿用既有看板范围，不新增 TSM/TSLA/CSCO/AAPL 零碎赠股（本次市值合计 US$199.68）。M+ 数量仍取已核对结单，未虚构十月交易；本次不是历史收益重新对账。",
+    "marginMethodUpdatedAt": "2026-10-28T08:55:00+08:00",
+    "marginMethodNote": "Owner 2026-10-28 指定：margin 区使用 moi journal 的 Maybank 专属口径，净损益=股价损益+已记Maybank股息−净融资利息；回报率除净现金投入+Maybank转入本金参考。股息再投资不算新增本金，REIT本金及股息不进入Maybank收益。以后每次刷新重新读取日志，包括新增现金/买入，不固守原行号或旧数量成本。Maybank股价继续Google Chrome；当前再次核对RM9.99（10/27 16:58 MYT卡片，10/28开盘前）。"
   },
   "constants": {
     "marginLoanMyr": 355897.77,
@@ -208,7 +211,7 @@
       "code": "1155",
       "name": "Malayan Banking",
       "qty": 45300,
-      "cost": 11.6964,
+      "cost": 11.696,
       "px": 9.99,
       "note": "partial margin"
     },
@@ -464,9 +467,36 @@
     "realizedProfitUsd": 27163.46,
     "realizedProfitMyr": 110987.18,
     "realizedProfitEstimated": true,
-    "costBasisReturnMyr": 140760.12,
-    "costBasisReturnPct": 10.3758,
+    "costBasisReturnMyr": 158788.25,
+    "costBasisReturnPct": 11.7049,
     "stockRealizedCombinedUsd": 10974.36,
-    "mplusRealizedMyr": -231.79
+    "mplusRealizedMyr": -231.79,
+    "maybankPriceProfitMyr": -77281.8,
+    "maybankNetIncomeMyr": 18010.01,
+    "maybankNetProfitMyr": -59271.79,
+    "maybankPrincipalMyr": 157970,
+    "maybankCapitalReturnPct": -37.5209
+  },
+  "marginJournal": {
+    "sourceLabel": "Margin Calculator / moi journal",
+    "asOf": "2026-10-23",
+    "checkedOn": "2026-10-28",
+    "quantity": 45300,
+    "averageCostMyr": 11.696,
+    "cashDepositsMyr": 152420,
+    "cashWithdrawalsMyr": 5000,
+    "transferredMaybankCapitalMyr": 10550,
+    "maybankDividendsMyr": 29133.38,
+    "netFinancingInterestMyr": 11123.37,
+    "loanBalanceMyr": 355897.77,
+    "referencePriceMyr": 9.99,
+    "sheetNetProfitMyr": -59271.79,
+    "sheetCapitalReturnPct": -37.52091536367665,
+    "transferCapitalEstimated": true,
+    "feesSeparatelyDeducted": false,
+    "unpostedInterestIncluded": false,
+    "financingInterestScope": "Recorded margin interest net of interest credits, allocated to Maybank because current financed purchases are Maybank only.",
+    "basisNote": "Statement average 11.6960; transferred Maybank principal RM10,550 is provisional. Excludes REIT capital/dividends and unposted interest. Trading/account fees are not additionally deducted under the owner-approved H6 method.",
+    "refreshMode": "Agent reads owner Google Sheet on each requested portfolio refresh; website consumes a saved aggregate snapshot."
   }
 }
