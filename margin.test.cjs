@@ -5,11 +5,16 @@ const context={};vm.createContext(context);vm.runInContext(helper,context);
 const calculate=context.calculateMaybankJournal,stock=data.my.find(s=>s.t==='MAYBANK'),j=data.marginJournal;
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-7,a+' != '+b);
 const baseline=calculate(stock,j);
-near(baseline.costMyr,529828.80);near(baseline.priceProfitMyr,-77281.80);
-near(baseline.netProfitMyr,-59271.79);near(baseline.principalMyr,157970);
-near(baseline.capitalReturnPct,-59271.79/157970*100);
+const round=n=>Number(n.toFixed(2)),format=(n,d=2)=>n.toLocaleString('en-MY',{minimumFractionDigits:d,maximumFractionDigits:d});
+near(baseline.costMyr,round(stock.qty*j.averageCostMyr));near(baseline.priceProfitMyr,round(stock.qty*stock.px-baseline.costMyr));
+near(baseline.netProfitMyr,round(baseline.priceProfitMyr+j.maybankDividendsMyr-j.netFinancingInterestMyr));near(baseline.principalMyr,j.cashDepositsMyr-j.cashWithdrawalsMyr+j.transferredMaybankCapitalMyr);
+near(baseline.capitalReturnPct,baseline.netProfitMyr/baseline.principalMyr*100);
+// Fixed known example keeps the arithmetic regression independent of market refreshes.
+const fixture=calculate({qty:45300,px:9.99},{quantity:45300,averageCostMyr:11.696,cashDepositsMyr:152420,cashWithdrawalsMyr:5000,transferredMaybankCapitalMyr:10550,maybankDividendsMyr:29133.38,netFinancingInterestMyr:11123.37});
+near(fixture.netProfitMyr,-59271.79);near(fixture.capitalReturnPct,-59271.79/157970*100);
 assert.equal(baseline.netProfitMyr,data.derived.maybankNetProfitMyr);
-near(baseline.capitalReturnPct,data.marginJournal.sheetCapitalReturnPct);
+const sheetReference=calculate({...stock,px:j.referencePriceMyr},j);
+near(sheetReference.netProfitMyr,j.sheetNetProfitMyr);near(sheetReference.capitalReturnPct,j.sheetCapitalReturnPct);
 assert.equal(calculate(stock,null),null);
 assert.equal(calculate(stock,{...j,netFinancingInterestMyr:null}),null);
 assert.equal(calculate({...stock,qty:stock.qty+100},j),null);
@@ -44,9 +49,10 @@ async function render(payload){
  vm.runInNewContext(main,ctx);await new Promise(resolve=>setImmediate(resolve));return nodes;
 }
 (async()=>{
- const offline=await render(null);assert.match(offline.mbPL.innerHTML,/-59,271.79/);assert.match(offline.mbPLEquity.innerHTML,/-37.52%/);assert.equal(offline.mbEquity.textContent,'157,970.00');assert.equal(offline.netWorth.textContent,'1,384,734');
+ const offline=await render(null);assert.ok(offline.mbPL.innerHTML.includes(format(baseline.netProfitMyr)));assert.ok(offline.mbPLEquity.innerHTML.includes(baseline.capitalReturnPct.toFixed(2)+'%'));assert.equal(offline.mbEquity.textContent,format(baseline.principalMyr));assert.equal(offline.netWorth.textContent,format(data.derived.netWorthMyr,0));
  const fresh=JSON.parse(JSON.stringify(data));fresh.marginJournal.cashDepositsMyr+=1000;fresh.marginJournal.maybankDividendsMyr+=100;
- const online=await render(fresh);assert.match(online.mbPL.innerHTML,/-59,171.79/);assert.equal(online.mbEquity.textContent,'158,970.00');assert.match(online.dataSrc.textContent,/数据载自/);
+ const online=await render(fresh);assert.ok(online.mbPL.innerHTML.includes(format(baseline.netProfitMyr+100)));assert.equal(online.mbEquity.textContent,format(baseline.principalMyr+1000));assert.match(online.dataSrc.textContent,/数据载自/);
  assert.ok(!html.includes('mbRow.cost-margin'));assert.ok(html.includes("if(d.marginJournal)holdings.marginJournal=d.marginJournal;"));
  console.log('PASS: Maybank-only P/L, principal return, new deposits, dividend reinvestment, REIT exclusion, missing-source guards, no double-counted NAV/ROI, inline/online snapshot and rendered UI.');
 })().catch(e=>{console.error(e);process.exitCode=1;});
+
