@@ -266,9 +266,12 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 
 <h2>US stocks · FX <span id="fxDisp">3.98</span></h2>
 <div class="card" style="padding:10px 12px">
-  <table><thead><tr>
-    <th>Ticker</th><th class="right">Qty</th><th class="right">Avg cost</th><th class="right">Last</th><th class="right">MV (MYR)</th><th class="right">P&L (MYR)</th>
+  <div style="overflow-x:auto" tabindex="0" role="region" aria-label="美股持仓及占净身家比例">
+  <table style="min-width:720px"><thead><tr>
+    <th>Ticker</th><th class="right">Qty</th><th class="right">Avg cost</th><th class="right">Last</th><th class="right">MV (MYR)</th><th class="right">P&L (MYR)</th><th class="right">成本占净身家</th><th class="right">市值占净身家</th>
   </tr></thead><tbody id="usBody"></tbody></table>
+  </div>
+  <div class="footnote" id="usWeightNote"></div>
 </div>
 
 <div class="card">
@@ -549,6 +552,12 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
   const fmtPct=n=>(n>=0?'+':'')+n.toFixed(2)+'%';
   const fmtSigned=(n,d=2)=>(n>=0?'+':'')+fmt(n,d);
   const colorOf=v=>v>=0?'pos':'neg';
+  /* NET_WORTH_WEIGHT_START */
+  function formatNetWorthWeight(value,netWorth){
+    return Number.isFinite(value)&&value>=0&&Number.isFinite(netWorth)&&netWorth>0
+      ?(value/netWorth*100).toFixed(2)+'%':'未计算';
+  }
+  /* NET_WORTH_WEIGHT_END */
   let goldMode='buyback';
 
   function render(){
@@ -561,18 +570,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       usMvUsd+=mvUsd; usCostUsd+=costUsd;
       return {...s, costPerShare:s.cost, mvUsd, costUsd, plUsd, plPct, mvMyr:mvUsd*fx, plMyr:plUsd*fx};
     });
-    document.getElementById('usBody').innerHTML=usRows.map(r=>`<tr>
-      <td><div class="ticker">${r.t}${r.cat?' <span class="chip chip-cat">'+r.cat+'</span>':''}</div><div class="ticker-note">${r.note}</div></td>
-      <td class="right num">${r.qty}</td>
-      <td class="right num">$${fmt(r.costPerShare)}</td>
-      <td class="right num">$${fmt(r.px)}</td>
-      <td class="right num">${fmt(r.mvMyr,0)}</td>
-      <td class="right num ${colorOf(r.plMyr)}">${fmtSigned(r.plMyr,0)}<br><span style="font-size:10px">${fmtPct(r.plPct)}</span></td>
-    </tr>`).join('')+`<tr class="subtotal">
-      <td>Subtotal</td><td></td><td class="right num">$${fmt(usCostUsd,0)}</td><td></td>
-      <td class="right num">${fmt(usMvUsd*fx,0)}</td>
-      <td class="right num ${colorOf(usMvUsd-usCostUsd)}">${fmtSigned((usMvUsd-usCostUsd)*fx,0)}<br><span style="font-size:10px">${fmtPct((usMvUsd-usCostUsd)/usCostUsd*100)}</span></td>
-    </tr>`;
+
 
     /* ===== US stocks by sector ===== */
     const catAgg={};
@@ -770,6 +768,23 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     const optShortLiabMyr=optShortLiabUsd*fx;
     const gross=usMvMyr+myMv+goldMv+cryptoMv+cashTotal;
     const netWorth=gross-margin-optShortLiabMyr;
+    document.getElementById('usBody').innerHTML=usRows.map(r=>`<tr>
+      <td><div class="ticker">${r.t}${r.cat?' <span class="chip chip-cat">'+r.cat+'</span>':''}</div><div class="ticker-note">${r.note}</div></td>
+      <td class="right num">${r.qty}</td>
+      <td class="right num">$${fmt(r.costPerShare)}</td>
+      <td class="right num">$${fmt(r.px)}</td>
+      <td class="right num">${fmt(r.mvMyr,0)}</td>
+      <td class="right num ${colorOf(r.plMyr)}">${fmtSigned(r.plMyr,0)}<br><span style="font-size:10px">${fmtPct(r.plPct)}</span></td>
+      <td class="right num">${formatNetWorthWeight(r.costUsd*fx,netWorth)}</td>
+      <td class="right num">${formatNetWorthWeight(r.mvMyr,netWorth)}</td>
+    </tr>`).join('')+`<tr class="subtotal">
+      <td>Subtotal</td><td></td><td class="right num">$${fmt(usCostUsd,0)}</td><td></td>
+      <td class="right num">${fmt(usMvUsd*fx,0)}</td>
+      <td class="right num ${colorOf(usMvUsd-usCostUsd)}">${fmtSigned((usMvUsd-usCostUsd)*fx,0)}<br><span style="font-size:10px">${fmtPct((usMvUsd-usCostUsd)/usCostUsd*100)}</span></td>
+      <td class="right num">${formatNetWorthWeight(usCostMyr,netWorth)}</td>
+      <td class="right num">${formatNetWorthWeight(usMvMyr,netWorth)}</td>
+    </tr>`;
+    document.getElementById('usWeightNote').textContent=`两列均以本页净身家 RM ${fmt(netWorth,0)} 为分母（已扣融资及卖出期权负债）。成本＝持股数 × Avg cost；市值＝持股数 × Last，均按快照 USD/MYR ${fx.toFixed(4)} 换算。成本不是历史马币现金投入；并非全资产成本配置，合计不必为 100%。ETF 仅计直接持仓，未穿透成分股；报价与持仓日期沿用页首快照。`;
     const grossInvested=usCostMyr+myCost+goldCost+cryptoCost;
     const totalDeployed=grossInvested+cashTotal-margin;
     const investedMv=usMvMyr+myMv+goldMv+cryptoMv;
@@ -1033,4 +1048,5 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 /* PERFORMANCE_2026_END */
 
 </script></body></html>
+
 
