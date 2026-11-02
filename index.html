@@ -142,9 +142,9 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 <div class="header">
   <div>
     <h1>Moi Investment Portfolio</h1>
-    <div class="timestamp">股票/Idle Cash: Moomoo (wallet · USD 货币基金) · 马股: Public Bank</div>
+    <div class="timestamp">股票/Wallet + funds: Moomoo（在途资产另列） · 马股: Public Bank</div>
     <div class="timestamp" id="syncStatus" style="margin-top:2px">期权来自 Moomoo</div>
-    <div class="timestamp" style="margin-top:2px;color:var(--red)">⚠⚠ 2026-10-29（22:20 MYT行情快照）OpenD持仓/现金/期权已核对；PLTR $225 covered call 1张（11/06），浮盈 <b>US$135.50</b>、OTM。Idle Cash <b>US$33,582.96</b>。Margin loan <b>RM355,897.77</b>（journal 10/23，未计未入账十月利息）；LSR <b>70.36%</b>，超出70%模型线0.36 pp（市值估算，非银行通知）。NOW、GOOGL盘中较前收约−24.23%、−12.03%。</div>
+    <div class="timestamp" style="margin-top:2px;color:var(--red)">⚠ 2026-11-02 OpenD已核对：美股21:36 MYT盘前价（EST UTC−5），非收盘价。PLTR $225 covered call 1张（11/06），浮盈 <b>US$202.50</b>、OTM。Wallet + funds <b>US$26,592.74</b>；在途（折合USD） <b>US$6,981.03</b>单列，不作可用现金。Margin loan <b>RM355,897.77</b>（journal10/23，未计未入账十月利息）；LSR <b>70.48%</b>（市值估算，非银行通知）。</div>
   </div>
   <div class="toggle-row">
     <span id="goldModeLabel">Gold: UOB buyback est.</span>
@@ -169,7 +169,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
   </div>
 </div>
 
-<div class="timestamp" style="margin-top:6px">2026-10-04 利润对账：M+ 本年卖出 −US$56.73（12/31 市值基准，结单截至 09/30）已计入汇总；原 Moomoo 成本口径及估算沿用，非统一 YTD。本次按10/29 22:20 MYT盘中快照刷新OpenD持仓、现金及期权；马股采用10/29收盘，黄金/BTC及FX来源日期见页尾。历史收益对账覆盖不延长。Maybank 损益按 Journal 独立计算；Total ROI 加入 Maybank 已记股息减净融资利息，净资产不重复加股息。</div>
+<div class="timestamp" style="margin-top:6px">2026-10-04 利润对账：M+ 本年卖出 −US$56.73（12/31 市值基准，结单截至 09/30）已计入汇总；原 Moomoo 成本口径及估算沿用，非统一 YTD。本次11/02刷新OpenD持仓、盘前行情、现金、在途资产及期权；各来源时间见页尾。历史收益对账覆盖不延长。Maybank 损益按 Journal 独立计算；Total ROI 加入 Maybank 已记股息减净融资利息，净资产不重复加股息。</div>
 
 <h2>2026 区间盈亏 <span style="font-weight:400;text-transform:none;color:var(--hint);font-size:10px">美股子组合 · USD · 非全组合</span></h2>
 <section class="card perf-card" aria-labelledby="perfHeading">
@@ -325,7 +325,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 </div>
 
 <div style="height:10px"></div>
-<div class="footnote" style="text-align:center;padding-bottom:12px">2026-10-29刷新。美股统一采用OpenD quote_snapshot 10/29 10:20:26–35 EDT（22:20 MYT）盘中价；NOW较前收−24.23%、GOOGL−12.03%，与10/28看板相比的变动另见数据，不混作同一指标。OpenD主要股数与前次一致，快照未发现行权接货，不据此断言期间无往返成交。PLTR 11/06 $225 covered call 1张由139股覆盖；positions未实现+US$135.50，平仓负债US$269.50；独立合约quote last2.67/bid2.65/ask2.74（10:20:21 EDT）。Idle Cash：wallet US$714.16 + USD货币基金US$32,868.80（HKD257,907.37÷7.846572）=US$33,582.96；MYR现金不加入。Chrome：Maybank RM10.00（10/29 17:00 MYT Google财经卡片）；IGBREIT RM2.73、SUNREIT RM2.06（KLSE Screener与Yahoo同价，10/29延迟收盘报价16:57:54/16:56:05 MYT）；Kitco黄金spot bid US$4,025/oz（10/29 10:20 EDT）；BTC US$80,380.42（10/29 14:18 UTC）。USD/MYR4.0664（BNM 10/29 KL参考）；USD/HKD7.846572（OFX 10/29参考），不是保证成交汇率。Journal重新复算全部47笔有效流水，贷款仍RM355,897.77，截至10/23入账，未计未入账十月利息。Maybank方法不变：股价损益−RM76,828.80＋股息RM29,133.38−净融资利息RM11,123.37=净损益−RM58,818.79；本金RM157,970，回报−37.23%。Sheet参考价仍9.99，网站按Chrome10.00，因此净损益较H6高RM453；未改写Sheet。转入本金仍为参考，未另扣交易/账户费用。Total ROI只另加Maybank净收入RM18,010.01，股息已抵贷款，不重复加净资产。LSR按马股市值估算，银行认可抵押值可能不同。持仓成本、历史收益、Wheel/MMF及利润对账日10/04保留；M+结单覆盖仍至09/30；零碎赠股不新增（本次合计US$199.83）。</div>
+<div class="footnote" style="text-align:center;padding-bottom:12px">2026-11-02刷新。美股统一用OpenD quote_snapshot pre_price，08:35:30–08:36:05 EST（21:36 MYT），非last_price或常规收盘价；主要Moomoo股数与前次一致，未从快照发现接货，不据此断言期间无往返成交。PLTR11/06 $225 covered call1张由139股覆盖；positions未实现+US$202.50，负债US$202.50（mark2.025）。独立合约quote07:30EST last1.39/bid0.35/ask3.70，价差宽且时间较早，未以last冒充mark。现金21:38:47MYT直接USD查询：wallet714.16+fund_assets25878.58=26592.74；pending_asset6981.0277为折合USD在途总额；用户说明USD及MYR货币基金赎回中，但API未提供原币拆分。按用户确认维持原资金范围：钱包714.16+基金25878.58+在途6981.0277合计33573.7677，替换旧cash33582.96，而非在旧cash之上叠加。在途不作可用现金，MYR现金174.81仍排除。MYR现金仍排除。11/02收盘：MAYBANK9.98（KLSE日期表）；IGBREIT2.76/SUNREIT2.03（Yahoo收盘16:50:02/16:57:30 MYT，KLSE交叉核对），Chrome21:41–21:44 MYT读取。 Kitco11/02 08:42 NY spot BID US$3936.70/oz，Chrome21:42MYT读取；沿用UOB回购估值spot×1.01，不是实际银行报价。 Coinbase BTC/USD当前价77993.04，Chrome11/02 21:43:13 MYT读取，非历史Today行。 USD/MYR4.0671为BNM11/02KL参考，非保证成交汇率；本次资金直接USD查询，不用旧HKD参考率换算。Journal11/02复算47笔，实际入账仍截至10/23；贷款355897.77，未计未入账十月利息。Maybank净损益RM-59,724.79，本金157970，回报-37.81%；Sheet参考9.99不改，转入本金暂估且未另扣交易/账户费用。股息已抵贷款，不重复加净资产。LSR为市值模型而非银行正式通知。历史成本/利润/Wheel及利润对账日10/04保持；M+结单覆盖至09/30，未核实十月交易；赠股仍排除。</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <script>
@@ -349,7 +349,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       "name": "Alphabet-A",
       "qty": 100,
       "cost": 387.5,
-      "px": 285.805,
+      "px": 282.11,
       "cat": "Hyperscaler",
       "broker": "Moomoo",
       "note": "Moomoo · 6/18 $387.5 put 接货"
@@ -359,7 +359,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       "name": "Meta",
       "qty": 55,
       "cost": 611.42,
-      "px": 623.37,
+      "px": 613.75,
       "cat": "Hyperscaler",
       "broker": "blended",
       "note": "blended · M+ 38 @ $639.45 + Moomoo 17 @ $548.78（8/1 加仓）"
@@ -369,7 +369,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       "name": "Microsoft",
       "qty": 63,
       "cost": 432.45,
-      "px": 523.875,
+      "px": 525.3578,
       "cat": "Hyperscaler",
       "broker": "blended",
       "note": "blended · Moomoo 17 + M+ 46（6/15 加仓 14 股 @ $398.28）"
@@ -379,7 +379,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       "name": "Nvidia",
       "qty": 110.4,
       "cost": 214.01,
-      "px": 213.7025,
+      "px": 206.15,
       "cat": "AI Capex",
       "broker": "Moomoo",
       "note": "Moomoo only（平均成本 $214.01 · option premium 已计入 wheel 收入）· M+ 26 股 6/15 @ $209.15 已卖出"
@@ -389,7 +389,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       "name": "iShares Semiconductor ETF",
       "qty": 18,
       "cost": 513.09,
-      "px": 514.81,
+      "px": 476.2,
       "cat": "AI Capex",
       "broker": "Moomoo",
       "note": "Moomoo · 8/1 买入（BOXX 换股）"
@@ -399,7 +399,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       "name": "ServiceNow",
       "qty": 200,
       "cost": 108,
-      "px": 113.7494,
+      "px": 105.5,
       "cat": "SaaS",
       "broker": "Moomoo",
       "note": "Moomoo · $108 put 行权接货 (2 张)"
@@ -409,7 +409,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       "name": "Palantir",
       "qty": 139,
       "cost": 134.499,
-      "px": 195.61,
+      "px": 187.6,
       "cat": "Defense",
       "broker": "Moomoo",
       "note": "Moomoo · 6/29 买 39 + 7/2 $141 put 行权接货 100 股 · 8/3 财报后续涨"
@@ -419,7 +419,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       "name": "Invesco QQQ",
       "qty": 46,
       "cost": 435.53,
-      "px": 716.43,
+      "px": 694.86,
       "cat": "ETF",
       "broker": "M+",
       "note": "M+ · 2026-07-03"
@@ -429,7 +429,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       "name": "UnitedHealth",
       "qty": 31,
       "cost": 319.89,
-      "px": 409.1299,
+      "px": 406.33,
       "cat": "Healthcare",
       "broker": "M+",
       "note": "M+ · 2026-07-03"
@@ -442,7 +442,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       "name": "IGB REIT",
       "qty": 11800,
       "cost": 2.67,
-      "px": 2.73,
+      "px": 2.76,
       "note": "cash"
     },
     {
@@ -451,7 +451,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       "name": "Malayan Banking",
       "qty": 45300,
       "cost": 11.696,
-      "px": 10,
+      "px": 9.98,
       "note": "partial margin"
     },
     {
@@ -460,27 +460,27 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       "name": "Sunway REIT",
       "qty": 10000,
       "cost": 2.11,
-      "px": 2.06,
+      "px": 2.03,
       "note": "cash"
     }
   ],
   "gold": {
     "oz": 7,
     "costPerOz": 21246,
-    "spotUsd": 4025,
+    "spotUsd": 3936.7,
     "custodian": "UOB",
     "note": "Kangaroo 1 oz · Perth Mint 99.99% · purchased 28 Jan 2026 @ USD spot ATH (~$5,400/oz)"
   },
   "crypto": {
     "qty": 0.0351549,
     "costMyr": 15994.97,
-    "pxUsd": 80380.42,
+    "pxUsd": 77993.04,
     "broker": "HATA"
   },
   "cash": {
-    "usd": 33582.96,
+    "usd": 26592.74,
     "myr": 0,
-    "usdBreakdown": "us_cash $714.16 + USD 货币基金 $32,868.80（fund_assets 257,907.37 HKD ÷ 7.846572；OFX 10/29参考汇率）",
+    "usdBreakdown": "USD query: wallet US$714.16 + fund_assets US$25,878.58 = US$26,592.74（11/02 21:38:47 MYT）；基金明细未由API提供，不保证即时可提现。另列在途资产，不混入可用现金。",
     "myrBreakdown": "不计入：owner 2026-09-30 指定 Idle Cash 只算 Moomoo money market fund + wallet"
   },
   "options": [
@@ -492,16 +492,16 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       "expiry": "2026-11-06",
       "contracts": 1,
       "premium": 405,
-      "closePx": 2.695,
-      "expPL": 135.5,
+      "closePx": 2.025,
+      "expPL": 202.5,
       "opn": null,
-      "ulPx": 195.61
+      "ulPx": 187.6
     }
   ],
   "marginJournal": {
     "sourceLabel": "Margin Calculator / moi journal",
     "asOf": "2026-10-23",
-    "checkedOn": "2026-10-29",
+    "checkedOn": "2026-11-02",
     "quantity": 45300,
     "averageCostMyr": 11.696,
     "cashDepositsMyr": 152420,
@@ -524,7 +524,13 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
   "stockRealizedUsd": 11031.09,
   "stockRealizedEstimated": true,
   "mplusRealizedUsd": -56.73,
-  "fx": 4.0664
+  "fx": 4.0671,
+  "pendingAssets": {
+    "usd": 6981.0277,
+    "asOf": "2026-11-02T21:38:47+08:00",
+    "source": "OpenD accinfo_query(currency=USD).pending_asset",
+    "note": "API在途资产折合USD；用户说明近期USD及MYR货币基金赎回中，但API未提供原币及金额拆分。按用户确认维持原资金范围，以最新钱包+基金+在途替换旧cash总额，不是在旧cash上新增财富；不作可用现金或期权抵押。"
+  }
 };
 
   /* MAYBANK_JOURNAL_CALC_START */
@@ -670,6 +676,8 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     /* ===== Option strategy & cash ===== */
     const cashUsdMyr=holdings.cash.usd*fx;
     const cashTotal=cashUsdMyr+holdings.cash.myr;
+    const pendingUsd=holdings.pendingAssets&&Number.isFinite(holdings.pendingAssets.usd)?holdings.pendingAssets.usd:0;
+    const pendingMyr=pendingUsd*fx;
     document.getElementById('cashBody').innerHTML=`
       <tr><td>USD cash <span class="chip chip-info">Moomoo</span>
         <div class="ticker-note">${holdings.cash.usdBreakdown||'Moomoo wallet + USD 货币基金'}</div></td>
@@ -679,7 +687,8 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
         <div class="ticker-note">按 owner 指示，不计入 Idle Cash</div></td>
         <td class="right num">—</td>
         <td class="right num">${fmt(holdings.cash.myr,0)}</td></tr>
-      <tr class="subtotal"><td>Cash total (MYR)</td><td></td><td class="right num">${fmt(cashTotal,0)}</td></tr>`;
+      <tr class="subtotal"><td>Wallet + funds (MYR)</td><td></td><td class="right num">${fmt(cashTotal,0)}</td></tr>
+      <tr><td>在途资产（折合USD） <span class="chip chip-warn">非可用现金</span><div class="ticker-note">API pending_asset，用户说明USD/MYR基金赎回中；原币拆分未知；与钱包/基金合并替换旧cash总额，不重复新增。不作可用现金或期权抵押。</div></td><td class="right num">$${fmt(pendingUsd)}</td><td class="right num">${fmt(pendingMyr,0)}</td></tr>`;
 
     const opts=holdings.options;
     const csp=opts.filter(o=>o.kind==='csp');
@@ -722,7 +731,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     if(csp.length===0){
       document.getElementById('collateralBox').innerHTML=`
         <div class="opt-sec-title">Collateral · 抵押占用</div>
-        <div class="opt-box ok">✓ 当前无 sold put，无抵押占用。可动用现金 $${fmt(availUsd,0)}（USD $${fmt(usdCash,0)} + MYR 折 $${fmt(myrCashUsd,0)}）全部自由。</div>`;
+        <div class="opt-box ok">✓ 当前无 sold put，无抵押占用。钱包及基金合计 $${fmt(availUsd,0)}（USD $${fmt(usdCash,0)} + MYR 折 $${fmt(myrCashUsd,0)}）；基金即时可用性以券商为准，在途资产另列、不用于抵押。</div>`;
     }else{
     const cspCollat=csp.map(o=>({ul:o.ul,strike:o.strike,amt:o.strike*100*o.contracts,itm:o.ulPx!=null&&o.ulPx<o.strike,unk:o.ulPx==null}));
     const totalCollat=cspCollat.reduce((a,c)=>a+c.amt,0);
@@ -766,7 +775,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 
     const usMvMyr=usMvUsd*fx, usCostMyr=usCostUsd*fx;
     const optShortLiabMyr=optShortLiabUsd*fx;
-    const gross=usMvMyr+myMv+goldMv+cryptoMv+cashTotal;
+    const gross=usMvMyr+myMv+goldMv+cryptoMv+cashTotal+pendingMyr;
     const netWorth=gross-margin-optShortLiabMyr;
     document.getElementById('usBody').innerHTML=usRows.map(r=>`<tr>
       <td><div class="ticker">${r.t}${r.cat?' <span class="chip chip-cat">'+r.cat+'</span>':''}</div><div class="ticker-note">${r.note}</div></td>
@@ -786,7 +795,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     </tr>`;
     document.getElementById('usWeightNote').textContent=`两列均以本页净身家 RM ${fmt(netWorth,0)} 为分母（已扣融资及卖出期权负债）。成本＝持股数 × Avg cost；市值＝持股数 × Last，均按快照 USD/MYR ${fx.toFixed(4)} 换算。成本不是历史马币现金投入；并非全资产成本配置，合计不必为 100%。ETF 仅计直接持仓，未穿透成分股；报价与持仓日期沿用页首快照。`;
     const grossInvested=usCostMyr+myCost+goldCost+cryptoCost;
-    const totalDeployed=grossInvested+cashTotal-margin;
+    const totalDeployed=grossInvested+cashTotal+pendingMyr-margin;
     const investedMv=usMvMyr+myMv+goldMv+cryptoMv;
     const totalPL=investedMv-grossInvested;
     const returnPct=totalDeployed?totalPL/totalDeployed*100:0;
@@ -821,7 +830,8 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       {label:'Gold',value:goldMv,color:'#b8620a'},
       {label:'Crypto',value:cryptoMv,color:'#7c3aed'},
       {label:'Cash · 抵押 collateral',value:cashCollatMyr,color:'#9ba9a0'},
-      {label:'Cash · 闲置 idle',value:cashIdleMyr,color:'#2e8b57'},
+      {label:'Cash · wallet + funds',value:cashIdleMyr,color:'#2e8b57'},
+      {label:'在途资产 · 非可用现金',value:pendingMyr,color:'#b8a070'},
     ].filter(s=>s.value>0);
     const totalAlloc=slices.reduce((a,b)=>a+b.value,0);
     document.getElementById('allocList').innerHTML=slices.map(s=>{
@@ -830,7 +840,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     }).join('');
     const collatPctCash=cashTotal?cashCollatMyr/cashTotal*100:0;
     const idlePctCash=cashTotal?cashIdleMyr/cashTotal*100:0;
-    document.getElementById('cashSplitNote').innerHTML=`现金 RM${fmt(cashTotal,0)} 拆分：<b style="color:var(--ink)">抵押 RM${fmt(cashCollatMyr,0)} (${collatPctCash.toFixed(1)}%)</b> 锁给 sold put，<b style="color:var(--green)">真正闲置 RM${fmt(cashIdleMyr,0)} (${idlePctCash.toFixed(1)}%)</b>。${csp.length===0?'当前无 sold put，现金全部自由。':''}`;
+    document.getElementById('cashSplitNote').innerHTML=`现金 RM${fmt(cashTotal,0)} 拆分：<b style="color:var(--ink)">抵押 RM${fmt(cashCollatMyr,0)} (${collatPctCash.toFixed(1)}%)</b> 锁给 sold put，<b style="color:var(--green)">wallet + funds RM${fmt(cashIdleMyr,0)} (${idlePctCash.toFixed(1)}%)</b>。${csp.length===0?'当前无 sold put；基金是否即时可用以券商为准，在途资产不计入可用现金。':''}`;
 
     const sharesVal=myMv;
     const lsr=margin/sharesVal*100;
@@ -885,6 +895,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       if(d.gold)holdings.gold=d.gold;
       if(d.crypto)holdings.crypto=d.crypto;
       if(d.cash)holdings.cash=d.cash;
+      if(d.pendingAssets)holdings.pendingAssets=d.pendingAssets;
       if(d.options)holdings.options=d.options;
       if(d.marginJournal)holdings.marginJournal=d.marginJournal;
       if(typeof d.wheelRealized==='number')holdings.wheelRealized=d.wheelRealized;
@@ -902,7 +913,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 
   document.getElementById('goldToggle').addEventListener('change',e=>{goldMode=e.target.checked?'buyback':'spot';render();});
   render();
-  setSyncStatus('2026-10-29 OpenD已同步 — 美股盘中/现金/期权22:20 MYT；PLTR call浮盈+$135.50','ok');
+  setSyncStatus('2026-11-02 OpenD已同步 — 美股21:36 MYT盘前，资金21:38；在途资产另列','ok');
   loadFromJson();
 })();
 </script>
@@ -1048,5 +1059,6 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 /* PERFORMANCE_2026_END */
 
 </script></body></html>
+
 
 

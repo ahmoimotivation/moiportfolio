@@ -4,30 +4,30 @@
     "owner": "Moi",
     "timezone": "Asia/Kuala_Lumpur (MYT)",
     "displayCurrency": "MYR",
-    "lastRefresh": "2026-10-29T22:20:35+08:00",
-    "lastRefreshNote": "10/29 22:20 MYT OpenD REAL/FUTUMY持仓、现金与期权已核对，主要股数和成本与前次一致，未从快照发现行权接货。全部美股采用10/29 10:20:26–35 EDT quote_snapshot盘中价；期权负债及未实现来自同期positions。Chrome重新读取马股、黄金、BTC；moi journal重新逐笔复算47行，无新增流水，贷款仍截至10/23。历史收益、Wheel/MMF和M+结单覆盖未延长。",
+    "lastRefresh": "2026-11-02T21:38:47+08:00",
+    "lastRefreshNote": "11/02 OpenD REAL/FUTUMY主要持仓股数/平均成本与前次一致；美股统一使用13:36 UTC / 08:36 EST盘前pre_price，不混用last_price。现金及在途资产13:38:47 UTC分别核对，pending_asset独立计入净资产而不作可用现金。Chrome重新读取马股/黄金/BTC，journal47行复算无新增入账。历史利润与M+结单覆盖不延长。",
     "priceAsOf": {
-      "usStocks": "2026-10-29 10:20:26–35 EDT / 22:20:26–35 MYT；OpenD quote_snapshot盘中价，非收盘价",
-      "myStocks": "Google Chrome：MAYBANK Google财经卡片10/29 17:00 MYT收盘RM10.00；IGBREIT RM2.73、SUNREIT RM2.06，KLSE Screener与Yahoo成交价/涨跌及成交量一致；Yahoo收盘时间16:57:54 / 16:56:05 MYT，页面截至10/29，延迟报价。",
-      "btc": "2026-10-29 14:18 UTC / 22:18 MYT；Google Chrome Search财经卡片USD80,380.42",
-      "goldSpot": "2026-10-29 10:20 EDT / 22:20 MYT；Google Chrome Search → Kitco实时spot bid USD4,025/oz",
-      "fx": "USD/MYR4.0664：BNM 10/29 KL参考汇率；USD/HKD7.846572：OFX 10/29参考汇率，用于HKD fund_assets折算；均非经纪商保证成交汇率",
-      "cash": "2026-10-29 22:20 MYT OpenD REAL/FUTUMY account_info；USD wallet + USD货币基金，myr cash不加入",
-      "options": "2026-10-29 22:20 MYT OpenD positions；独立合约snapshot10:20:21 EDT last2.67/bid2.65/ask2.74；标的quote10:20:34 EDT",
-      "marginLoan": "moi journal最新入账截至2026-10-23；2026-10-29重新复核47行，无新增记录；未计未入账十月利息",
-      "marginJournal": "2026-10-29重新读取总览、实际流水与成本/转入参考；日志截至10/23，融资利息记至9月底，Sheet参考价仍9.99，网站按Chrome10.00重算"
+      "usStocks": "2026-11-02 08:35:30–08:36:05 America/New_York EST（UTC−5）/ 21:36 MYT；OpenD quote_snapshot pre_price，盘前报价，非常规收盘价",
+      "myStocks": "11/02收盘：MAYBANK9.98（KLSE日期表）；IGBREIT2.76/SUNREIT2.03（Yahoo收盘16:50:02/16:57:30 MYT，KLSE交叉核对），Chrome21:41–21:44 MYT读取。",
+      "btc": "Coinbase BTC/USD当前价77993.04，Chrome11/02 21:43:13 MYT读取，非历史Today行。",
+      "goldSpot": "Kitco11/02 08:42 NY spot BID US$3936.70/oz，Chrome21:42MYT读取；沿用UOB回购估值spot×1.01，不是实际银行报价。",
+      "fx": "USD/MYR4.0671：BNM 11/02 KL参考汇率，非保证成交汇率；本次fund_assets直接USD查询，无需USD/HKD换算；旧USD/HKD仅保留历史字段，不用于本次现金。",
+      "cash": "2026-11-02 21:38:47 MYT OpenD REAL/FUTUMY accinfo_query(currency=USD)，wallet+fund_assets，与pending_asset分开；MYR现金仍排除",
+      "options": "2026-11-02 21:36:05 MYT positions；PLTR short call mark2.025，独立quote last1.39/bid0.35/ask3.70，source07:30 EST，价差宽且非同期成交",
+      "marginLoan": "2026-11-02重新核对47行；最新实际入账2026-10-23，贷款355897.77，未计未入账十月利息",
+      "marginJournal": "2026-11-02重新核对实际流水及总览，无新增有效交易；行情按本次Chrome价格重算，Sheet参考9.99不改"
     },
     "sources": {
       "gold": "https://www.kitco.com/charts/gold",
-      "btc": "https://www.google.com/finance/quote/BTC-USD",
-      "maybank": "https://www.google.com/finance/quote/MAYBANK:KLSE",
+      "btc": "https://www.coinbase.com/price/bitcoin",
+      "maybank": "https://www.klsescreener.com/v2/stocks/view/1155",
       "igbreit": "https://finance.yahoo.com/quote/5227.KL/",
       "sunreit": "https://finance.yahoo.com/quote/5176.KL/",
       "usdMyr": "https://financialmarkets.bnm.gov.my/data-download-kl-usd-myr-reference-rate",
       "usdHkd": "https://www.ofx.com/en-ie/forex-news/historical-exchange-rates/usd/hkd/"
     },
     "profitReconciledAt": "2026-10-04",
-    "profitReconciliationNote": "M+本年卖出−US$56.73（结单覆盖至09/30）与原Moomoo成本口径股票约US$11,031.09、Wheel/MMF US$16,189.10沿用，合计非统一YTD。10/29仅刷新资产/现金/行情/期权及重新核对journal；历史利润对账日10/04与覆盖不延长。",
+    "profitReconciliationNote": "历史利润对账仍为10/04：M+结单截至09/30，原Moomoo成本口径与Wheel/MMF沿用，合计非统一YTD。本次11/02仅刷新当前资产/行情/现金/在途/期权与journal复核，不延长历史利润覆盖。",
     "moomooYtdReference": {
       "cumulativePlUsd": 35906.5,
       "reportedAt": "2026-10-03",
@@ -38,36 +38,37 @@
     },
     "mplusStatementsThrough": "2026-09-30",
     "refreshWarnings": [
-      "LSR 70.36%，超出既有70%模型线0.36 pp；按马股市值估算，非银行认可抵押值或正式追缴通知。",
-      "贷款截至10/23已入账记录，未计尚未入账十月利息；M+持仓和历史收益覆盖未延长。",
-      "GOOGL本次盘中价较10/28常规收盘-12.03%，属当日大幅变动。",
-      "NOW本次盘中价较10/28常规收盘-24.23%，属当日大幅变动。",
-      "Maybank网站按Chrome RM10.00估值；Sheet参考价仍RM9.99，因此网站净损益与H6相差RM453；方法和本金相同。"
+      "LSR 70.48%，按马股市值估算，非银行认可抵押值或正式通知。",
+      "贷款仅截至10/23入账，未计未入账十月利息；M+持仓仍为既有结单范围。",
+      "PLTR期权mark2.025采用positions；独立quote0.35–3.70价差宽，last1.39不是mark。",
+      "在途资产折合US$6981.0277；用户说明USD/MYR基金赎回中，原币拆分未知；沿用原资金范围、替换旧现金汇总而非叠加；MYR现金174.81仍排除。",
+      "SOXX较10/29看板快照-7.50%，不同于较前收变化。",
+      "NOW较10/29看板快照-7.25%，不同于较前收变化。"
     ],
     "optionPriceSanity": {
-      "observedAsOf": "2026-10-29T22:20:35+08:00",
-      "observedMarkPrice": 2.695,
-      "observedLiabilityUsd": 269.5,
-      "displayedClosePx": 2.695,
+      "observedAsOf": "2026-11-02T21:36:05+08:00",
+      "observedMarkPrice": 2.025,
+      "observedLiabilityUsd": 202.5,
+      "displayedClosePx": 2.025,
       "liabilityFromMarketValue": true,
       "liabilityGuardHeld": false,
       "ownerAuthorizedOverride": false,
       "independentlyVerified": true,
-      "changeFromPreviousRefreshPct": -18.29,
-      "verificationNote": "Same contract and short quantity confirmed; current position market value agrees with nominal_price and lies within independent current bid/ask. Prior single-run overrides are not reused.",
+      "changeFromPreviousRefreshPct": -24.86,
+      "verificationNote": "Same contract short1 confirmed; positions nominal mark2.025 equals liability202.50/100 and independent bid/ask midpoint; quote source07:30EST is earlier and spread0.35–3.70wide. Last1.39 is not used as liability.",
       "independentQuote": {
-        "asOf": "2026-10-29 10:20:21 EDT",
-        "lastPrice": 2.67,
-        "bid": 2.65,
-        "ask": 2.74
+        "asOf": "2026-11-02 07:30:00 EST",
+        "lastPrice": 1.39,
+        "bid": 0.35,
+        "ask": 3.7
       },
       "netWorthOverstatementMyrIfHeld": 0
     },
-    "refreshStatus": "complete_current_holdings_refresh",
+    "refreshStatus": "complete_current_snapshot_with_disclosed_scope_limits",
     "marginLoanReconciliation": {
       "source": "Owner-provided Google Sheet / moi journal",
       "asOf": "2026-10-23",
-      "checkedOn": "2026-10-29",
+      "checkedOn": "2026-11-02",
       "sourceCells": [
         "B6",
         "L59"
@@ -81,12 +82,23 @@
       "cashTreatment": "Dividends already reduce loan; do not add again to cash or realized income.",
       "status": "posted_balance_october_statement_pending",
       "unpostedOctoberInterestIncluded": false,
-      "check": "All 47 valid dated journal rows recomputed; each running loan and Maybank quantity matched. No new ledger entries since prior refresh. Reference and month-end statement rows excluded.",
+      "check": "全部47笔有效流水独立重算，股数和贷款每行一致；无10/23后新入账。排除结单、参考本金和模拟行。",
       "bankLsrCaveat": "Dashboard LSR uses current MY market values; bank-approved collateral values and lender notice may differ. Do not substitute stale September haircuts as current."
     },
-    "holdingsScopeNote": "主要Moomoo股数与前次一致；沿用既有范围，不新增TSM/TSLA/CSCO/AAPL零碎赠股（本次合计US$199.83）。M+数量仍取已核对结单，不推断未提供的十月交易；本次不是历史收益重新对账。",
+    "holdingsScopeNote": "OpenD主要Moomoo股数/平均成本与既有范围一致；零碎TSM/TSLA/CSCO/AAPL赠股仍排除（本次US$195.39）。M+数量沿用已核对结单，不推断十月交易；仅刷新M+持仓标的报价。未从快照发现行权接货，不断言期间无往返交易。",
     "marginMethodUpdatedAt": "2026-10-28T08:55:00+08:00",
-    "marginMethodNote": "继续采用owner 10/28确认的Journal H6/I6方法：Maybank股价损益+Maybank股息−净融资利息；分母为净外部现金投入+Maybank转入本金参考。10/29重新读取47笔流水，股数45,300、均价11.6960、本金157,970、贷款355,897.77未变。Chrome股价10.00高于Sheet参考9.99，网站净损益−58,818.79、回报−37.234151%；Sheet原H6/I6不改写。"
+    "marginMethodNote": "11/02重新核对47笔journal流水，Maybank股数45300、均价11.696、本金157970、贷款355897.77不变；网站按Chrome最新价格重算，Sheet参考9.99保持不变。未入账十月利息未计。",
+    "cashReconciliation": {
+      "asOf": "2026-11-02T21:38:47+08:00",
+      "requestedCurrency": "USD",
+      "totalAssetsUsd": 160076.2609,
+      "securitiesAssetsUsd": 127216.65,
+      "fundAssetsUsd": 25878.58,
+      "pendingAssetsUsd": 6981.0277,
+      "walletUsd": 714.16,
+      "residualUsd": 0.0032,
+      "note": "securities_assets+fund_assets+pending_asset matches total_assets within rounding. Wallet already in securities_assets for account reconciliation; portfolio uses individual shares+wallet+fund+pending once. API does not identify fund types or pending source. These funds and securities NAV timestamps differ from13:36 quotes."
+    }
   },
   "constants": {
     "marginLoanMyr": 355897.77,
@@ -98,7 +110,7 @@
     "pdsVersion": "Public Bank PDS Ver032026"
   },
   "fx": {
-    "usdMyr": 4.0664,
+    "usdMyr": 4.0671,
     "usdHkd": 7.846572
   },
   "us": [
@@ -107,7 +119,7 @@
       "name": "Alphabet-A",
       "qty": 100,
       "cost": 387.5,
-      "px": 285.805,
+      "px": 282.11,
       "cat": "Hyperscaler",
       "broker": "Moomoo",
       "note": "Moomoo · 6/18 $387.5 put 接货"
@@ -117,7 +129,7 @@
       "name": "Meta",
       "qty": 55,
       "cost": 611.42,
-      "px": 623.37,
+      "px": 613.75,
       "cat": "Hyperscaler",
       "broker": "blended",
       "note": "blended · M+ 38 @ $639.45 + Moomoo 17 @ $548.78（8/1 加仓）"
@@ -127,7 +139,7 @@
       "name": "Microsoft",
       "qty": 63,
       "cost": 432.45,
-      "px": 523.875,
+      "px": 525.3578,
       "cat": "Hyperscaler",
       "broker": "blended",
       "note": "blended · Moomoo 17 + M+ 46（6/15 加仓 14 股 @ $398.28）"
@@ -137,7 +149,7 @@
       "name": "Nvidia",
       "qty": 110.4,
       "cost": 214.01,
-      "px": 213.7025,
+      "px": 206.15,
       "cat": "AI Capex",
       "broker": "Moomoo",
       "note": "Moomoo only（平均成本 $214.01 · option premium 已计入 wheel 收入）· M+ 26 股 6/15 @ $209.15 已卖出"
@@ -147,7 +159,7 @@
       "name": "iShares Semiconductor ETF",
       "qty": 18,
       "cost": 513.09,
-      "px": 514.81,
+      "px": 476.2,
       "cat": "AI Capex",
       "broker": "Moomoo",
       "note": "Moomoo · 8/1 买入（BOXX 换股）"
@@ -157,7 +169,7 @@
       "name": "ServiceNow",
       "qty": 200,
       "cost": 108,
-      "px": 113.7494,
+      "px": 105.5,
       "cat": "SaaS",
       "broker": "Moomoo",
       "note": "Moomoo · $108 put 行权接货 (2 张)"
@@ -167,7 +179,7 @@
       "name": "Palantir",
       "qty": 139,
       "cost": 134.499,
-      "px": 195.61,
+      "px": 187.6,
       "cat": "Defense",
       "broker": "Moomoo",
       "note": "Moomoo · 6/29 买 39 + 7/2 $141 put 行权接货 100 股 · 8/3 财报后续涨"
@@ -177,7 +189,7 @@
       "name": "Invesco QQQ",
       "qty": 46,
       "cost": 435.53,
-      "px": 716.43,
+      "px": 694.86,
       "cat": "ETF",
       "broker": "M+",
       "note": "M+ · 2026-07-03"
@@ -187,7 +199,7 @@
       "name": "UnitedHealth",
       "qty": 31,
       "cost": 319.89,
-      "px": 409.1299,
+      "px": 406.33,
       "cat": "Healthcare",
       "broker": "M+",
       "note": "M+ · 2026-07-03"
@@ -200,7 +212,7 @@
       "name": "IGB REIT",
       "qty": 11800,
       "cost": 2.67,
-      "px": 2.73,
+      "px": 2.76,
       "note": "cash"
     },
     {
@@ -209,7 +221,7 @@
       "name": "Malayan Banking",
       "qty": 45300,
       "cost": 11.696,
-      "px": 10,
+      "px": 9.98,
       "note": "partial margin"
     },
     {
@@ -218,27 +230,27 @@
       "name": "Sunway REIT",
       "qty": 10000,
       "cost": 2.11,
-      "px": 2.06,
+      "px": 2.03,
       "note": "cash"
     }
   ],
   "gold": {
     "oz": 7,
     "costPerOz": 21246,
-    "spotUsd": 4025,
+    "spotUsd": 3936.7,
     "custodian": "UOB",
     "note": "Kangaroo 1 oz · Perth Mint 99.99% · purchased 28 Jan 2026 @ USD spot ATH (~$5,400/oz)"
   },
   "crypto": {
     "qty": 0.0351549,
     "costMyr": 15994.97,
-    "pxUsd": 80380.42,
+    "pxUsd": 77993.04,
     "broker": "HATA"
   },
   "cash": {
-    "usd": 33582.96,
+    "usd": 26592.74,
     "myr": 0,
-    "usdBreakdown": "us_cash $714.16 + USD 货币基金 $32,868.80（fund_assets 257,907.37 HKD ÷ 7.846572；OFX 10/29参考汇率）",
+    "usdBreakdown": "USD query: wallet US$714.16 + fund_assets US$25,878.58 = US$26,592.74（11/02 21:38:47 MYT）；基金明细未由API提供，不保证即时可提现。另列在途资产，不混入可用现金。",
     "myrBreakdown": "不计入：owner 2026-09-30 指定 Idle Cash 只算 Moomoo money market fund + wallet"
   },
   "options": [
@@ -250,10 +262,10 @@
       "expiry": "2026-11-06",
       "contracts": 1,
       "premium": 405,
-      "closePx": 2.695,
-      "expPL": 135.5,
+      "closePx": 2.025,
+      "expPL": 202.5,
       "opn": null,
-      "ulPx": 195.61
+      "ulPx": 187.6
     }
   ],
   "stockRealizedUsd": 11031.09,
@@ -423,11 +435,16 @@
   },
   "wheelRealized": 16189.1,
   "ulPxFallback": {
-    "AMZN": 253.1,
-    "GOOGL": 285.805,
-    "NVDA": 213.7025,
-    "PLTR": 195.61,
-    "NOW": 113.7494
+    "AMZN": 241.45,
+    "GOOGL": 282.11,
+    "NVDA": 206.15,
+    "PLTR": 187.6,
+    "NOW": 105.5,
+    "META": 613.75,
+    "MSFT": 525.3578,
+    "SOXX": 476.2,
+    "QQQ": 694.86,
+    "UNH": 406.33
   },
   "sectorMap": {
     "AI Capex": [
@@ -454,30 +471,31 @@
   },
   "derived": {
     "_comment": "Recomputed on every refresh. Do not hand-edit — recalculate from the formulas in UPDATE_INSTRUCTIONS.md §5.",
-    "netWorthMyr": 1324714,
-    "grossAssetsMyr": 1681708,
-    "lsrPct": 70.36,
-    "lsrBufferToCallPp": -0.36,
+    "netWorthMyr": 1296300,
+    "grossAssetsMyr": 1653021,
+    "lsrPct": 70.48,
+    "lsrBufferToCallPp": -0.48,
     "soldPutLiabilityUsd": 0,
-    "soldCallLiabilityUsd": 269.5,
-    "soldOptionLiabilityUsd": 269.5,
+    "soldCallLiabilityUsd": 202.5,
+    "soldOptionLiabilityUsd": 202.5,
     "realizedProfitUsd": 27163.46,
-    "realizedProfitMyr": 110457.49,
+    "realizedProfitMyr": 110476.51,
     "realizedProfitEstimated": true,
-    "costBasisReturnMyr": 102627.38,
-    "costBasisReturnPct": 7.5897,
+    "costBasisReturnMyr": 74104.21,
+    "costBasisReturnPct": 5.4797,
     "stockRealizedCombinedUsd": 10974.36,
-    "mplusRealizedMyr": -230.69,
-    "maybankPriceProfitMyr": -76828.8,
+    "mplusRealizedMyr": -230.73,
+    "maybankPriceProfitMyr": -77734.8,
     "maybankNetIncomeMyr": 18010.01,
-    "maybankNetProfitMyr": -58818.79,
+    "maybankNetProfitMyr": -59724.79,
     "maybankPrincipalMyr": 157970,
-    "maybankCapitalReturnPct": -37.2342
+    "maybankCapitalReturnPct": -37.8077,
+    "pendingAssetsMyr": 28392.54
   },
   "marginJournal": {
     "sourceLabel": "Margin Calculator / moi journal",
     "asOf": "2026-10-23",
-    "checkedOn": "2026-10-29",
+    "checkedOn": "2026-11-02",
     "quantity": 45300,
     "averageCostMyr": 11.696,
     "cashDepositsMyr": 152420,
@@ -495,5 +513,11 @@
     "financingInterestScope": "Recorded margin interest net of interest credits, allocated to Maybank because current financed purchases are Maybank only.",
     "basisNote": "Statement average 11.6960; transferred Maybank principal RM10,550 is provisional. Excludes REIT capital/dividends and unposted interest. Trading/account fees are not additionally deducted under the owner-approved H6 method.",
     "refreshMode": "Agent reads owner Google Sheet on each requested portfolio refresh; website consumes a saved aggregate snapshot."
+  },
+  "pendingAssets": {
+    "usd": 6981.0277,
+    "asOf": "2026-11-02T21:38:47+08:00",
+    "source": "OpenD accinfo_query(currency=USD).pending_asset",
+    "note": "API在途资产折合USD；用户说明近期USD及MYR货币基金赎回中，但API未提供原币及金额拆分。按用户确认维持原资金范围，以最新钱包+基金+在途替换旧cash总额，不是在旧cash上新增财富；不作可用现金或期权抵押。"
   }
 }

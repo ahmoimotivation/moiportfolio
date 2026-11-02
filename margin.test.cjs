@@ -30,16 +30,16 @@ near(reinvested.principalMyr,flatBase.principalMyr);near(reinvested.netProfitMyr
 near(calculate(stock,{...j,reitDividendsMyr:999999,reitCapitalMyr:999999}).netProfitMyr,baseline.netProfitMyr);
 // Current assets already reflect dividends through the actual loan; never add income to NAV.
 const fx=data.fx.usdMyr,sum=(xs,fn)=>xs.reduce((a,x)=>a+fn(x),0);
-const gross=sum(data.us,x=>x.qty*x.px)*fx+sum(data.my,x=>x.qty*x.px)+data.gold.oz*data.gold.spotUsd*fx*data.constants.uobBuybackMultiplier+data.crypto.qty*data.crypto.pxUsd*fx+data.cash.usd*fx+data.cash.myr;
+const gross=sum(data.us,x=>x.qty*x.px)*fx+sum(data.my,x=>x.qty*x.px)+data.gold.oz*data.gold.spotUsd*fx*data.constants.uobBuybackMultiplier+data.crypto.qty*data.crypto.pxUsd*fx+data.cash.usd*fx+data.cash.myr+(data.pendingAssets?.usd||0)*fx;
 const liabilities=sum(data.options,x=>x.closePx*100*x.contracts)*fx;
 assert.equal(Math.round(gross-data.constants.marginLoanMyr-liabilities),data.derived.netWorthMyr);
 const invested=sum(data.us,x=>x.qty*x.cost)*fx+sum(data.my,x=>x.qty*x.cost)+data.gold.oz*data.gold.costPerOz+data.crypto.costMyr;
-const investedMV=gross-data.cash.usd*fx-data.cash.myr;
+const investedMV=gross-data.cash.usd*fx-data.cash.myr-(data.pendingAssets?.usd||0)*fx;
 const roi=investedMV-invested+sum(data.options,x=>x.expPL)*fx+(data.wheelRealized+data.stockRealizedUsd+data.mplusRealizedUsd)*fx+baseline.netIncomeMyr;
 near(+roi.toFixed(2),data.derived.costBasisReturnMyr);
 const inline=html.split('  const holdings=')[1].split('/* MAYBANK_JOURNAL_CALC_START */')[0].trim();
 const mirror={};vm.createContext(mirror);vm.runInContext('this.holdings='+inline,mirror);
-for(const key of ['us','my','cash','options','marginJournal'])assert.deepEqual(JSON.parse(JSON.stringify(mirror.holdings[key])),data[key]);
+for(const key of ['us','my','cash','options','marginJournal','pendingAssets'])assert.deepEqual(JSON.parse(JSON.stringify(mirror.holdings[key])),data[key]);
 const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(m=>m[1]).filter(Boolean);
 scripts.forEach(s=>new vm.Script(s));const main=scripts.find(s=>s.includes('  const holdings='));
 async function render(payload){
@@ -55,4 +55,5 @@ async function render(payload){
  assert.ok(!html.includes('mbRow.cost-margin'));assert.ok(html.includes("if(d.marginJournal)holdings.marginJournal=d.marginJournal;"));
  console.log('PASS: Maybank-only P/L, principal return, new deposits, dividend reinvestment, REIT exclusion, missing-source guards, no double-counted NAV/ROI, inline/online snapshot and rendered UI.');
 })().catch(e=>{console.error(e);process.exitCode=1;});
+
 
