@@ -324,7 +324,7 @@ pumpForce = margin × (1 − 69/80)
 
 ## 8. 更新流程 checklist
 
-**Owner 页面偏好（2026-11-04）**：区间盈亏使用默认收起的折叠区，点击标题展开日期选择和结果。Allocation 保留原分类饼图及 MY net-equity 口径，下方细列每只美股及马股的市值（RM）、占各自市场股票市值的百分比、占当前净资产的百分比。**Owner 同日更正**：Maybank行使用股票市值减全额margin loan后的净股权；当前融资仅用于Maybank，REIT仍按市值。马股单股占比＝各行净股权÷马股净股权合计，占净身家＝各行净股权÷净资产。贷款已在Maybank行扣除，合计不可再扣第二次；移除原先gross合计及独立贷款扣减行。列名明确写净股权。如果将来融资用途改变须重新核对归属。每日刷新由最新持仓动态生成，不固定股票名单、金额或百分比；保留折叠偏好。本次为 owner 明确授权的页面结构调整，后续日常行情刷新不撤销。新增核验：`node allocation.test.cjs`。
+**Owner 页面偏好（2026-11-04最新更正）**：区间盈亏默认收起，点击标题展开。Allocation保留原分类饼图及MY net-equity口径；明细显示每只美股、马股以及黄金、Crypto的现值（RM）、现价占净身家%、成本占净身家%，移除占美股/占马股内部比例。两个百分比分母统一为当前净资产。美股：股数×现价或平均成本×当前快照汇率；REIT：股数×现价或账面均价；黄金：本页估值模式对应市值或oz×实际购入成本/oz；Crypto：币数×当前美元价×汇率或记录的costMyr。Maybank现值和账面成本分别减同一笔当前margin loan，再各除以净资产；当前融资仅用于Maybank，不重复扣到合计或REIT。若融资用途改变须重新核对归属。成本占比不是历史现金投入或收益率，所有成本占比不要求合计100%。分母非正数或成本缺失显示未计算。每日动态生成，不固定名单、金额或占比，保留默认折叠。此展示变更由owner明确授权，后续日常刷新不得撤销。新增核验：`node allocation.test.cjs`。
 
 1. [ ] 确认数据源可用（OpenD / Google Chrome Search / WebSearch）
 2. [ ] 拉价格：美股（OpenD）· MAYBANK/黄金/BTC（Google Chrome Search）· IGBREIT/SUNREIT（Chrome）· USD/MYR (· USD/HKD)

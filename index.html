@@ -53,6 +53,7 @@ tr:last-child td{border-bottom:none}
 .alloc-row:last-child{border-bottom:none}
 .alloc-dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:middle}
 .alloc-details{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+@media(min-width:761px){.alloc-group:first-child{grid-row:span 3}}
 .alloc-group{min-width:0}.alloc-group h3{font-size:13px;margin:0 0 5px}.alloc-group table{width:100%;table-layout:fixed}.alloc-group th,.alloc-group td{padding:7px 3px;font-size:11px}.alloc-group th{white-space:normal}.alloc-group th:first-child{width:28%}.alloc-group .alloc-stock{font-weight:600}.alloc-group .alloc-debt td{color:var(--red)}.alloc-detail-note{font-size:11px;color:var(--muted);line-height:1.5;margin:12px 0 0}
 @media(max-width:760px){.alloc-details{grid-template-columns:1fr;gap:18px}}@media(max-width:420px){.card .alloc{grid-template-columns:1fr}.alloc>div:first-child{max-width:150px;width:100%;margin:auto}.alloc-row{gap:8px}.alloc-row>span:last-child{white-space:nowrap}}
 .lsr-bar{position:relative;height:12px;background:#eee;border-radius:4px;overflow:visible;margin-top:10px}
@@ -588,10 +589,11 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     const rows=stocks.map(s=>{
       const grossValue=s.qty*s.px*fx,deductedLoan=s.t===loanTicker?remainingLoan:0;
       remainingLoan-=deductedLoan;
-      const value=grossValue-deductedLoan;
-      return {ticker:s.t,grossValue,deductedLoan,value,groupWeight:weight(value,total),netWorthWeight:weight(value,netWorth)};
+      const value=grossValue-deductedLoan,costValue=Number.isFinite(s.cost)?s.qty*s.cost*fx-deductedLoan:null;
+      return {ticker:s.t,grossValue,deductedLoan,value,costValue,netWorthWeight:weight(value,netWorth),costWeight:costValue===null?null:weight(costValue,netWorth)};
     }).sort((a,b)=>b.value-a.value);
-    return {grossTotal,total,loan,totalWeight:weight(total,netWorth),unallocatedLoan:remainingLoan,unallocatedGroupWeight:weight(-remainingLoan,total),unallocatedNetWeight:weight(-remainingLoan,netWorth),rows};
+    const costTotal=rows.every(r=>r.costValue!==null)?rows.reduce((sum,r)=>sum+r.costValue,0)-remainingLoan:null;
+    return {grossTotal,total,costTotal,loan,totalWeight:weight(total,netWorth),totalCostWeight:costTotal===null?null:weight(costTotal,netWorth),unallocatedLoan:remainingLoan,unallocatedNetWeight:weight(-remainingLoan,netWorth),rows};
   }
   /* ALLOCATION_DETAIL_END */
   let goldMode='buyback';
@@ -870,15 +872,15 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     }).join('');
     const collatPctCash=cashTotal?cashCollatMyr/cashTotal*100:0;
     const allocationPct=value=>value===null?'未计算':value.toFixed(2)+'%';
-    const allocationTable=(title,group,isMy)=>`<section class="alloc-group" aria-label="${title}配置明细">
-      <h3>${title} · ${group.rows.length} 只</h3>
-      <table><thead><tr><th scope="col">股票</th><th scope="col" class="right">${isMy?'净股权':'市值'} · RM</th><th scope="col" class="right">${isMy?'占马股<br>净股权':'占美股'}</th><th scope="col" class="right">占净身家</th></tr></thead><tbody>
-      ${group.rows.map(r=>`<tr><th scope="row" class="alloc-stock">${r.ticker}${r.deductedLoan?'<div class="ticker-note">已扣融资贷款</div>':''}</th><td class="right num">${fmt(r.value,0)}</td><td class="right num">${allocationPct(r.groupWeight)}</td><td class="right num">${allocationPct(r.netWorthWeight)}</td></tr>`).join('')}
-      ${group.unallocatedLoan?`<tr class="alloc-debt"><th scope="row">未分配融资贷款</th><td class="right num">−${fmt(group.unallocatedLoan,0)}</td><td class="right num">${allocationPct(group.unallocatedGroupWeight)}</td><td class="right num">${allocationPct(group.unallocatedNetWeight)}</td></tr>`:''}
-      <tr class="subtotal"><th scope="row">${isMy?'净股权合计':'股票合计'}</th><td class="right num">${fmt(group.total,0)}</td><td class="right num">${group.total>0?'100.00%':'未计算'}</td><td class="right num">${allocationPct(group.totalWeight)}</td></tr>
+    const allocationTable=(title,group,isMy=false,isStock=true)=>`<section class="alloc-group" aria-label="${title}配置明细">
+      <h3>${title}${isStock?' · '+group.rows.length+' 只':''}</h3>
+      <table><thead><tr><th scope="col">资产</th><th scope="col" class="right">${isMy?'净现值':'现值'} · RM</th><th scope="col" class="right">现价占<br>净身家</th><th scope="col" class="right">成本占<br>净身家</th></tr></thead><tbody>
+      ${group.rows.map(r=>`<tr><th scope="row" class="alloc-stock">${r.ticker}${r.deductedLoan?'<div class="ticker-note">现值及成本已扣贷款</div>':''}</th><td class="right num">${fmt(r.value,0)}</td><td class="right num">${allocationPct(r.netWorthWeight)}</td><td class="right num">${allocationPct(r.costWeight)}</td></tr>`).join('')}
+      ${group.unallocatedLoan?`<tr class="alloc-debt"><th scope="row">未分配融资贷款</th><td class="right num">−${fmt(group.unallocatedLoan,0)}</td><td class="right num">${allocationPct(group.unallocatedNetWeight)}</td><td class="right num">${allocationPct(group.unallocatedNetWeight)}</td></tr>`:''}
+      ${isStock?`<tr class="subtotal"><th scope="row">${isMy?'净股权合计':'股票合计'}</th><td class="right num">${fmt(group.total,0)}</td><td class="right num">${allocationPct(group.totalWeight)}</td><td class="right num">${allocationPct(group.totalCostWeight)}</td></tr>`:''}
       </tbody></table></section>`;
-    document.getElementById('allocDetails').innerHTML=allocationTable('US stocks',allocationBreakdown(holdings.us,fx,netWorth),false)+allocationTable('MY stocks',allocationBreakdown(holdings.my,1,netWorth,margin,'MAYBANK'),true);
-    document.getElementById('allocDetailNote').textContent=`Maybank 净股权＝股票市值 RM${fmt(mbRow?mbRow.mv:0,0)} − margin loan RM${fmt(margin,0)}；贷款全额从 Maybank 扣一次，REIT 按市值。「占马股净股权」以扣贷款后的马股合计 RM${fmt(myMv-margin,0)} 为分母；「占美股」以美股总市值为分母。「占净身家」以净资产 RM${fmt(netWorth,0)} 为分母；美股按快照汇率 ${fx.toFixed(4)} 换算。百分比经四舍五入；ETF 按直接持仓计算。`;
+    document.getElementById('allocDetails').innerHTML=allocationTable('US stocks',allocationBreakdown(holdings.us,fx,netWorth))+allocationTable('MY stocks',allocationBreakdown(holdings.my,1,netWorth,margin,'MAYBANK'),true)+allocationTable('Gold',allocationBreakdown([{t:'Kangaroo Gold',qty:1,px:goldMv,cost:goldCost}],1,netWorth),false,false)+allocationTable('Crypto',allocationBreakdown([{t:'BTC',qty:1,px:cryptoMv,cost:cryptoCost}],1,netWorth),false,false);
+    document.getElementById('allocDetailNote').textContent=`两栏统一除以当前净身家 RM${fmt(netWorth,0)}：现价占比用现值，成本占比用当前持仓账面成本。Maybank 的现值和成本均先减同一笔当前 margin loan RM${fmt(margin,0)}；贷款只扣一次。REIT、黄金与 Crypto 不扣贷款。美股现值与美元成本均按快照汇率 ${fx.toFixed(4)} 换算；黄金现值沿用本页${goldMode==='buyback'?'UOB 回购估值':'spot 估值'}，成本用实际购入成本。成本占比不是历史现金投入或收益率，各项不必合计100%；ETF 按直接持仓计算。`;
     const idlePctCash=cashTotal?cashIdleMyr/cashTotal*100:0;
     document.getElementById('cashSplitNote').innerHTML=`现金 RM${fmt(cashTotal,0)} 拆分：<b style="color:var(--ink)">抵押 RM${fmt(cashCollatMyr,0)} (${collatPctCash.toFixed(1)}%)</b> 锁给 sold put，<b style="color:var(--green)">wallet + funds RM${fmt(cashIdleMyr,0)} (${idlePctCash.toFixed(1)}%)</b>。${csp.length===0?'当前无 sold put；基金是否即时可用以券商为准，在途资产不计入可用现金。':''}`;
 

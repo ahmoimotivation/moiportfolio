@@ -11,7 +11,7 @@
 - 股息已抵贷款，不能再加到资产或现金。Total ROI 只额外加Maybank股息减净利息，不再加一次整个Maybank净损益。
 - 公开只放聚合数据；不上传私人 Sheet URL/ID、账户号、交易编号、原始流水或截图。
 - 核验：node margin.test.cjs；node tests/performance.test.cjs。发布后验证 live 页面；不要只确认提交成功。
-- Owner 页面偏好（2026-11-04）：2026区间盈亏默认收起，点击标题展开；Allocation 保留分类饼图，并显示每只美股/马股的市值、各市场内占比及占净资产比例，Maybank那一行先扣全额margin loan，再按净额计算占马股净股权和净资产的比例；REIT按市值，马股合计不再重复扣贷款（owner同日更正）。日常刷新保留这些展示。配置计算核验：node allocation.test.cjs。
+- Owner 页面偏好（2026-11-04最新）：2026区间盈亏默认收起；Allocation明细列每只美股、马股及黄金、Crypto的现价占净身家和成本占净身家，均以当前净资产为分母，移除美股/马股内部占比。Maybank现值和账面成本均先扣全额当前margin loan，只扣一次；REIT、金、币不扣。黄金现值沿用本页估值开关，美股美元成本按快照汇率折算。日常刷新保留这些展示。配置核验：node allocation.test.cjs。
 - 不下单、不动钱、不把估算LSR写成银行正式通知。保留成本/转入本金/未入账利息等实际局限。
 
 
