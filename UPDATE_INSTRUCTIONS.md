@@ -324,7 +324,7 @@ pumpForce = margin × (1 − 69/80)
 
 ## 8. 更新流程 checklist
 
-**Owner 页面偏好（2026-11-04）**：区间盈亏使用默认收起的折叠区，点击标题展开日期选择和结果。Allocation 保留原分类饼图及 MY net-equity 口径，下方细列每只美股及马股的市值（RM）、占各自市场股票市值的百分比、占当前净资产的百分比。马股单股使用 gross 市值，融资贷款单独列负数，再列净股权；不任意把贷款分配到单股。两种分母明确标注，不能把马股 gross 单股比例冒充已扣贷款比例。每日刷新由最新持仓动态生成，不固定股票名单、金额或百分比；保留折叠偏好。本次为 owner 明确授权的页面结构调整，后续日常行情刷新不撤销。新增核验：`node allocation.test.cjs`。
+**Owner 页面偏好（2026-11-04）**：区间盈亏使用默认收起的折叠区，点击标题展开日期选择和结果。Allocation 保留原分类饼图及 MY net-equity 口径，下方细列每只美股及马股的市值（RM）、占各自市场股票市值的百分比、占当前净资产的百分比。**Owner 同日更正**：Maybank行使用股票市值减全额margin loan后的净股权；当前融资仅用于Maybank，REIT仍按市值。马股单股占比＝各行净股权÷马股净股权合计，占净身家＝各行净股权÷净资产。贷款已在Maybank行扣除，合计不可再扣第二次；移除原先gross合计及独立贷款扣减行。列名明确写净股权。如果将来融资用途改变须重新核对归属。每日刷新由最新持仓动态生成，不固定股票名单、金额或百分比；保留折叠偏好。本次为 owner 明确授权的页面结构调整，后续日常行情刷新不撤销。新增核验：`node allocation.test.cjs`。
 
 1. [ ] 确认数据源可用（OpenD / Google Chrome Search / WebSearch）
 2. [ ] 拉价格：美股（OpenD）· MAYBANK/黄金/BTC（Google Chrome Search）· IGBREIT/SUNREIT（Chrome）· USD/MYR (· USD/HKD)

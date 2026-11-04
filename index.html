@@ -581,11 +581,17 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
   }
   /* NET_WORTH_WEIGHT_END */
   /* ALLOCATION_DETAIL_START */
-  function allocationBreakdown(stocks,fx,netWorth,loan=0){
-    const total=stocks.reduce((sum,s)=>sum+s.qty*s.px*fx,0);
+  function allocationBreakdown(stocks,fx,netWorth,loan=0,loanTicker=null){
+    const grossTotal=stocks.reduce((sum,s)=>sum+s.qty*s.px*fx,0),total=grossTotal-loan;
     const weight=(value,base)=>Number.isFinite(value)&&Number.isFinite(base)&&base>0?value/base*100:null;
-    return {total,loan,netEquity:total-loan,totalWeight:weight(total,netWorth),loanWeight:weight(-loan,netWorth),netWeight:weight(total-loan,netWorth),
-      rows:stocks.map(s=>{const value=s.qty*s.px*fx;return {ticker:s.t,value,groupWeight:weight(value,total),netWorthWeight:weight(value,netWorth)};}).sort((a,b)=>b.value-a.value)};
+    let remainingLoan=loan;
+    const rows=stocks.map(s=>{
+      const grossValue=s.qty*s.px*fx,deductedLoan=s.t===loanTicker?remainingLoan:0;
+      remainingLoan-=deductedLoan;
+      const value=grossValue-deductedLoan;
+      return {ticker:s.t,grossValue,deductedLoan,value,groupWeight:weight(value,total),netWorthWeight:weight(value,netWorth)};
+    }).sort((a,b)=>b.value-a.value);
+    return {grossTotal,total,loan,totalWeight:weight(total,netWorth),unallocatedLoan:remainingLoan,unallocatedGroupWeight:weight(-remainingLoan,total),unallocatedNetWeight:weight(-remainingLoan,netWorth),rows};
   }
   /* ALLOCATION_DETAIL_END */
   let goldMode='buyback';
@@ -866,13 +872,13 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     const allocationPct=value=>value===null?'未计算':value.toFixed(2)+'%';
     const allocationTable=(title,group,isMy)=>`<section class="alloc-group" aria-label="${title}配置明细">
       <h3>${title} · ${group.rows.length} 只</h3>
-      <table><thead><tr><th scope="col">股票</th><th scope="col" class="right">市值 · RM</th><th scope="col" class="right">占${isMy?'马股':'美股'}</th><th scope="col" class="right">占净身家</th></tr></thead><tbody>
-      ${group.rows.map(r=>`<tr><th scope="row" class="alloc-stock">${r.ticker}</th><td class="right num">${fmt(r.value,0)}</td><td class="right num">${allocationPct(r.groupWeight)}</td><td class="right num">${allocationPct(r.netWorthWeight)}</td></tr>`).join('')}
-      <tr class="subtotal"><th scope="row">股票合计</th><td class="right num">${fmt(group.total,0)}</td><td class="right num">${group.total>0?'100.00%':'未计算'}</td><td class="right num">${allocationPct(group.totalWeight)}</td></tr>
-      ${isMy?`<tr class="alloc-debt"><th scope="row">减：融资贷款</th><td class="right num">−${fmt(group.loan,0)}</td><td class="right num">—</td><td class="right num">${allocationPct(group.loanWeight)}</td></tr><tr class="subtotal"><th scope="row">马股净股权</th><td class="right num">${fmt(group.netEquity,0)}</td><td class="right num">—</td><td class="right num">${allocationPct(group.netWeight)}</td></tr>`:''}
+      <table><thead><tr><th scope="col">股票</th><th scope="col" class="right">${isMy?'净股权':'市值'} · RM</th><th scope="col" class="right">${isMy?'占马股<br>净股权':'占美股'}</th><th scope="col" class="right">占净身家</th></tr></thead><tbody>
+      ${group.rows.map(r=>`<tr><th scope="row" class="alloc-stock">${r.ticker}${r.deductedLoan?'<div class="ticker-note">已扣融资贷款</div>':''}</th><td class="right num">${fmt(r.value,0)}</td><td class="right num">${allocationPct(r.groupWeight)}</td><td class="right num">${allocationPct(r.netWorthWeight)}</td></tr>`).join('')}
+      ${group.unallocatedLoan?`<tr class="alloc-debt"><th scope="row">未分配融资贷款</th><td class="right num">−${fmt(group.unallocatedLoan,0)}</td><td class="right num">${allocationPct(group.unallocatedGroupWeight)}</td><td class="right num">${allocationPct(group.unallocatedNetWeight)}</td></tr>`:''}
+      <tr class="subtotal"><th scope="row">${isMy?'净股权合计':'股票合计'}</th><td class="right num">${fmt(group.total,0)}</td><td class="right num">${group.total>0?'100.00%':'未计算'}</td><td class="right num">${allocationPct(group.totalWeight)}</td></tr>
       </tbody></table></section>`;
-    document.getElementById('allocDetails').innerHTML=allocationTable('US stocks',allocationBreakdown(holdings.us,fx,netWorth),false)+allocationTable('MY stocks',allocationBreakdown(holdings.my,1,netWorth,margin),true);
-    document.getElementById('allocDetailNote').textContent=`「占美股／马股」以各市场股票总市值为分母；「占净身家」以净资产 RM${fmt(netWorth,0)} 为分母。美股按快照汇率 ${fx.toFixed(4)} 换算。马股单只按完整市值展示，贷款独立扣减，所以单只占比合计高于上方马股净股权占比。百分比经四舍五入；ETF 按直接持仓计算。`;
+    document.getElementById('allocDetails').innerHTML=allocationTable('US stocks',allocationBreakdown(holdings.us,fx,netWorth),false)+allocationTable('MY stocks',allocationBreakdown(holdings.my,1,netWorth,margin,'MAYBANK'),true);
+    document.getElementById('allocDetailNote').textContent=`Maybank 净股权＝股票市值 RM${fmt(mbRow?mbRow.mv:0,0)} − margin loan RM${fmt(margin,0)}；贷款全额从 Maybank 扣一次，REIT 按市值。「占马股净股权」以扣贷款后的马股合计 RM${fmt(myMv-margin,0)} 为分母；「占美股」以美股总市值为分母。「占净身家」以净资产 RM${fmt(netWorth,0)} 为分母；美股按快照汇率 ${fx.toFixed(4)} 换算。百分比经四舍五入；ETF 按直接持仓计算。`;
     const idlePctCash=cashTotal?cashIdleMyr/cashTotal*100:0;
     document.getElementById('cashSplitNote').innerHTML=`现金 RM${fmt(cashTotal,0)} 拆分：<b style="color:var(--ink)">抵押 RM${fmt(cashCollatMyr,0)} (${collatPctCash.toFixed(1)}%)</b> 锁给 sold put，<b style="color:var(--green)">wallet + funds RM${fmt(cashIdleMyr,0)} (${idlePctCash.toFixed(1)}%)</b>。${csp.length===0?'当前无 sold put；基金是否即时可用以券商为准，在途资产不计入可用现金。':''}`;
 
