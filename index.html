@@ -144,7 +144,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     <h1>Moi Investment Portfolio</h1>
     <div class="timestamp">股票/Wallet + funds: Moomoo（在途资产另列） · 马股: Public Bank</div>
     <div class="timestamp" id="syncStatus" style="margin-top:2px">期权来自 Moomoo</div>
-    <div class="timestamp" style="margin-top:2px;color:var(--red)">⚠ 2026-11-04 OpenD已核对：新增FTNT 30股、AMZN 20股；PLTR call已于11/02买回，当前<b>无持仓期权</b>。美股08:52–08:54 MYT对应11/03美东盘后；wallet + funds <b>US$17,597.58</b>，在途为0。继续原MYR现金排除规则，Moomoo MYR钱包RM28,424.38未计入净值；净值与旧快照差额包含原在途退出计算范围的影响，不能全部当投资亏损。 Margin loan <b>RM355,897.77</b>（journal10/23，未见十月利息入账）；LSR <b>70.08%</b>（市值估算，非银行通知）。</div>
+    <div class="timestamp" style="margin-top:2px;color:var(--red)">⚠ 2026-11-04 OpenD已核对：新增FTNT 30股、AMZN 20股；PLTR call已于11/02买回，当前<b>无持仓期权</b>。美股08:52–08:54 MYT对应11/03美东盘后；wallet + funds <b>US$17,597.58</b>，在途为0。本次owner确认将Moomoo MYR钱包RM28,424.38纳入现金，Maybank现金仍不加入。 Margin loan <b>RM355,897.77</b>（journal10/23，未见十月利息入账）；LSR <b>70.08%</b>（市值估算，非银行通知）。</div>
   </div>
   <div class="toggle-row">
     <span id="goldModeLabel">Gold: UOB buyback est.</span>
@@ -325,7 +325,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 </div>
 
 <div style="height:10px"></div>
-<div class="footnote" style="text-align:center;padding-bottom:12px">2026-11-04刷新。美股统一使用OpenD quote_snapshot.after_price，11/03 19:52–19:54 EST（UTC−5，11/04 08:52–08:54 MYT）盘后价，不把last_price常规收盘误称最新。新增FTNT30股成本132（11/02买入）、AMZN20股成本247（11/03买入），OpenD平均成本/股数与近期成交一致；其他主要股数成本未变。PLTR11/06$225 call于11/02买回1张@1.26，持仓已消失且PLTR139股不变，当前期权浮盈及负债均为0，非行权接货。旧Wheel历史总额保持，平仓净收益尚未并入，不冒称最新完整历史回报。资金08:55MYT直接USD查询：wallet479.84+fund_assets17,117.74=17,597.58，在途0；旧在途不重复保留。继续原MYR现金排除规则，Moomoo MYR钱包RM28,424.38未计入净值；净值与旧快照差额包含原在途退出计算范围的影响，不能全部当投资亏损。 Chrome开盘前核对11/03马股收盘：Maybank10.04（Google财经卡片16:52MYT），IGBREIT2.74（Yahoo16:50:50MYT），SUNREIT2.07（Yahoo16:53:28MYT）。黄金Kitco spot BID3929.50/oz（11/03 19:55–19:56 EST）；BTC Google财经卡片76964（11/04 00:54 UTC）。USD/MYR4.0768为BNM11/03 KL参考；资金直接USD查询，不用旧USD/HKD换算。Journal重算47笔有效流水，入账仍截至2026-10-23，贷款RM355,897.77，未见十月利息记录，不估填。Maybank净损益RM-57,006.79，本金RM157,970.00，回报-36.09%；网站10.04与Sheet9.99不同，估值差RM2,265.00。转入本金暂估，未另扣交易/账户费用；股息已抵贷款，不重复加净资产。LSR为马股市值模型，非银行认可价值或正式通知。历史收益对账仍10/04，M+结单覆盖09/30；未重建历史期间资料；赠股仍排除（US$188.87）。</div>
+<div class="footnote" style="text-align:center;padding-bottom:12px">2026-11-04刷新。美股统一使用OpenD quote_snapshot.after_price，11/03 19:52–19:54 EST（UTC−5，11/04 08:52–08:54 MYT）盘后价，不把last_price常规收盘误称最新。新增FTNT30股成本132（11/02买入）、AMZN20股成本247（11/03买入），OpenD平均成本/股数与近期成交一致；其他主要股数成本未变。PLTR11/06$225 call于11/02买回1张@1.26，持仓已消失且PLTR139股不变，当前期权浮盈及负债均为0，非行权接货。旧Wheel历史总额保持，平仓净收益尚未并入，不冒称最新完整历史回报。资金08:55MYT直接USD查询：wallet479.84+fund_assets17,117.74=17,597.58，在途0；旧在途不重复保留。本次owner确认将Moomoo MYR钱包RM28,424.38纳入现金，Maybank现金仍不加入。 Chrome开盘前核对11/03马股收盘：Maybank10.04（Google财经卡片16:52MYT），IGBREIT2.74（Yahoo16:50:50MYT），SUNREIT2.07（Yahoo16:53:28MYT）。黄金Kitco spot BID3929.50/oz（11/03 19:55–19:56 EST）；BTC Google财经卡片76964（11/04 00:54 UTC）。USD/MYR4.0768为BNM11/03 KL参考；资金直接USD查询，不用旧USD/HKD换算。Journal重算47笔有效流水，入账仍截至2026-10-23，贷款RM355,897.77，未见十月利息记录，不估填。Maybank净损益RM-57,006.79，本金RM157,970.00，回报-36.09%；网站10.04与Sheet9.99不同，估值差RM2,265.00。转入本金暂估，未另扣交易/账户费用；股息已抵贷款，不重复加净资产。LSR为马股市值模型，非银行认可价值或正式通知。历史收益对账仍10/04，M+结单覆盖09/30；未重建历史期间资料；赠股仍排除（US$188.87）。</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <script>
@@ -499,9 +499,9 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
   },
   "cash": {
     "usd": 17597.58,
-    "myr": 0,
+    "myr": 28424.38,
     "usdBreakdown": "OpenD直接USD查询（11/04 08:55 MYT）：wallet US$479.84 + fund_assets US$17,117.74 = US$17,597.58；不混入MYR钱包或在途资产。",
-    "myrBreakdown": "按既有规则排除MYR现金；OpenD本账户MYR钱包RM28,424.38未计入本页净值。"
+    "myrBreakdown": "Owner本次确认纳入Moomoo MYR钱包RM28,424.38；仅本账户现金，不加入Maybank现金。"
   },
   "options": [],
   "marginJournal": {

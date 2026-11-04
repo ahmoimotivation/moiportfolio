@@ -17,10 +17,12 @@ Moi 的投资组合看板 + 完整更新规程。设计成**任何 AI 拿到这�
 | 马股 | MAYBANK (1155) · IGBREIT (5227) · SUNREIT (5176) | Public Bank（MAYBANK 部分 margin 融资）|
 | 实物黄金 | Kangaroo 1oz × 7（Perth Mint 99.99%）| UOB |
 | 加密货币 | BTC | HATA |
-| 现金 | USD（含货币基金）+ MYR | Moomoo / Maybank |
+| 现金 | USD 钱包及基金 + MYR 钱包 | Moomoo（Maybank现金/货币基金不计入） |
 | 期权 | Wheel 策略（sold put → covered call）| Moomoo |
 
 当前资产看板货币为 **MYR**。净资产已扣除 Public Bank margin loan 及所有 sold-option liability。
+
+2026-11-04 owner 确认将 **Moomoo MYR 钱包**纳入现金和净值。以后每次刷新读取 OpenD `my_cash`，不再固定为0；基金赎回转钱包后不得与旧在途资产重复计入，转账不算新增投资利润。详见更新规程 §4。
 
 ## 2026 区间盈亏
 
@@ -107,3 +109,4 @@ https://raw.githubusercontent.com/ahmoimotivation/moiportfolio/main/portfolio-da
 
 **不要**在这个 repo 里放：API key、券商密码、access token、
 或任何「知道就能访问」的标识符（例如开了"知道链接即可查看"的 Google Sheet ID）。
+

@@ -5,7 +5,7 @@
     "timezone": "Asia/Kuala_Lumpur (MYT)",
     "displayCurrency": "MYR",
     "lastRefresh": "2026-11-04T08:55:39+08:00",
-    "lastRefreshNote": "11/04 OpenD实际持仓/近期成交已核对：新增FTNT30股与AMZN20股，PLTR11/06$225 call于11/02买回平仓，无行权。美股统一采用11/03 19:52–19:54 EST的after_price盘后价；直接USD查询资金，pending_asset已归零。Chrome核对马股11/03收盘、黄金spot与BTC；journal重新复算全部有效流水。继续原MYR现金排除规则，Moomoo MYR钱包RM28,424.38未计入净值；净值与旧快照差额包含原在途退出计算范围的影响，不能全部当投资亏损。",
+    "lastRefreshNote": "11/04 OpenD实际持仓/近期成交已核对：新增FTNT30股与AMZN20股，PLTR11/06$225 call于11/02买回平仓，无行权。美股统一采用11/03 19:52–19:54 EST的after_price盘后价；直接USD查询资金，pending_asset已归零。Chrome核对马股11/03收盘、黄金spot与BTC；journal重新复算全部有效流水。本次owner确认将Moomoo MYR钱包RM28,424.38纳入现金，Maybank现金仍不加入。",
     "priceAsOf": {
       "usStocks": "OpenD quote_snapshot after_price；update_time为2026-11-03 19:52:00–19:54:54 America/New_York EST（UTC−5）/ 11/04 08:52–08:54 MYT；非last_price常规收盘",
       "myStocks": "Chrome11/04开盘前读取11/03收盘：Maybank Google财经卡片RM10.04（11/03 16:52MYT）；IGBREIT Yahoo RM2.74（11/03 16:50:50MYT），SUNREIT RM2.07（11/03 16:53:28MYT），均延迟报价",
@@ -40,7 +40,7 @@
     "refreshWarnings": [
       "LSR 70.08%，超出70%模型线0.08 pp；按马股市值估算，非银行正式通知。",
       "Journal最新入账2026-10-23；未见十月融资利息入账，贷款未估填。",
-      "继续原MYR现金排除规则，Moomoo MYR钱包RM28,424.38未计入净值；净值与旧快照差额包含原在途退出计算范围的影响，不能全部当投资亏损。",
+      "本次owner确认将Moomoo MYR钱包RM28,424.38纳入现金，Maybank现金仍不加入。",
       "PLTR call已于11/02买回，当前期权浮盈及负债均归零；本次未重算旧Wheel历史收益，平仓净收益尚未并入该旧汇总。",
       "PLTR较11/02快照-7.87%，前次盘前与本次盘后时段不同，不是单日涨跌。"
     ],
@@ -85,7 +85,7 @@
       "pendingAssetsUsd": 0,
       "walletUsd": 479.84,
       "myrWalletMyr": 28424.38,
-      "myrWalletIncluded": false,
+      "myrWalletIncluded": true,
       "residualUsd": 0.0008,
       "note": "Account total includes MYR cash converted to USD; portfolio cash applies the explicit scope shown separately. Securities_assets already includes wallets in account reconciliation; portfolio adds individual positions and wallets once. Direct USD fund_assets avoids FX conversion errors."
     },
@@ -118,6 +118,15 @@
         "includedInHistoricalWheel": false
       },
       "note": "Read-only verified actual activity, not new orders. Historical Wheel retained pending reconciliation of opening and closing proceeds/fees with the owner journal."
+    },
+    "cashPolicy": {
+      "effectiveOn": "2026-11-04",
+      "confirmedAt": "2026-11-04T09:11:13+08:00",
+      "includeMoomooMyrWallet": true,
+      "myrWalletSource": "OpenD accinfo_query.my_cash",
+      "includeMaybankCash": false,
+      "instruction": "Owner explicitly selected: 纳入 Moomoo 的 MYR 钱包. Re-read the balance at every requested refresh; do not retain a fixed amount.",
+      "transferTreatment": "Fund redemption into a wallet is a transfer of existing assets, not investment profit; remove any settled pending balance to avoid double counting."
     }
   },
   "constants": {
@@ -289,9 +298,9 @@
   },
   "cash": {
     "usd": 17597.58,
-    "myr": 0,
+    "myr": 28424.38,
     "usdBreakdown": "OpenD直接USD查询（11/04 08:55 MYT）：wallet US$479.84 + fund_assets US$17,117.74 = US$17,597.58；不混入MYR钱包或在途资产。",
-    "myrBreakdown": "按既有规则排除MYR现金；OpenD本账户MYR钱包RM28,424.38未计入本页净值。"
+    "myrBreakdown": "Owner本次确认纳入Moomoo MYR钱包RM28,424.38；仅本账户现金，不加入Maybank现金。"
   },
   "options": [],
   "stockRealizedUsd": 11031.09,
@@ -501,8 +510,8 @@
   },
   "derived": {
     "_comment": "Recomputed on every refresh. Do not hand-edit — recalculate from the formulas in UPDATE_INSTRUCTIONS.md §5.",
-    "netWorthMyr": 1259721,
-    "grossAssetsMyr": 1615619,
+    "netWorthMyr": 1288145,
+    "grossAssetsMyr": 1644043,
     "lsrPct": 70.08,
     "lsrBufferToCallPp": -0.08,
     "soldPutLiabilityUsd": 0,
@@ -512,7 +521,7 @@
     "realizedProfitMyr": 110739.99,
     "realizedProfitEstimated": true,
     "costBasisReturnMyr": 62697.48,
-    "costBasisReturnPct": 4.7291,
+    "costBasisReturnPct": 4.6299,
     "stockRealizedCombinedUsd": 10974.36,
     "mplusRealizedMyr": -231.28,
     "maybankPriceProfitMyr": -75016.8,

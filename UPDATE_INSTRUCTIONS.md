@@ -14,14 +14,14 @@
 3. **严禁触碰**（除非 §3 的行权接货例外，或 Moi 明确指示）：
    - `constants.marginLoanMyr` 须按下方 §4.1 的 moi journal 已入账余额更新，不得再固定为旧的 362763.77
    - `constants.targetLsr` / `marginCallLsr` / `forceSellLsr`
-   - `cash.myr` = 0（Owner 2026-09-30 指定 Idle Cash 只算 Moomoo money market fund + wallet；不得再加回 Maybank 现金/货币基金）
+   - `cash.myr` 按 Moomoo OpenD `my_cash` 更新（Owner 2026-11-04 明确确认纳入 Moomoo MYR 钱包，覆盖旧的0固定规则）；不得加入 Maybank 现金/货币基金，不得把 OpenD 账户总资产再叠加到明细资产
    - `wheelRealized`
    - `stockRealizedUsd` / `stockRealizedEstimated` / `stockRealizedDetail`（须重新对账历史成交与费用，不得随每日行情刷新重置）
    - `mplusRealizedUsd` / `mplusRealizedDetail`（仅凭新上传的 M+ 结单重新对账；不得逐次累加同一结单或用 OpenD 替代）
    - 其他持仓的 `qty` 和 `cost`；Maybank 依 owner 2026-10-28 授权按 §4.2 的 Journal 新买入、转入和最新成本记录同步
    - `index.html` 的 CSS / HTML 结构
    - **Allocation 饼图的 MY stocks 口径**：`value = Math.max(0, myMv - margin)`（net equity，非 gross）。这是 Moi 在 2026-07-07 明确指定的，不要改回 gross。
-4. **日常刷新更新行情及 journal 贷款余额**：`constants.marginLoanMyr` 按 §4.1 更新；其余字段范围为 `px`、`spotUsd`、`pxUsd`、`fx`、`cash.usd`、`options[]`、`ulPxFallback`、`meta.*`、`derived.*`，以及按 §4.2 更新 `marginJournal`、Maybank `qty/cost`。
+4. **日常刷新更新行情及 journal 贷款余额**：`constants.marginLoanMyr` 按 §4.1 更新；其余字段范围为 `px`、`spotUsd`、`pxUsd`、`fx`、`cash.usd`、`cash.myr`、`pendingAssets`、`options[]`、`ulPxFallback`、`meta.*`、`derived.*`，以及按 §4.2 更新 `marginJournal`、Maybank `qty/cost`。
 
 ---
 
@@ -116,13 +116,16 @@ cash.usd = account_info.us_cash
 ```
 
 USD 货币基金的取法，按顺序试：
+0. 优先 `accinfo_query(currency=USD)`，直接读取该返回的 USD `fund_assets`；`cash.usd = us_cash + fund_assets`，此时无需USD/HKD折算。不要把返回中已折算包含MYR的钱包总额 `cash` 误当成USD钱包，否则会与 `cash.myr` 重复。
 1. 若 positions 里有 `US.BOXX`（现金停泊 ETF）→ 用它的 `market_val`
 2. 否则用 `account_info.fund_assets`（**HKD 计价**）÷ USD/HKD 汇率
 
 > ⚠ 不要再用 2026-07-03 之前的旧口径「+97321.89」。
 > 2026-08-01 起 BOXX 已换成 SOXX，货币基金改走 `fund_assets`。
 
-`cash.myr` = **0 固定**。Owner 于 2026-09-30 指定 Idle Cash 只计算 Moomoo USD 货币基金 + wallet；Maybank MYR 现金/货币基金不再计入组合总值。不要自行加回。
+**Owner 2026-11-04 更新现金范围**：`cash.myr = account_info.my_cash`，明确纳入 **Moomoo MYR 钱包**。本次08:55快照为 RM28,424.38；以后每次重新读取，不固定该金额。Moomoo USD钱包、基金与MYR钱包均纳入组合现金及净值；**Maybank MYR现金/货币基金继续排除**。
+
+`pendingAssets.usd` 与钱包、基金分别列示；赎回到账后以实际钱包及在途余额替换，不能保留旧在途再加一次钱包。基金转钱包属于资产转移，不增加投资利润或Maybank净投入本金。总现金 `cash.usd × USD/MYR + cash.myr`，与各股票、基金或账户总资产核对时只计一次。
 
 ---
 
@@ -364,3 +367,4 @@ pumpForce = margin × (1 − 69/80)
 | **Wheel** | 卖 put 接货 → 卖 covered call 的轮动策略 |
 | **UOB buyback** | 实物金回购价，估算 = spot × 1.01 |
 | **OpenD** | Moomoo 的本地行情/交易 gateway，必须在 Moi 电脑上运行 |
+
