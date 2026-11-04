@@ -324,6 +324,8 @@ pumpForce = margin × (1 − 69/80)
 
 ## 8. 更新流程 checklist
 
+**Owner 页面偏好（2026-11-04）**：区间盈亏使用默认收起的折叠区，点击标题展开日期选择和结果。Allocation 保留原分类饼图及 MY net-equity 口径，下方细列每只美股及马股的市值（RM）、占各自市场股票市值的百分比、占当前净资产的百分比。马股单股使用 gross 市值，融资贷款单独列负数，再列净股权；不任意把贷款分配到单股。两种分母明确标注，不能把马股 gross 单股比例冒充已扣贷款比例。每日刷新由最新持仓动态生成，不固定股票名单、金额或百分比；保留折叠偏好。本次为 owner 明确授权的页面结构调整，后续日常行情刷新不撤销。新增核验：`node allocation.test.cjs`。
+
 1. [ ] 确认数据源可用（OpenD / Google Chrome Search / WebSearch）
 2. [ ] 拉价格：美股（OpenD）· MAYBANK/黄金/BTC（Google Chrome Search）· IGBREIT/SUNREIT（Chrome）· USD/MYR (· USD/HKD)
 3. [ ] 拉持仓 + 现金（有 Moomoo 时），侦测行权接货
@@ -367,4 +369,5 @@ pumpForce = margin × (1 − 69/80)
 | **Wheel** | 卖 put 接货 → 卖 covered call 的轮动策略 |
 | **UOB buyback** | 实物金回购价，估算 = spot × 1.01 |
 | **OpenD** | Moomoo 的本地行情/交易 gateway，必须在 Moi 电脑上运行 |
+
 

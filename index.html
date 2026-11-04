@@ -52,6 +52,9 @@ tr:last-child td{border-bottom:none}
 .alloc-row{display:flex;justify-content:space-between;padding:5px 0;font-size:12px;border-bottom:0.5px dashed var(--border)}
 .alloc-row:last-child{border-bottom:none}
 .alloc-dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.alloc-details{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.alloc-group{min-width:0}.alloc-group h3{font-size:13px;margin:0 0 5px}.alloc-group table{width:100%;table-layout:fixed}.alloc-group th,.alloc-group td{padding:7px 3px;font-size:11px}.alloc-group th{white-space:normal}.alloc-group th:first-child{width:28%}.alloc-group .alloc-stock{font-weight:600}.alloc-group .alloc-debt td{color:var(--red)}.alloc-detail-note{font-size:11px;color:var(--muted);line-height:1.5;margin:12px 0 0}
+@media(max-width:760px){.alloc-details{grid-template-columns:1fr;gap:18px}}@media(max-width:420px){.card .alloc{grid-template-columns:1fr}.alloc>div:first-child{max-width:150px;width:100%;margin:auto}.alloc-row{gap:8px}.alloc-row>span:last-child{white-space:nowrap}}
 .lsr-bar{position:relative;height:12px;background:#eee;border-radius:4px;overflow:visible;margin-top:10px}
 .lsr-fill{height:100%;transition:width .4s;border-radius:4px}
 .lsr-danger-zone{position:absolute;top:0;right:0;left:70%;height:100%;background:repeating-linear-gradient(45deg,rgba(197,48,48,.12),rgba(197,48,48,.12) 4px,transparent 4px,transparent 8px);border-radius:0 4px 4px 0;pointer-events:none}
@@ -123,13 +126,13 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 @media(max-width:420px){.hero-value{font-size:24px}.alloc{grid-template-columns:100px 1fr}th,td{padding:6px 2px;font-size:11px}.pump-grid,.mb-pl-grid,.collat-box{grid-template-columns:1fr}}
 </style>
 <style>
-.perf-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.perf-heading h3{font-size:15px;font-weight:600;margin:0}
+.perf-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;list-style:none;min-height:28px}.perf-heading::-webkit-details-marker{display:none}.perf-title{font-size:15px;font-weight:600}.perf-action{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--blue);white-space:nowrap}.perf-action::after{content:'⌄';font-size:18px;line-height:1}.perf-disclosure[open] .perf-action::after{transform:rotate(180deg)}.perf-close{display:none}.perf-disclosure[open] .perf-open{display:none}.perf-disclosure[open] .perf-close{display:inline}.perf-heading:focus-visible{outline:2px solid var(--blue);outline-offset:5px;border-radius:3px}.perf-content{padding-top:14px}
 .perf-controls{display:grid;grid-template-columns:1.4fr 1.2fr 1fr 1fr;gap:10px}.perf-controls label{display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted)}
 .perf-controls select,.perf-controls input{width:100%;min-width:0;border:1px solid #d5d5d1;border-radius:6px;background:white;color:var(--ink);padding:8px;font:inherit;font-size:12px;min-height:38px}.perf-controls select:focus-visible,.perf-controls input:focus-visible,.perf-method summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .perf-kpis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0;padding-top:14px;border-top:1px solid var(--border)}.perf-value{font-size:24px;font-weight:600;letter-spacing:-.02em;line-height:1.3;margin:5px 0}.perf-total{background:#f4f6f2;padding:10px;border-radius:8px;margin-top:-10px}
 .perf-note{font-size:11px;line-height:1.5;color:var(--muted);margin-top:4px}.perf-error{font-size:12px;color:var(--red);background:#fcebeb;padding:8px 10px;border-radius:6px;margin-top:10px}.perf-warning{font-size:11px;color:var(--amber);background:#fdf3e1;border-radius:7px;padding:8px 10px;margin-top:10px;line-height:1.5}
 .perf-chart{margin:14px 0 10px;min-height:180px;overflow-x:auto}.perf-chart svg{display:block;width:100%;min-width:600px;height:auto;max-height:240px}.perf-method{font-size:11px;color:var(--muted);margin:10px 0}.perf-method summary{cursor:pointer;color:var(--blue)}.perf-method p{margin:6px 0}
-@media(max-width:700px){.perf-controls{grid-template-columns:1fr 1fr}.perf-value{font-size:20px}}@media(max-width:430px){.perf-kpis{grid-template-columns:1fr;gap:10px}.perf-kpis>div:not(.perf-total){padding-bottom:8px;border-bottom:1px solid var(--border)}.perf-total{margin:0}.perf-heading h3{font-size:14px}.perf-value{font-size:23px}}
+@media(max-width:700px){.perf-controls{grid-template-columns:1fr 1fr}.perf-value{font-size:20px}}@media(max-width:430px){.perf-kpis{grid-template-columns:1fr;gap:10px}.perf-kpis>div:not(.perf-total){padding-bottom:8px;border-bottom:1px solid var(--border)}.perf-total{margin:0}.perf-title{font-size:14px}.perf-value{font-size:23px}}
 </style></head><body>
 
 <div class="repo-bar">
@@ -173,7 +176,10 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 
 <h2>2026 区间盈亏 <span style="font-weight:400;text-transform:none;color:var(--hint);font-size:10px">美股子组合 · USD · 非全组合</span></h2>
 <section class="card perf-card" aria-labelledby="perfHeading">
-  <div class="perf-heading"><h3 id="perfHeading">这段时间，赚了还是亏了？</h3><span class="chip chip-info">只统计 2026</span></div>
+  <details id="performanceDisclosure" class="perf-disclosure">
+  <summary class="perf-heading"><span id="perfHeading" class="perf-title">这段时间，赚了还是亏了？</span><span class="perf-action"><span class="perf-open">展开查看</span><span class="perf-close">收起</span></span></summary>
+  <div class="perf-content">
+  <div class="perf-note" style="margin:0 0 10px">只统计 2026 · 美股子组合 · USD</div>
   <div class="perf-controls">
     <label>统计范围<select id="perfScope"><option value="both">Moomoo + M+ 美股</option><option value="moomoo">Moomoo 美股</option><option value="mplus">M+ 美股</option></select></label>
     <label>快捷范围<select id="perfPreset"><option value="ytd">年初至已核对日</option><option value="custom">自选日期</option></select></label>
@@ -193,6 +199,8 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
   <div class="perf-warning">⚠ 不含期权/Wheel、货币基金/BOXX、股息利息、马股、黄金、BTC 及 Moomoo 零碎赠股（NVDA 除外）。这些资产缺完整历史估值，不能把此处合计当全组合收益。</div>
   <details class="perf-method"><summary>为什么与上方 Realized / ROI 不一样？</summary><p>此处两家券商统一以 2025-12-31 美股收盘价重置期初成本，剔除 2026 年前涨跌。已实现为「2026 归属收益」，不等同券商的生命周期/税务已实现。卖出时从未实现转入已实现，合计不会重复计算。</p><p>M+ 结单的月末估值截点与美股收盘日期不同；此处使用 OpenD 的同日历史收盘价，不混用结单价格。上方原有成本口径及 Wheel 汇总未改，不能直接与这里对平。</p></details>
   <div id="perfDataStatus" class="footnote"></div>
+  </div>
+  </details>
 </section>
 
 <h2>Allocation <span style="font-weight:400;text-transform:none;color:var(--hint);font-size:10px">(MY stocks 已扣 margin loan · 其余按 gross)</span></h2>
@@ -202,6 +210,8 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
     <div id="allocList"></div>
   </div>
   <div class="footnote" id="cashSplitNote" style="margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border)"></div>
+  <div id="allocDetails" class="alloc-details"></div>
+  <p class="alloc-detail-note" id="allocDetailNote"></p>
 </div>
 
 <h2>Margin health — Public Bank (per PDS)</h2>
@@ -570,6 +580,14 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       ?(value/netWorth*100).toFixed(2)+'%':'未计算';
   }
   /* NET_WORTH_WEIGHT_END */
+  /* ALLOCATION_DETAIL_START */
+  function allocationBreakdown(stocks,fx,netWorth,loan=0){
+    const total=stocks.reduce((sum,s)=>sum+s.qty*s.px*fx,0);
+    const weight=(value,base)=>Number.isFinite(value)&&Number.isFinite(base)&&base>0?value/base*100:null;
+    return {total,loan,netEquity:total-loan,totalWeight:weight(total,netWorth),loanWeight:weight(-loan,netWorth),netWeight:weight(total-loan,netWorth),
+      rows:stocks.map(s=>{const value=s.qty*s.px*fx;return {ticker:s.t,value,groupWeight:weight(value,total),netWorthWeight:weight(value,netWorth)};}).sort((a,b)=>b.value-a.value)};
+  }
+  /* ALLOCATION_DETAIL_END */
   let goldMode='buyback';
 
   function render(){
@@ -845,6 +863,16 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
       return `<div class="alloc-row"><span><span class="alloc-dot" style="background:${s.color}"></span>${s.label}</span><span class="num">${fmt(s.value,0)} <span style="color:var(--muted);font-size:11px">${pct.toFixed(1)}%</span></span></div>`;
     }).join('');
     const collatPctCash=cashTotal?cashCollatMyr/cashTotal*100:0;
+    const allocationPct=value=>value===null?'未计算':value.toFixed(2)+'%';
+    const allocationTable=(title,group,isMy)=>`<section class="alloc-group" aria-label="${title}配置明细">
+      <h3>${title} · ${group.rows.length} 只</h3>
+      <table><thead><tr><th scope="col">股票</th><th scope="col" class="right">市值 · RM</th><th scope="col" class="right">占${isMy?'马股':'美股'}</th><th scope="col" class="right">占净身家</th></tr></thead><tbody>
+      ${group.rows.map(r=>`<tr><th scope="row" class="alloc-stock">${r.ticker}</th><td class="right num">${fmt(r.value,0)}</td><td class="right num">${allocationPct(r.groupWeight)}</td><td class="right num">${allocationPct(r.netWorthWeight)}</td></tr>`).join('')}
+      <tr class="subtotal"><th scope="row">股票合计</th><td class="right num">${fmt(group.total,0)}</td><td class="right num">${group.total>0?'100.00%':'未计算'}</td><td class="right num">${allocationPct(group.totalWeight)}</td></tr>
+      ${isMy?`<tr class="alloc-debt"><th scope="row">减：融资贷款</th><td class="right num">−${fmt(group.loan,0)}</td><td class="right num">—</td><td class="right num">${allocationPct(group.loanWeight)}</td></tr><tr class="subtotal"><th scope="row">马股净股权</th><td class="right num">${fmt(group.netEquity,0)}</td><td class="right num">—</td><td class="right num">${allocationPct(group.netWeight)}</td></tr>`:''}
+      </tbody></table></section>`;
+    document.getElementById('allocDetails').innerHTML=allocationTable('US stocks',allocationBreakdown(holdings.us,fx,netWorth),false)+allocationTable('MY stocks',allocationBreakdown(holdings.my,1,netWorth,margin),true);
+    document.getElementById('allocDetailNote').textContent=`「占美股／马股」以各市场股票总市值为分母；「占净身家」以净资产 RM${fmt(netWorth,0)} 为分母。美股按快照汇率 ${fx.toFixed(4)} 换算。马股单只按完整市值展示，贷款独立扣减，所以单只占比合计高于上方马股净股权占比。百分比经四舍五入；ETF 按直接持仓计算。`;
     const idlePctCash=cashTotal?cashIdleMyr/cashTotal*100:0;
     document.getElementById('cashSplitNote').innerHTML=`现金 RM${fmt(cashTotal,0)} 拆分：<b style="color:var(--ink)">抵押 RM${fmt(cashCollatMyr,0)} (${collatPctCash.toFixed(1)}%)</b> 锁给 sold put，<b style="color:var(--green)">wallet + funds RM${fmt(cashIdleMyr,0)} (${idlePctCash.toFixed(1)}%)</b>。${csp.length===0?'当前无 sold put；基金是否即时可用以券商为准，在途资产不计入可用现金。':''}`;
 
@@ -1065,6 +1093,7 @@ tr.row-cc td{background:#f5f5f2}tr.row-cc td:first-child{box-shadow:inset 2px 0 
 /* PERFORMANCE_2026_END */
 
 </script></body></html>
+
 
 
 
